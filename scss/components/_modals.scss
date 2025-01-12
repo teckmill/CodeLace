@@ -89,18 +89,19 @@
 
   z-index: 1040;
 
-  width: 100vw;
+  width: 100%;
 
-  height: 100vh;
+  height: 100%;
 
   background-color: #000;
 
-  opacity: 0;
+  opacity: 0%;
 
-  transition: opacity 0.15s linear;
+  transition: $transition-fade;
 
   &.show {
-    opacity: 0.5;
+
+    opacity: 50%;
   }
 }
 
@@ -262,27 +263,23 @@
 // Modal animations
 
 .cl-modal-fade {
+
   transition: $transition-fade;
 
   &:not(.show) {
-    opacity: 0;
+
+    opacity: 0%;
   }
 }
 
 .cl-modal.fade .cl-modal-dialog {
+
   transform: translate(0, -50px);
+
   transition: $transition-modal;
 }
 
 .cl-modal.show .cl-modal-dialog {
+
   transform: none;
-}
-
-.cl-modal-backdrop {
-  opacity: 0;
-  transition: $transition-fade;
-
-  &.show {
-    opacity: 0.5;
-  }
 }
