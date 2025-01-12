@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/codelace.git"
+    "url": "https://github.com/teckmill/CodeLace.git"
   },
   "keywords": [
     "css",
@@ -27,14 +27,18 @@
     "responsive",
     "front-end",
     "framework",
-    "web"
+    "web",
+    "typescript",
+    "components",
+    "ui",
+    "accessibility"
   ],
-  "author": "Your Name",
+  "author": "teckmill",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yourusername/codelace/issues"
+    "url": "https://github.com/teckmill/CodeLace/issues"
   },
-  "homepage": "https://github.com/yourusername/codelace#readme",
+  "homepage": "https://github.com/teckmill/CodeLace#readme",
   "devDependencies": {
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.8",
