@@ -1,0 +1,245 @@
+// Dark Theme
+// -------------------------
+
+// Theme variables
+$dark-theme-colors: (
+  "primary": #6d9eff,
+  "secondary": #6c757d,
+  "success": #2fb344,
+  "info": #39c0ed,
+  "warning": #ffa726,
+  "danger": #f44336,
+  "light": #343a40,
+  "dark": #212529,
+  "body": #121212,
+  "muted": #6c757d
+) !default;
+
+$dark-theme-bg: #121212 !default;
+$dark-theme-surface: #1e1e1e !default;
+$dark-theme-border: #2f2f2f !default;
+$dark-theme-text: #e0e0e0 !default;
+$dark-theme-text-muted: #9e9e9e !default;
+$dark-theme-shadow: rgba(0, 0, 0, 0.25) !default;
+$dark-theme-overlay: rgba(0, 0, 0, 0.5) !default;
+
+// Dark theme class
+[data-theme="dark"] {
+  // Base colors
+  --cl-body-bg: #{$dark-theme-bg};
+  --cl-body-color: #{$dark-theme-text};
+  --cl-border-color: #{$dark-theme-border};
+  --cl-shadow-color: #{$dark-theme-shadow};
+  --cl-overlay-color: #{$dark-theme-overlay};
+
+  // Theme colors
+  @each $color, $value in $dark-theme-colors {
+    --cl-#{$color}: #{$value};
+    --cl-#{$color}-rgb: #{red($value)}, #{green($value)}, #{blue($value)};
+  }
+
+  // Surface colors
+  --cl-surface-1: #{lighten($dark-theme-bg, 5%)};
+  --cl-surface-2: #{lighten($dark-theme-bg, 10%)};
+  --cl-surface-3: #{lighten($dark-theme-bg, 15%)};
+  --cl-surface-4: #{lighten($dark-theme-bg, 20%)};
+
+  // Text colors
+  --cl-text-primary: #{$dark-theme-text};
+  --cl-text-secondary: #{$dark-theme-text-muted};
+  --cl-text-muted: #{$dark-theme-text-muted};
+
+  // Component specific overrides
+  // Buttons
+  .cl-btn {
+    &-outline-primary,
+    &-outline-secondary,
+    &-outline-success,
+    &-outline-info,
+    &-outline-warning,
+    &-outline-danger {
+      color: var(--cl-text-primary);
+      border-color: currentColor;
+
+      &:hover {
+        color: var(--cl-body-bg);
+      }
+    }
+  }
+
+  // Cards
+  .cl-card {
+    background-color: var(--cl-surface-1);
+    border-color: var(--cl-border-color);
+
+    &-header {
+      background-color: var(--cl-surface-2);
+      border-bottom-color: var(--cl-border-color);
+    }
+
+    &-footer {
+      background-color: var(--cl-surface-2);
+      border-top-color: var(--cl-border-color);
+    }
+  }
+
+  // Forms
+  .cl-form-control {
+    background-color: var(--cl-surface-1);
+    border-color: var(--cl-border-color);
+    color: var(--cl-text-primary);
+
+    &:focus {
+      background-color: var(--cl-surface-2);
+      border-color: var(--cl-primary);
+    }
+
+    &::placeholder {
+      color: var(--cl-text-muted);
+    }
+
+    &:disabled,
+    &[readonly] {
+      background-color: var(--cl-surface-3);
+    }
+  }
+
+  // Modals
+  .cl-modal {
+    &-content {
+      background-color: var(--cl-surface-1);
+      border-color: var(--cl-border-color);
+    }
+
+    &-header {
+      border-bottom-color: var(--cl-border-color);
+    }
+
+    &-footer {
+      border-top-color: var(--cl-border-color);
+    }
+  }
+
+  // Tabs
+  .cl-tabs {
+    .cl-tab-link {
+      color: var(--cl-text-secondary);
+
+      &:hover {
+        color: var(--cl-text-primary);
+      }
+
+      &.active {
+        color: var(--cl-primary);
+        background-color: var(--cl-surface-1);
+        border-color: var(--cl-border-color);
+      }
+    }
+  }
+
+  // Alerts
+  .cl-alert {
+    background-color: var(--cl-surface-1);
+    border-color: var(--cl-border-color);
+
+    @each $color, $value in $dark-theme-colors {
+      &-#{$color} {
+        background-color: rgba($value, 0.1);
+        border-color: rgba($value, 0.2);
+        color: lighten($value, 10%);
+      }
+    }
+  }
+
+  // Tables
+  .cl-table {
+    color: var(--cl-text-primary);
+
+    th, td {
+      border-color: var(--cl-border-color);
+    }
+
+    thead th {
+      background-color: var(--cl-surface-2);
+    }
+
+    tbody tr {
+      &:hover {
+        background-color: var(--cl-surface-2);
+      }
+    }
+
+    &-striped tbody tr:nth-of-type(odd) {
+      background-color: var(--cl-surface-1);
+    }
+  }
+
+  // Dropdowns
+  .cl-dropdown-menu {
+    background-color: var(--cl-surface-1);
+    border-color: var(--cl-border-color);
+
+    .cl-dropdown-item {
+      color: var(--cl-text-primary);
+
+      &:hover {
+        background-color: var(--cl-surface-2);
+      }
+
+      &.active {
+        background-color: var(--cl-primary);
+        color: var(--cl-body-bg);
+      }
+    }
+
+    .cl-dropdown-divider {
+      border-color: var(--cl-border-color);
+    }
+  }
+
+  // Navbar
+  .cl-navbar {
+    background-color: var(--cl-surface-1);
+    border-color: var(--cl-border-color);
+
+    .cl-nav-link {
+      color: var(--cl-text-secondary);
+
+      &:hover,
+      &.active {
+        color: var(--cl-text-primary);
+      }
+    }
+  }
+
+  // Progress bars
+  .cl-progress {
+    background-color: var(--cl-surface-2);
+  }
+
+  // List groups
+  .cl-list-group {
+    &-item {
+      background-color: var(--cl-surface-1);
+      border-color: var(--cl-border-color);
+      color: var(--cl-text-primary);
+
+      &:hover {
+        background-color: var(--cl-surface-2);
+      }
+
+      &.active {
+        background-color: var(--cl-primary);
+        border-color: var(--cl-primary);
+        color: var(--cl-body-bg);
+      }
+    }
+  }
+
+  // Code
+  pre, code {
+    background-color: var(--cl-surface-1);
+    border-color: var(--cl-border-color);
+    color: var(--cl-text-primary);
+  }
+}
