@@ -4,6 +4,7 @@ import { addClass, removeClass, hasClass } from '../util';
 interface TabOptions extends ComponentOptions {
   activeTab?: string | null;
   keyboard?: boolean;
+  vertical?: boolean;
   onShow?: (tabId: string) => void;
   onShown?: (tabId: string) => void;
   onHide?: (tabId: string) => void;
@@ -14,6 +15,7 @@ interface TabItem {
   trigger: HTMLElement;
   content: HTMLElement;
   id: string;
+  panel: HTMLElement;
 }
 
 export default class Tab extends BaseComponent {
@@ -31,6 +33,7 @@ export default class Tab extends BaseComponent {
       ...super.getDefaultOptions(),
       activeTab: null,
       keyboard: true,
+      vertical: false,
       onShow: () => {},
       onShown: () => {},
       onHide: () => {},
@@ -65,8 +68,15 @@ export default class Tab extends BaseComponent {
 
     // Find all tab triggers
     const triggers = this.element.querySelectorAll('[data-toggle="tab"]');
+    const tabList = this.element.querySelector('.cl-tabs-list');
     
-    triggers.forEach((trigger) => {
+    // Set up tablist
+    if (tabList) {
+      tabList.setAttribute('role', 'tablist');
+      tabList.setAttribute('aria-orientation', this.options.vertical ? 'vertical' : 'horizontal');
+    }
+    
+    triggers.forEach((trigger, index) => {
       if (!(trigger instanceof HTMLElement)) return;
 
       const targetId = trigger.getAttribute('href')?.substring(1) || 
@@ -77,32 +87,38 @@ export default class Tab extends BaseComponent {
       const content = document.getElementById(targetId);
       if (!content) return;
 
-      // Setup ARIA attributes
-      trigger.setAttribute('role', 'tab');
-      trigger.setAttribute('aria-controls', targetId);
-      content.setAttribute('role', 'tabpanel');
-      content.setAttribute('aria-labelledby', trigger.id || `tab-${targetId}`);
-
+      // Generate unique IDs if not present
       if (!trigger.id) {
         trigger.id = `tab-${targetId}`;
       }
+
+      // Set up ARIA attributes for the tab
+      trigger.setAttribute('role', 'tab');
+      trigger.setAttribute('aria-controls', targetId);
+      trigger.setAttribute('aria-selected', 'false');
+      trigger.setAttribute('tabindex', '-1');
+      trigger.setAttribute('aria-description', 'Press Enter or Space to activate tab');
+      
+      // Set up tab panel
+      content.setAttribute('role', 'tabpanel');
+      content.setAttribute('aria-labelledby', trigger.id);
+      content.setAttribute('tabindex', '0');
+      content.setAttribute('hidden', '');
+      
+      // Create live region for announcements
+      const liveRegion = document.createElement('div');
+      liveRegion.setAttribute('aria-live', 'polite');
+      liveRegion.setAttribute('class', 'cl-sr-only');
+      content.appendChild(liveRegion);
 
       // Add to tabs collection
       this.tabs.push({
         trigger,
         content,
-        id: targetId
+        id: targetId,
+        panel: content
       });
-
-      // Initially hide all content
-      content.style.display = 'none';
     });
-
-    // Create tab list role
-    const tabList = this.element.querySelector('.cl-tabs-list');
-    if (tabList) {
-      tabList.setAttribute('role', 'tablist');
-    }
   }
 
   private bindEvents(): void {
@@ -111,6 +127,27 @@ export default class Tab extends BaseComponent {
       tab.trigger.addEventListener('click', (e) => {
         e.preventDefault();
         this.activate(tab.id);
+      });
+
+      // Add keyboard activation
+      tab.trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.activate(tab.id);
+        }
+      });
+
+      // Focus management
+      tab.trigger.addEventListener('focus', () => {
+        if (!hasClass(tab.trigger, 'active')) {
+          tab.trigger.setAttribute('tabindex', '0');
+        }
+      });
+
+      tab.trigger.addEventListener('blur', () => {
+        if (!hasClass(tab.trigger, 'active')) {
+          tab.trigger.setAttribute('tabindex', '-1');
+        }
       });
     });
 
@@ -126,21 +163,44 @@ export default class Tab extends BaseComponent {
     const currentIndex = this.tabs.findIndex(tab => tab.id === this.activeTab?.id);
     let nextIndex: number;
 
+    const isVertical = this.options.vertical;
+    const isHorizontal = !isVertical;
+
     switch (event.key) {
       case 'ArrowRight':
-      case 'ArrowDown':
-        event.preventDefault();
-        nextIndex = currentIndex + 1;
-        if (nextIndex >= this.tabs.length) nextIndex = 0;
-        this.activate(this.tabs[nextIndex].id);
+        if (isHorizontal) {
+          event.preventDefault();
+          nextIndex = currentIndex + 1;
+          if (nextIndex >= this.tabs.length) nextIndex = 0;
+          this.activate(this.tabs[nextIndex].id);
+        }
         break;
 
       case 'ArrowLeft':
+        if (isHorizontal) {
+          event.preventDefault();
+          nextIndex = currentIndex - 1;
+          if (nextIndex < 0) nextIndex = this.tabs.length - 1;
+          this.activate(this.tabs[nextIndex].id);
+        }
+        break;
+
+      case 'ArrowDown':
+        if (isVertical) {
+          event.preventDefault();
+          nextIndex = currentIndex + 1;
+          if (nextIndex >= this.tabs.length) nextIndex = 0;
+          this.activate(this.tabs[nextIndex].id);
+        }
+        break;
+
       case 'ArrowUp':
-        event.preventDefault();
-        nextIndex = currentIndex - 1;
-        if (nextIndex < 0) nextIndex = this.tabs.length - 1;
-        this.activate(this.tabs[nextIndex].id);
+        if (isVertical) {
+          event.preventDefault();
+          nextIndex = currentIndex - 1;
+          if (nextIndex < 0) nextIndex = this.tabs.length - 1;
+          this.activate(this.tabs[nextIndex].id);
+        }
         break;
 
       case 'Home':
@@ -168,7 +228,8 @@ export default class Tab extends BaseComponent {
     removeClass(trigger, 'active');
 
     // Hide content
-    content.style.display = 'none';
+    content.setAttribute('hidden', '');
+    content.querySelector('.cl-sr-only')?.textContent = `Tab panel ${trigger.textContent} is now hidden`;
     
     this.options.onHidden?.(id);
     this.activeTab = null;
@@ -188,11 +249,14 @@ export default class Tab extends BaseComponent {
     trigger.setAttribute('aria-selected', 'true');
     trigger.tabIndex = 0;
     addClass(trigger, 'active');
+    
+    // Show content and announce to screen readers
+    content.removeAttribute('hidden');
+    content.querySelector('.cl-sr-only')?.textContent = `Tab panel ${trigger.textContent} is now visible`;
+    
+    // Focus management
     trigger.focus();
-
-    // Show content
-    content.style.display = 'block';
-
+    
     this.activeTab = tab;
     this.options.onShown?.(id);
   }
@@ -207,19 +271,32 @@ export default class Tab extends BaseComponent {
     }
 
     this.tabs.forEach(tab => {
+      // Remove event listeners
       tab.trigger.removeEventListener('click', () => this.activate(tab.id));
       
       // Remove ARIA attributes
       tab.trigger.removeAttribute('role');
       tab.trigger.removeAttribute('aria-controls');
       tab.trigger.removeAttribute('aria-selected');
+      tab.trigger.removeAttribute('aria-description');
+      tab.trigger.removeAttribute('tabindex');
+      
       tab.content.removeAttribute('role');
       tab.content.removeAttribute('aria-labelledby');
+      tab.content.removeAttribute('tabindex');
+      tab.content.removeAttribute('hidden');
+      
+      // Remove live region
+      const liveRegion = tab.content.querySelector('.cl-sr-only');
+      if (liveRegion) {
+        liveRegion.remove();
+      }
     });
 
     const tabList = this.element.querySelector('.cl-tabs-list');
     if (tabList) {
       tabList.removeAttribute('role');
+      tabList.removeAttribute('aria-orientation');
     }
 
     super.destroy();
