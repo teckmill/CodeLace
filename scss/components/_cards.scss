@@ -1,189 +1,151 @@
+@use "sass:color";
+@use "../variables";
+@use "../mixins";
+
 // Cards
 // -------------------------
 
-// Variables
-$card-spacer-y: 1rem !default;
-$card-spacer-x: 1rem !default;
-$card-border-width: 1px !default;
-$card-border-radius: $border-radius !default;
-$card-border-color: $border-color !default;
-$card-inner-border-radius: subtract($card-border-radius, $card-border-width) !default;
-$card-cap-padding-y: 0.5rem !default;
-$card-cap-padding-x: $card-spacer-x !default;
-$card-cap-bg: rgba($black, 0.03) !default;
-$card-img-overlay-padding: 1.25rem !default;
-$card-group-margin: $grid-gutter-width * 0.5 !default;
-
 // Base styles
-.cl-card {
+.card {
   position: relative;
   display: flex;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: $white;
+  background-color: variables.$body-bg;
   background-clip: border-box;
-  border: $card-border-width solid $card-border-color;
-  border-radius: $card-border-radius;
+  border: variables.$border-width solid variables.$border-color;
+  border-radius: variables.$border-radius;
 
   > hr {
     margin-right: 0;
     margin-left: 0;
   }
-
-  > .cl-list-group {
-    border-top: inherit;
-    border-bottom: inherit;
-
-    &:first-child {
-      border-top-width: 0;
-      @include border-top-radius($card-inner-border-radius);
-    }
-
-    &:last-child {
-      border-bottom-width: 0;
-      @include border-bottom-radius($card-inner-border-radius);
-    }
-  }
 }
 
 // Card body
-.cl-card-body {
+.card-body {
   flex: 1 1 auto;
-  padding: $card-spacer-y $card-spacer-x;
-  color: $body-color;
+  padding: 1.25rem;
 }
 
 // Card title
-.cl-card-title {
-  margin-bottom: $card-spacer-y;
-  @include rtl-property(margin-left, auto);
-  @include rtl-property(margin-right, auto);
+.card-title {
+  margin-bottom: 0.75rem;
 }
 
 // Card subtitle
-.cl-card-subtitle {
-  margin-top: -($card-spacer-y * 0.5);
+.card-subtitle {
+  margin-top: -0.375rem;
   margin-bottom: 0;
-  @include rtl-property(margin-left, auto);
-  @include rtl-property(margin-right, auto);
 }
 
 // Card text
-.cl-card-text:last-child {
+.card-text:last-child {
   margin-bottom: 0;
 }
 
 // Card link
-.cl-card-link {
-  @include hover {
+.card-link {
+  &:hover {
     text-decoration: none;
   }
 
-  + .cl-card-link {
-    @include rtl-property(margin-left, $card-spacer-x);
+  + .card-link {
+    margin-left: 1.25rem;
   }
 }
 
 // Card header
-.cl-card-header {
-  padding: $card-cap-padding-y $card-cap-padding-x;
+.card-header {
+  padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: $card-cap-bg;
-  border-bottom: $card-border-width solid $card-border-color;
+  background-color: rgba(#000, 0.03);
+  border-bottom: variables.$border-width solid variables.$border-color;
 
   &:first-child {
-    @include border-top-radius($card-inner-border-radius);
+    border-radius: calc(variables.$border-radius - variables.$border-width) calc(variables.$border-radius - variables.$border-width) 0 0;
   }
 }
 
 // Card footer
-.cl-card-footer {
-  padding: $card-cap-padding-y $card-cap-padding-x;
-  background-color: $card-cap-bg;
-  border-top: $card-border-width solid $card-border-color;
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(#000, 0.03);
+  border-top: variables.$border-width solid variables.$border-color;
 
   &:last-child {
-    @include border-bottom-radius($card-inner-border-radius);
+    border-radius: 0 0 calc(variables.$border-radius - variables.$border-width) calc(variables.$border-radius - variables.$border-width);
   }
 }
 
 // Card image
-.cl-card-img-overlay {
+.card-img-overlay {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  padding: $card-img-overlay-padding;
-  border-radius: $card-inner-border-radius;
+  padding: 1.25rem;
+  border-radius: calc(variables.$border-radius - variables.$border-width);
 }
 
-.cl-card-img,
-.cl-card-img-top,
-.cl-card-img-bottom {
+.card-img,
+.card-img-top,
+.card-img-bottom {
   width: 100%;
 }
 
-.cl-card-img,
-.cl-card-img-top {
-  @include border-top-radius($card-inner-border-radius);
+.card-img,
+.card-img-top {
+  border-top-left-radius: calc(variables.$border-radius - variables.$border-width);
+  border-top-right-radius: calc(variables.$border-radius - variables.$border-width);
 }
 
-.cl-card-img,
-.cl-card-img-bottom {
-  @include border-bottom-radius($card-inner-border-radius);
+.card-img,
+.card-img-bottom {
+  border-bottom-right-radius: calc(variables.$border-radius - variables.$border-width);
+  border-bottom-left-radius: calc(variables.$border-radius - variables.$border-width);
 }
 
 // Card groups
-.cl-card-group {
+.card-group {
   display: flex;
   flex-flow: row wrap;
 
-  > .cl-card {
+  > .card {
     flex: 1 0 0%;
-    margin-bottom: $card-group-margin;
+    margin-bottom: 0;
 
-    + .cl-card {
-      @include rtl-property(margin-left, 0);
-      @include rtl-property(border-left, none);
+    + .card {
+      margin-left: 0;
+      border-left: 0;
     }
 
-    // Handle rounded corners
-    @if $enable-rounded {
-      &:not(:last-child) {
-        @include rtl {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-        @include ltr {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-      }
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-      &:not(:first-child) {
-        @include rtl {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-        @include ltr {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
     }
   }
 }
 
 // Card columns
-.cl-card-columns {
+.card-columns {
   column-count: 3;
-  column-gap: $card-group-margin;
+  column-gap: variables.$grid-gutter-width * 0.5;
   orphans: 1;
   widows: 1;
 
-  .cl-card {
+  .card {
     display: inline-block;
     width: 100%;
   }
@@ -191,39 +153,73 @@ $card-group-margin: $grid-gutter-width * 0.5 !default;
 
 // RTL specific adjustments
 [dir="rtl"] {
-  .cl-card {
+  .card {
     text-align: right;
   }
 
-  .cl-card-header,
-  .cl-card-footer {
+  .card-header,
+  .card-footer {
     text-align: right;
   }
 
-  .cl-card-link + .cl-card-link {
-    margin-right: $card-spacer-x;
+  .card-link + .card-link {
+    margin-right: 1.25rem;
     margin-left: 0;
   }
 
-  .cl-card-group {
-    > .cl-card {
-      + .cl-card {
+  .card-group {
+    > .card {
+      + .card {
         margin-right: 0;
         border-right: none;
       }
 
-      &:not(:last-child) {
+      &:first-child {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        border-top-right-radius: $card-border-radius;
-        border-bottom-right-radius: $card-border-radius;
+        border-top-right-radius: variables.$border-radius;
+        border-bottom-right-radius: variables.$border-radius;
       }
 
-      &:not(:first-child) {
+      &:last-child {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-        border-top-left-radius: $card-border-radius;
-        border-bottom-left-radius: $card-border-radius;
+        border-top-left-radius: variables.$border-radius;
+        border-bottom-left-radius: variables.$border-radius;
+      }
+    }
+  }
+}
+
+// RTL support
+[dir="rtl"] {
+  .card-link {
+    + .card-link {
+      @include mixins.rtl-property(margin-left, 0);
+      @include mixins.rtl-property(margin-right, 1.25rem);
+    }
+  }
+
+  .card-group {
+    > .card {
+      + .card {
+        @include mixins.rtl-property(margin-left, 0);
+        @include mixins.rtl-property(border-left, none);
+        @include mixins.rtl-property(border-right, 0);
+      }
+
+      &:first-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: variables.$border-radius;
+        border-bottom-right-radius: variables.$border-radius;
+      }
+
+      &:last-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: variables.$border-radius;
+        border-bottom-left-radius: variables.$border-radius;
       }
     }
   }

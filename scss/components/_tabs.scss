@@ -2,17 +2,9 @@
 // -------------------------
 
 // Variables
-$tab-border-width: 1px !default;
-$tab-border-color: $border-color !default;
-$tab-border-radius: $border-radius !default;
-$tab-padding-y: 0.5rem !default;
-$tab-padding-x: 1rem !default;
-$tab-margin-x: 0.125rem !default;
-$tab-font-size: 1rem !default;
-$tab-line-height: 1.5 !default;
-$tab-transition: color 0.15s ease-in-out,
-                background-color 0.15s ease-in-out,
-                border-color 0.15s ease-in-out !default;
+@use "sass:color";
+@use "../variables" as *;
+@use "../mixins" as *;
 
 // Base styles
 .cl-tabs {
@@ -26,14 +18,14 @@ $tab-transition: color 0.15s ease-in-out,
     flex-wrap: wrap;
     @include rtl-property(padding-left, 0);
     margin: 0;
-    border-bottom: $tab-border-width solid $tab-border-color;
+    border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
     list-style: none;
   }
 
   // Tab items
   .cl-tab-item {
-    margin-bottom: -$tab-border-width;
-    @include rtl-property(margin-right, $tab-margin-x);
+    margin-bottom: -$nav-tabs-border-width;
+    @include rtl-property(margin-right, $nav-tabs-margin-x);
 
     &:last-child {
       @include rtl-property(margin-right, 0);
@@ -44,39 +36,36 @@ $tab-transition: color 0.15s ease-in-out,
   .cl-tab-link {
     display: inline-flex;
     align-items: center;
-    padding: $tab-padding-y $tab-padding-x;
-    font-size: $tab-font-size;
+    padding: $nav-tabs-padding-y $nav-tabs-padding-x;
+    font-size: $nav-tabs-font-size;
     font-weight: 500;
-    line-height: $tab-line-height;
+    line-height: $nav-tabs-line-height;
     color: $body-color;
     text-decoration: none;
     background-color: transparent;
-    border: $tab-border-width solid transparent;
-    border-top-left-radius: $tab-border-radius;
-    border-top-right-radius: $tab-border-radius;
-    transition: $tab-transition;
+    border: $nav-tabs-border-width solid transparent;
+    border-top-left-radius: $nav-tabs-border-radius;
+    border-top-right-radius: $nav-tabs-border-radius;
+    transition: color 0.15s ease-in-out,
+                background-color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out;
     cursor: pointer;
 
     &:hover,
     &:focus {
-      border-color: rgba($tab-border-color, 0.5);
-      isolation: isolate;
-    }
-
-    &.active {
-      color: $primary;
-      background-color: $body-bg;
-      border-color: $tab-border-color $tab-border-color $body-bg;
-
-      &:hover {
-        border-color: $tab-border-color $tab-border-color $body-bg;
-      }
+      border-color: $nav-tabs-link-hover-border-color;
     }
 
     &.disabled {
-      color: $text-muted;
-      pointer-events: none;
-      cursor: default;
+      color: $nav-link-disabled-color;
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    &.active {
+      color: $nav-tabs-link-active-color;
+      background-color: $nav-tabs-link-active-bg;
+      border-color: $nav-tabs-link-active-border-color;
     }
 
     // Icon support
@@ -90,12 +79,12 @@ $tab-transition: color 0.15s ease-in-out,
   // Tab panels
   .cl-tab-content {
     flex: 1 1 auto;
-    padding: $tab-padding-y 0;
+    padding: $nav-tabs-padding-y 0;
 
     > .cl-tab-pane {
       display: none;
       width: 100%;
-      padding: $tab-padding-y $tab-padding-x;
+      padding: $nav-tabs-padding-y $nav-tabs-padding-x;
 
       &.active {
         display: block;
@@ -110,14 +99,14 @@ $tab-transition: color 0.15s ease-in-out,
     .cl-tab-list {
       flex-direction: column;
       border-bottom: 0;
-      @include rtl-property(border-right, $tab-border-width solid $tab-border-color);
+      @include rtl-property(border-right, $nav-tabs-border-width solid $nav-tabs-border-color);
       @include rtl-property(padding-right, 0);
       width: auto;
     }
 
     .cl-tab-item {
-      margin-bottom: $tab-margin-x;
-      @include rtl-property(margin-right, -$tab-border-width);
+      margin-bottom: $nav-tabs-margin-x;
+      @include rtl-property(margin-right, -$nav-tabs-border-width);
       margin-top: 0;
 
       &:last-child {
@@ -126,16 +115,16 @@ $tab-transition: color 0.15s ease-in-out,
     }
 
     .cl-tab-link {
-      border-radius: $tab-border-radius 0 0 $tab-border-radius;
+      border-radius: $nav-tabs-border-radius 0 0 $nav-tabs-border-radius;
       border-right: 0;
 
       &.active {
-        border-color: $tab-border-color transparent $tab-border-color $tab-border-color;
+        border-color: $nav-tabs-border-color transparent $nav-tabs-border-color $nav-tabs-border-color;
       }
     }
 
     .cl-tab-content {
-      @include rtl-property(padding-left, $tab-padding-x);
+      @include rtl-property(padding-left, $nav-tabs-padding-x);
       flex: 1;
     }
   }
@@ -147,7 +136,7 @@ $tab-transition: color 0.15s ease-in-out,
     }
 
     .cl-tab-link {
-      border-radius: $tab-border-radius;
+      border-radius: $nav-pills-border-radius;
       border: 0;
 
       &:hover,
@@ -156,12 +145,12 @@ $tab-transition: color 0.15s ease-in-out,
       }
 
       &.active {
-        color: $white;
-        background-color: $primary;
+        color: $nav-pills-link-active-color;
+        background-color: $nav-pills-link-active-bg;
         border: 0;
 
         &:hover {
-          background-color: darken($primary, 5%);
+          background-color: color.adjust($nav-pills-link-active-bg, $lightness: -5%);
         }
       }
     }
@@ -193,7 +182,7 @@ $tab-transition: color 0.15s ease-in-out,
     }
 
     .cl-tab-item {
-      @include rtl-property(margin-left, $tab-margin-x);
+      @include rtl-property(margin-left, $nav-tabs-margin-x);
       @include rtl-property(margin-right, 0);
 
       &:last-child {
@@ -211,26 +200,26 @@ $tab-transition: color 0.15s ease-in-out,
     // Vertical tabs
     &.cl-tabs-vertical {
       .cl-tab-list {
-        @include rtl-property(border-left, $tab-border-width solid $tab-border-color);
+        @include rtl-property(border-left, $nav-tabs-border-width solid $nav-tabs-border-color);
         @include rtl-property(border-right, 0);
         @include rtl-property(padding-left, 0);
       }
 
       .cl-tab-item {
-        @include rtl-property(margin-left, -$tab-border-width);
+        @include rtl-property(margin-left, -$nav-tabs-border-width);
         @include rtl-property(margin-right, 0);
       }
 
       .cl-tab-link {
-        border-radius: 0 $tab-border-radius $tab-border-radius 0;
+        border-radius: 0 $nav-tabs-border-radius $nav-tabs-border-radius 0;
 
         &.active {
-          border-color: $tab-border-color $tab-border-color $tab-border-color transparent;
+          border-color: $nav-tabs-border-color $nav-tabs-border-color $nav-tabs-border-color transparent;
         }
       }
 
       .cl-tab-content {
-        @include rtl-property(padding-right, $tab-padding-x);
+        @include rtl-property(padding-right, $nav-tabs-padding-x);
         @include rtl-property(padding-left, 0);
       }
     }

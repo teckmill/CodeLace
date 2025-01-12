@@ -1,12 +1,19 @@
-@use "sass:math";
 @use "sass:map";
+@use "sass:math";
 @use "variables" as *;
 @use "mixins" as *;
 
-// Container
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
 .container {
-  @include make-container();
-  
+  width: 100%;
+  padding-right: $grid-gutter-width * 0.5;
+  padding-left: $grid-gutter-width * 0.5;
+  margin-right: auto;
+  margin-left: auto;
+
   @each $breakpoint, $container-max-width in $container-max-widths {
     @include breakpoint-up($breakpoint) {
       max-width: $container-max-width;
@@ -14,35 +21,83 @@
   }
 }
 
+// Fluid container
+//
+// Utilizes the mixin meant for fixed width containers, but with 100% width for
+// fluid, full width layouts.
+
 .container-fluid {
-  @include make-container();
+  width: 100%;
+  padding-right: $grid-gutter-width * 0.5;
+  padding-left: $grid-gutter-width * 0.5;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 // Row
+//
+// Rows contain and clear the floats of your columns.
+
 .row {
-  @include make-row();
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: $grid-gutter-width * -0.5;
+  margin-left: $grid-gutter-width * -0.5;
+}
+
+// Remove the negative margin from default .row, then the horizontal padding
+// from all immediate children columns (to prevent runaway style inheritance).
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
 // Columns
-@each $breakpoint in map.keys($breakpoints) {
-  @include breakpoint-up($breakpoint) {
-    $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
+//
+// Common styles for small and large grid columns
 
-    @for $i from 1 through $grid-columns {
-      .col#{$infix}-#{$i} {
-        @include make-col($i);
-      }
+@each $breakpoint in map.keys($grid-breakpoints) {
+  $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
+
+  // Allow columns to stretch full width below their breakpoints
+  @for $i from 1 through $grid-columns {
+    .col#{$infix}-#{$i} {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
     }
+  }
 
-    .col#{$infix}-auto {
-      flex: 0 0 auto;
-      width: auto;
-      max-width: 100%;
-    }
+  .col#{$infix}-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+  }
 
-    @for $i from 0 through $grid-columns {
+  .col#{$infix} {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+
+  .order#{$infix}-first { order: -1; }
+
+  .order#{$infix}-last { order: $grid-columns + 1; }
+
+  @for $i from 0 through $grid-columns {
+    .order#{$infix}-#{$i} { order: $i; }
+  }
+
+  // `$columns - 1` because offsetting by the width of an entire row isn't possible
+  @for $i from 0 through ($grid-columns - 1) {
+    @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
       .offset#{$infix}-#{$i} {
-        margin-left: if($i == 0, 0, math.percentage(math.div($i, $grid-columns)));
+        margin-left: math.percentage(math.div($i, $grid-columns));
       }
     }
   }
@@ -51,16 +106,22 @@
 // RTL support
 [dir="rtl"] {
   .row {
-    flex-direction: row-reverse;
+    margin-right: $grid-gutter-width * -0.5;
+    margin-left: $grid-gutter-width * -0.5;
   }
 
-  @each $breakpoint in map.keys($breakpoints) {
-    @include breakpoint-up($breakpoint) {
-      $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
+  .col {
+    padding-right: $grid-gutter-width * 0.5;
+    padding-left: $grid-gutter-width * 0.5;
+  }
 
-      @for $i from 0 through $grid-columns {
+  @each $breakpoint in map.keys($grid-breakpoints) {
+    $infix: if($breakpoint == "xs", "", "-#{$breakpoint}");
+
+    @for $i from 0 through ($grid-columns - 1) {
+      @if not ($infix == "" and $i == 0) {
         .offset#{$infix}-#{$i} {
-          margin-right: if($i == 0, 0, math.percentage(math.div($i, $grid-columns)));
+          margin-right: math.percentage(math.div($i, $grid-columns));
           margin-left: 0;
         }
       }
