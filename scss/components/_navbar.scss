@@ -1,93 +1,143 @@
-// Navbar component styles
+// Navbar
+// -------------------------
 
+// Variables
+$navbar-padding-y: 0.5rem !default;
+$navbar-padding-x: 1rem !default;
+$navbar-nav-link-padding-x: 0.5rem !default;
+$navbar-brand-font-size: 1.25rem !default;
+$navbar-brand-padding-y: 0.3125rem !default;
+$navbar-toggler-padding-y: 0.25rem !default;
+$navbar-toggler-padding-x: 0.75rem !default;
+$navbar-toggler-border-radius: $border-radius !default;
+$navbar-dark-color: rgba($white, 0.75) !default;
+$navbar-dark-hover-color: rgba($white, 0.9) !default;
+$navbar-light-color: rgba($black, 0.75) !default;
+$navbar-light-hover-color: rgba($black, 0.9) !default;
+
+// Base styles
 .cl-navbar {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: $navbar-padding-y $navbar-padding-x;
 
-  // Navbar brand
-  .cl-navbar-brand {
-    display: inline-block;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    white-space: nowrap;
+  // Because flex containers don't support margins
+  > .container,
+  > .container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// Navbar brand
+.cl-navbar-brand {
+  display: inline-block;
+  @include rtl-property(padding-left, $navbar-padding-x);
+  @include rtl-property(margin-right, 1rem);
+  font-size: $navbar-brand-font-size;
+  line-height: inherit;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
     text-decoration: none;
-    color: #000;
+  }
+}
 
-    &:hover,
-    &:focus {
-      text-decoration: none;
-    }
+// Navbar nav
+.cl-navbar-nav {
+  display: flex;
+  flex-direction: row;
+  @include rtl-property(padding-left, 0);
+  margin-bottom: 0;
+  list-style: none;
+
+  .cl-nav-link {
+    @include rtl-properties(
+      (padding-right: $navbar-nav-link-padding-x),
+      (padding-left: $navbar-nav-link-padding-x)
+    );
   }
 
-  // Navbar nav
-  .cl-navbar-nav {
-    display: flex;
-    flex-direction: column;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
+  .cl-dropdown-menu {
+    position: absolute;
+  }
+}
 
-    .cl-nav-item {
-      .cl-nav-link {
-        display: block;
-        padding: 0.5rem 1rem;
-        text-decoration: none;
-        color: rgba(0, 0, 0, 0.5);
+// Navbar text
+.cl-navbar-text {
+  display: inline-block;
+  padding-top: $navbar-brand-padding-y;
+  padding-bottom: $navbar-brand-padding-y;
+}
 
-        &:hover,
-        &:focus {
-          color: rgba(0, 0, 0, 0.7);
+// Responsive navbar
+.cl-navbar-expand {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($next) {
+        > .container,
+        > .container-fluid {
+          padding-right: 0;
+          padding-left: 0;
+        }
+      }
+
+      @include media-breakpoint-up($next) {
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+
+        .cl-navbar-nav {
+          flex-direction: row;
+
+          .cl-dropdown-menu {
+            position: absolute;
+          }
         }
 
-        &.disabled {
-          color: rgba(0, 0, 0, 0.3);
-          pointer-events: none;
-          cursor: default;
+        > .container,
+        > .container-fluid {
+          flex-wrap: nowrap;
         }
 
-        &.active {
-          color: rgba(0, 0, 0, 0.9);
+        .cl-navbar-collapse {
+          display: flex !important;
+          flex-basis: auto;
+        }
+
+        .cl-navbar-toggler {
+          display: none;
         }
       }
     }
   }
+}
 
-  // Navbar text
-  .cl-navbar-text {
-    display: inline-block;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+// Navbar toggler
+.cl-navbar-toggler {
+  padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: $navbar-toggler-border-radius;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
   }
 
-  // Navbar toggler
-  .cl-navbar-toggler {
-    padding: 0.25rem 0.75rem;
-    font-size: 1.25rem;
-    line-height: 1;
-    background-color: transparent;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    cursor: pointer;
-
-    &:hover,
-    &:focus {
-      text-decoration: none;
-    }
-
-    &:not(:disabled):not(.disabled) {
-      cursor: pointer;
-    }
-  }
-
-  // Navbar toggler icon
-  .cl-navbar-toggler-icon {
+  &-icon {
     display: inline-block;
     width: 1.5em;
     height: 1.5em;
@@ -96,195 +146,156 @@
     background: no-repeat center center;
     background-size: 100% 100%;
   }
+}
 
-  // Navbar collapse
-  .cl-navbar-collapse {
-    flex-basis: 100%;
-    flex-grow: 1;
-    align-items: center;
+// Generate series of `.navbar-expand-*` responsive classes
+.cl-navbar-expand {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-up($next) {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+
+        .cl-navbar-nav {
+          flex-direction: row;
+        }
+
+        .cl-navbar-collapse {
+          display: flex !important;
+        }
+
+        .cl-navbar-toggler {
+          display: none;
+        }
+      }
+    }
   }
 }
 
 // Navbar themes
 .cl-navbar-light {
-  background-color: #f8f9fa;
-
   .cl-navbar-brand {
-    color: rgba(0, 0, 0, 0.9);
+    color: $navbar-light-color;
 
     &:hover,
     &:focus {
-      color: rgba(0, 0, 0, 1);
+      color: $navbar-light-hover-color;
     }
   }
 
   .cl-navbar-nav {
     .cl-nav-link {
-      color: rgba(0, 0, 0, 0.5);
+      color: $navbar-light-color;
 
       &:hover,
       &:focus {
-        color: rgba(0, 0, 0, 0.7);
+        color: $navbar-light-hover-color;
       }
 
       &.disabled {
-        color: rgba(0, 0, 0, 0.3);
+        color: rgba($black, 0.3);
       }
+    }
 
-      &.active {
-        color: rgba(0, 0, 0, 0.9);
-      }
+    .show > .cl-nav-link,
+    .active > .cl-nav-link,
+    .cl-nav-link.show,
+    .cl-nav-link.active {
+      color: $navbar-light-hover-color;
     }
   }
 
   .cl-navbar-toggler {
-    color: rgba(0, 0, 0, 0.5);
-    border-color: rgba(0, 0, 0, 0.1);
+    color: $navbar-light-color;
+    border-color: rgba($black, 0.1);
   }
 
   .cl-navbar-text {
-    color: rgba(0, 0, 0, 0.5);
+    color: $navbar-light-color;
   }
 }
 
 .cl-navbar-dark {
-  background-color: #343a40;
-
   .cl-navbar-brand {
-    color: rgba(255, 255, 255, 0.9);
+    color: $navbar-dark-color;
 
     &:hover,
     &:focus {
-      color: rgba(255, 255, 255, 1);
+      color: $navbar-dark-hover-color;
     }
   }
 
   .cl-navbar-nav {
     .cl-nav-link {
-      color: rgba(255, 255, 255, 0.5);
+      color: $navbar-dark-color;
 
       &:hover,
       &:focus {
-        color: rgba(255, 255, 255, 0.75);
+        color: $navbar-dark-hover-color;
       }
 
       &.disabled {
-        color: rgba(255, 255, 255, 0.25);
+        color: rgba($white, 0.25);
       }
+    }
 
-      &.active {
-        color: rgba(255, 255, 255, 0.9);
-      }
+    .show > .cl-nav-link,
+    .active > .cl-nav-link,
+    .cl-nav-link.show,
+    .cl-nav-link.active {
+      color: $navbar-dark-hover-color;
     }
   }
 
   .cl-navbar-toggler {
-    color: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.1);
+    color: $navbar-dark-color;
+    border-color: rgba($white, 0.1);
   }
 
   .cl-navbar-text {
-    color: rgba(255, 255, 255, 0.5);
+    color: $navbar-dark-color;
   }
 }
 
-// Responsive navbar
-@media (min-width: 576px) {
-  .cl-navbar-expand-sm {
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-
+// RTL specific adjustments
+[dir="rtl"] {
+  .cl-navbar {
     .cl-navbar-nav {
-      flex-direction: row;
-
-      .cl-nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
+      .cl-nav-item {
+        &:first-child {
+          @include rtl-property(margin-left, auto);
+          @include rtl-property(margin-right, 0);
+        }
       }
     }
 
-    .cl-navbar-collapse {
-      display: flex !important;
-      flex-basis: auto;
+    .cl-navbar-brand {
+      @include rtl-property(margin-right, 0);
+      @include rtl-property(margin-left, 1rem);
+    }
+
+    .cl-dropdown-menu {
+      @include rtl-property(right, 0);
+      @include rtl-property(left, auto);
+      text-align: right;
     }
 
     .cl-navbar-toggler {
-      display: none;
+      @include rtl-property(margin-left, 0);
+      @include rtl-property(margin-right, auto);
     }
   }
-}
 
-@media (min-width: 768px) {
-  .cl-navbar-expand-md {
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-
-    .cl-navbar-nav {
-      flex-direction: row;
-
-      .cl-nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
+  // Handle dropdown arrows
+  .cl-nav-item.cl-dropdown {
+    > .cl-nav-link {
+      &::after {
+        @include rtl-property(margin-left, 0);
+        @include rtl-property(margin-right, 0.5em);
       }
-    }
-
-    .cl-navbar-collapse {
-      display: flex !important;
-      flex-basis: auto;
-    }
-
-    .cl-navbar-toggler {
-      display: none;
-    }
-  }
-}
-
-@media (min-width: 992px) {
-  .cl-navbar-expand-lg {
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-
-    .cl-navbar-nav {
-      flex-direction: row;
-
-      .cl-nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-      }
-    }
-
-    .cl-navbar-collapse {
-      display: flex !important;
-      flex-basis: auto;
-    }
-
-    .cl-navbar-toggler {
-      display: none;
-    }
-  }
-}
-
-@media (min-width: 1200px) {
-  .cl-navbar-expand-xl {
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-
-    .cl-navbar-nav {
-      flex-direction: row;
-
-      .cl-nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-      }
-    }
-
-    .cl-navbar-collapse {
-      display: flex !important;
-      flex-basis: auto;
-    }
-
-    .cl-navbar-toggler {
-      display: none;
     }
   }
 }
