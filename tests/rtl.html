@@ -1,222 +1,155 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeLace RTL Test Page</title>
-    <link rel="stylesheet" href="../dist/css/codelace.min.css">
-    <style>
-        .demo-section {
-            margin-bottom: 2rem;
-            padding: 1rem;
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-        }
-        
-        .demo-section h2 {
-            margin-bottom: 1rem;
-        }
-    </style>
+    <title>CodeLace RTL Test</title>
+    <link rel="stylesheet" href="../dist/css/codelace.css">
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="cl-navbar cl-navbar-expand-lg cl-navbar-light">
-        <div class="container">
-            <a class="cl-navbar-brand" href="#">CodeLace RTL</a>
-            <button class="cl-navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <nav class="cl-navbar cl-navbar-expand-lg cl-navbar-dark cl-bg-primary">
+        <div class="cl-container">
+            <a class="cl-navbar-brand" href="#">كودليس</a>
+            <button class="cl-navbar-toggler" type="button" data-cl-toggle="navbar">
                 <span class="cl-navbar-toggler-icon"></span>
             </button>
-            <div class="cl-navbar-collapse" id="navbarNav">
+            <div class="cl-navbar-collapse">
                 <ul class="cl-navbar-nav">
-                    <li class="cl-nav-item active">
-                        <a class="cl-nav-link" href="#">الرئيسية</a>
-                    </li>
                     <li class="cl-nav-item">
-                        <a class="cl-nav-link" href="#">المميزات</a>
+                        <a class="cl-nav-link cl-active" href="#">الرئيسية</a>
                     </li>
-                    <li class="cl-nav-item">
-                        <a class="cl-nav-link" href="#">التسعير</a>
-                    </li>
-                    <li class="cl-nav-item">
-                        <a class="cl-nav-link" href="#">اتصل بنا</a>
+                    <li class="cl-nav-item cl-dropdown">
+                        <a class="cl-nav-link" href="#" data-cl-toggle="dropdown">القائمة</a>
+                        <ul class="cl-dropdown-menu">
+                            <li><a class="cl-dropdown-item" href="#">العنصر 1</a></li>
+                            <li><a class="cl-dropdown-item" href="#">العنصر 2</a></li>
+                            <li><hr class="cl-dropdown-divider"></li>
+                            <li><a class="cl-dropdown-item" href="#">العنصر 3</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container" style="margin-top: 2rem;">
-        <!-- Forms -->
-        <div class="demo-section">
-            <h2>نماذج</h2>
-            <form>
-                <div class="cl-form-group">
-                    <label class="cl-form-label required">الاسم</label>
-                    <input type="text" class="cl-form-control" placeholder="أدخل اسمك">
-                </div>
-                <div class="cl-form-group">
-                    <label class="cl-form-label">البريد الإلكتروني</label>
-                    <div class="cl-input-group">
-                        <div class="cl-input-group-prepend">
-                            <span class="cl-input-group-text">@</span>
-                        </div>
-                        <input type="email" class="cl-form-control" placeholder="أدخل بريدك الإلكتروني">
-                    </div>
-                </div>
-                <div class="cl-form-group">
-                    <label class="cl-form-label">الدولة</label>
-                    <select class="cl-form-select">
-                        <option selected>اختر دولتك</option>
-                        <option>مصر</option>
-                        <option>السعودية</option>
-                        <option>الإمارات</option>
-                    </select>
-                </div>
-                <div class="cl-form-group">
-                    <div class="cl-form-check">
-                        <input class="cl-form-check-input" type="checkbox" id="terms">
-                        <label class="cl-form-check-label" for="terms">
-                            أوافق على الشروط والأحكام
-                        </label>
-                    </div>
-                </div>
-                <button type="submit" class="cl-btn cl-btn-primary">إرسال</button>
-            </form>
-        </div>
-
+    <div class="cl-container cl-mt-4">
         <!-- Tabs -->
-        <div class="demo-section">
-            <h2>علامات التبويب</h2>
+        <section class="cl-mb-4">
+            <h2>التبويبات</h2>
             <div class="cl-tabs">
-                <ul class="cl-tab-list" role="tablist">
-                    <li class="cl-tab-item">
-                        <button class="cl-tab-link active" id="home-tab" data-toggle="tab" data-target="#home">
-                            الرئيسية
-                        </button>
+                <ul class="cl-nav cl-nav-tabs" role="tablist">
+                    <li class="cl-nav-item" role="presentation">
+                        <button class="cl-nav-link cl-active" data-cl-toggle="tab" data-cl-target="#tab1" type="button" role="tab">التبويب 1</button>
                     </li>
-                    <li class="cl-tab-item">
-                        <button class="cl-tab-link" id="profile-tab" data-toggle="tab" data-target="#profile">
-                            الملف الشخصي
-                        </button>
-                    </li>
-                    <li class="cl-tab-item">
-                        <button class="cl-tab-link" id="contact-tab" data-toggle="tab" data-target="#contact">
-                            اتصل بنا
-                        </button>
+                    <li class="cl-nav-item" role="presentation">
+                        <button class="cl-nav-link" data-cl-toggle="tab" data-cl-target="#tab2" type="button" role="tab">التبويب 2</button>
                     </li>
                 </ul>
                 <div class="cl-tab-content">
-                    <div class="cl-tab-pane active" id="home">
-                        محتوى الصفحة الرئيسية
+                    <div class="cl-tab-pane cl-fade cl-show cl-active" id="tab1" role="tabpanel">
+                        <p>محتوى التبويب الأول</p>
                     </div>
-                    <div class="cl-tab-pane" id="profile">
-                        محتوى الملف الشخصي
-                    </div>
-                    <div class="cl-tab-pane" id="contact">
-                        محتوى صفحة اتصل بنا
+                    <div class="cl-tab-pane cl-fade" id="tab2" role="tabpanel">
+                        <p>محتوى التبويب الثاني</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Modal -->
-        <div class="demo-section">
-            <h2>النوافذ المنبثقة</h2>
-            <button class="cl-btn cl-btn-primary" data-toggle="modal" data-target="#demoModal">
-                فتح النافذة المنبثقة
-            </button>
-            <div class="cl-modal" id="demoModal" aria-hidden="true">
-                <div class="cl-modal-dialog">
-                    <div class="cl-modal-content">
-                        <div class="cl-modal-header">
-                            <h5 class="cl-modal-title">عنوان النافذة المنبثقة</h5>
-                            <button type="button" class="cl-close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+        <!-- Cards -->
+        <section class="cl-mb-4">
+            <h2>البطاقات</h2>
+            <div class="cl-row">
+                <div class="cl-col-md-4">
+                    <div class="cl-card">
+                        <div class="cl-card-header">
+                            <h5 class="cl-card-title">بطاقة قابلة للطي</h5>
+                            <button class="cl-btn cl-btn-link" data-cl-toggle="collapse">
+                                <i class="cl-icon cl-icon-chevron-down"></i>
                             </button>
                         </div>
-                        <div class="cl-modal-body">
-                            محتوى النافذة المنبثقة يظهر هنا
-                        </div>
-                        <div class="cl-modal-footer">
-                            <button type="button" class="cl-btn cl-btn-secondary" data-dismiss="modal">إغلاق</button>
-                            <button type="button" class="cl-btn cl-btn-primary">حفظ التغييرات</button>
+                        <div class="cl-card-body">
+                            <p>محتوى البطاقة القابلة للطي</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Input Groups -->
-        <div class="demo-section">
-            <h2>مجموعات الإدخال</h2>
-            <div class="cl-input-group mb-3">
-                <div class="cl-input-group-prepend">
-                    <span class="cl-input-group-text">$</span>
-                </div>
-                <input type="text" class="cl-form-control" placeholder="أدخل المبلغ">
-                <div class="cl-input-group-append">
-                    <span class="cl-input-group-text">.00</span>
-                </div>
-            </div>
-            <div class="cl-input-group">
-                <div class="cl-input-group-prepend">
-                    <span class="cl-input-group-text">تعليق</span>
-                </div>
-                <textarea class="cl-form-control" aria-label="تعليق"></textarea>
-            </div>
-        </div>
-
-        <!-- Form Validation -->
-        <div class="demo-section">
-            <h2>التحقق من صحة النموذج</h2>
-            <form class="needs-validation" novalidate>
-                <div class="cl-form-group">
-                    <label class="cl-form-label">اسم المستخدم</label>
-                    <input type="text" class="cl-form-control is-valid" value="ahmed">
-                    <div class="cl-valid-feedback">
-                        يبدو جيداً!
+                <div class="cl-col-md-4">
+                    <div class="cl-card">
+                        <div class="cl-card-header">
+                            <h5 class="cl-card-title">بطاقة قابلة للإزالة</h5>
+                            <button class="cl-btn cl-btn-close" data-cl-dismiss="card"></button>
+                        </div>
+                        <div class="cl-card-body">
+                            <p>محتوى البطاقة القابلة للإزالة</p>
+                        </div>
                     </div>
                 </div>
-                <div class="cl-form-group">
-                    <label class="cl-form-label">كلمة المرور</label>
-                    <input type="password" class="cl-form-control is-invalid">
-                    <div class="cl-invalid-feedback">
-                        يرجى إدخال كلمة مرور صالحة
-                    </div>
+            </div>
+        </section>
+
+        <!-- Alerts -->
+        <section class="cl-mb-4">
+            <h2>التنبيهات</h2>
+            <div class="cl-alert cl-alert-primary cl-alert-dismissible" role="alert">
+                <div class="cl-alert-content">
+                    تنبيه أساسي مع زر إغلاق
                 </div>
-            </form>
-        </div>
+                <button type="button" class="cl-btn-close" data-cl-dismiss="alert"></button>
+            </div>
+            <div class="cl-alert cl-alert-success cl-alert-dismissible" role="alert">
+                <div class="cl-alert-content">
+                    تنبيه نجاح مع زر إغلاق
+                </div>
+                <button type="button" class="cl-btn-close" data-cl-dismiss="alert"></button>
+            </div>
+        </section>
+
+        <!-- Dropdowns -->
+        <section class="cl-mb-4">
+            <h2>القوائم المنسدلة</h2>
+            <div class="cl-dropdown">
+                <button class="cl-btn cl-btn-primary" data-cl-toggle="dropdown">
+                    قائمة منسدلة
+                    <i class="cl-icon cl-icon-chevron-down"></i>
+                </button>
+                <ul class="cl-dropdown-menu">
+                    <li><a class="cl-dropdown-item" href="#">العنصر 1</a></li>
+                    <li><a class="cl-dropdown-item" href="#">العنصر 2</a></li>
+                    <li><hr class="cl-dropdown-divider"></li>
+                    <li><a class="cl-dropdown-item" href="#">العنصر 3</a></li>
+                </ul>
+            </div>
+        </section>
     </div>
 
+    <script src="../dist/js/codelace.js"></script>
     <script>
-        // Simple tab functionality
-        document.querySelectorAll('.cl-tab-link').forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                const target = document.querySelector(tab.dataset.target);
-                
-                // Remove active class from all tabs and panes
-                document.querySelectorAll('.cl-tab-link').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.cl-tab-pane').forEach(p => p.classList.remove('active'));
-                
-                // Add active class to clicked tab and its pane
-                tab.classList.add('active');
-                target.classList.add('active');
-            });
-        });
+        // Initialize components
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get all components
+            const tabs = document.querySelectorAll('.cl-tabs');
+            const cards = document.querySelectorAll('.cl-card');
+            const dropdowns = document.querySelectorAll('.cl-dropdown');
+            const navbar = document.querySelector('.cl-navbar');
 
-        // Modal functionality
-        document.querySelectorAll('[data-toggle="modal"]').forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                const modal = document.querySelector(trigger.dataset.target);
-                modal.setAttribute('aria-hidden', 'false');
-            });
-        });
+            // Initialize each component
+            tabs.forEach(tab => new CodeLace.Tab(tab, { rtl: true }));
+            cards.forEach(card => new CodeLace.Card(card, { rtl: true }));
+            dropdowns.forEach(dropdown => new CodeLace.Dropdown(dropdown, { rtl: true }));
+            if (navbar) new CodeLace.Navbar(navbar, { rtl: true });
 
-        document.querySelectorAll('[data-dismiss="modal"]').forEach(closer => {
-            closer.addEventListener('click', (e) => {
-                const modal = closer.closest('.cl-modal');
-                modal.setAttribute('aria-hidden', 'true');
+            // Handle direction changes
+            const dirToggle = document.createElement('button');
+            dirToggle.className = 'cl-btn cl-btn-primary cl-fixed-bottom cl-ms-3 cl-mb-3';
+            dirToggle.textContent = 'Toggle Direction';
+            dirToggle.addEventListener('click', () => {
+                const html = document.documentElement;
+                const newDir = html.dir === 'rtl' ? 'ltr' : 'rtl';
+                html.dir = newDir;
+                html.lang = newDir === 'rtl' ? 'ar' : 'en';
             });
+            document.body.appendChild(dirToggle);
         });
     </script>
 </body>
