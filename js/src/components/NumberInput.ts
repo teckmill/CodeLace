@@ -132,19 +132,21 @@ export class NumberInput extends Component {
             decrement?.addEventListener('click', () => this.decrement());
 
             // Keyboard support for controls
-            increment?.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+            increment?.addEventListener('keydown', ((e: Event) => {
+                const keyboardEvent = e as KeyboardEvent;
+                if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
                     e.preventDefault();
                     this.increment();
                 }
-            });
+            }) as EventListener);
 
-            decrement?.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+            decrement?.addEventListener('keydown', ((e: Event) => {
+                const keyboardEvent = e as KeyboardEvent;
+                if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
                     e.preventDefault();
                     this.decrement();
                 }
-            });
+            }) as EventListener);
         }
     }
 
