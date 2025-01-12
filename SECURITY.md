@@ -15,7 +15,7 @@ We take the security of CodeLace seriously. If you believe you have found a secu
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them via email to security@teckmill.com (replace with your actual security contact email).
+Instead, please report them via email to teckmillion17@gmail.com.
 
 You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
 
