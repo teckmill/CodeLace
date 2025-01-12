@@ -1,0 +1,141 @@
+// RTL Mixins
+// -------------------------
+
+// RTL property maps
+$rtl-properties: (
+  "margin-left": "margin-right",
+  "margin-right": "margin-left",
+  "padding-left": "padding-right",
+  "padding-right": "padding-left",
+  "border-left": "border-right",
+  "border-right": "border-left",
+  "border-top-left-radius": "border-top-right-radius",
+  "border-top-right-radius": "border-top-left-radius",
+  "border-bottom-left-radius": "border-bottom-right-radius",
+  "border-bottom-right-radius": "border-bottom-left-radius",
+  "left": "right",
+  "right": "left",
+  "float": (
+    "left": "right",
+    "right": "left"
+  ),
+  "text-align": (
+    "left": "right",
+    "right": "left"
+  )
+) !default;
+
+// RTL mixin for single property
+@mixin rtl-property($property, $value) {
+  #{$property}: $value;
+
+  [dir="rtl"] & {
+    @if map-has-key($rtl-properties, $property) {
+      $rtl-prop: map-get($rtl-properties, $property);
+      @if type-of($rtl-prop) == "map" {
+        #{$property}: map-get($rtl-prop, $value);
+      } @else {
+        #{$rtl-prop}: $value;
+      }
+    }
+  }
+}
+
+// RTL mixin for multiple properties
+@mixin rtl-properties($properties...) {
+  @each $property, $value in $properties {
+    @include rtl-property($property, $value);
+  }
+}
+
+// RTL mixin for transforms
+@mixin rtl-transform($transform) {
+  transform: $transform;
+
+  [dir="rtl"] & {
+    $rtl-transform: $transform;
+    @if str-index($transform, "translate") {
+      $rtl-transform: str-replace($transform, "translate(", "translate(-");
+    }
+    @if str-index($transform, "rotate") {
+      $rtl-transform: str-replace($transform, "rotate(", "rotate(-");
+    }
+    transform: $rtl-transform;
+  }
+}
+
+// RTL mixin for background positions
+@mixin rtl-background-position($x-pos, $y-pos: null) {
+  @if $y-pos == null {
+    background-position: $x-pos;
+    [dir="rtl"] & {
+      background-position: right-or-left($x-pos);
+    }
+  } @else {
+    background-position: $x-pos $y-pos;
+    [dir="rtl"] & {
+      background-position: right-or-left($x-pos) $y-pos;
+    }
+  }
+}
+
+// RTL mixin for absolute positioning
+@mixin rtl-position($top: null, $right: null, $bottom: null, $left: null) {
+  @if $top != null { top: $top; }
+  @if $right != null { right: $right; }
+  @if $bottom != null { bottom: $bottom; }
+  @if $left != null { left: $left; }
+
+  [dir="rtl"] & {
+    @if $right != null { left: $right; right: auto; }
+    @if $left != null { right: $left; left: auto; }
+  }
+}
+
+// RTL mixin for flex direction
+@mixin rtl-flex-direction($direction) {
+  flex-direction: $direction;
+
+  [dir="rtl"] & {
+    @if $direction == row {
+      flex-direction: row-reverse;
+    } @else if $direction == row-reverse {
+      flex-direction: row;
+    }
+  }
+}
+
+// RTL mixin for icons and symbols
+@mixin rtl-icon($content, $rtl-content: null) {
+  content: $content;
+
+  [dir="rtl"] & {
+    @if $rtl-content != null {
+      content: $rtl-content;
+    } @else {
+      transform: scale(-1, 1);
+    }
+  }
+}
+
+// Helper function to convert left/right values
+@function right-or-left($value) {
+  @if $value == "left" {
+    @return "right";
+  } @else if $value == "right" {
+    @return "left";
+  } @else {
+    @return $value;
+  }
+}
+
+// String replace helper function
+@function str-replace($string, $search, $replace) {
+  $index: str-index($string, $search);
+  
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-slice($string, $index + str-length($search));
+  }
+  
+  @return $string;
+}

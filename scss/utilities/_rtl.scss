@@ -1,0 +1,122 @@
+// RTL Utilities
+// -------------------------
+
+// Text alignment
+.cl-text-start {
+  @include rtl-property(text-align, left);
+}
+
+.cl-text-end {
+  @include rtl-property(text-align, right);
+}
+
+// Float utilities
+.cl-float-start {
+  @include rtl-property(float, left);
+}
+
+.cl-float-end {
+  @include rtl-property(float, right);
+}
+
+// Margin utilities
+.cl-ms-0 { @include rtl-property(margin-left, 0); }
+.cl-ms-1 { @include rtl-property(margin-left, 0.25rem); }
+.cl-ms-2 { @include rtl-property(margin-left, 0.5rem); }
+.cl-ms-3 { @include rtl-property(margin-left, 1rem); }
+.cl-ms-4 { @include rtl-property(margin-left, 1.5rem); }
+.cl-ms-5 { @include rtl-property(margin-left, 3rem); }
+
+.cl-me-0 { @include rtl-property(margin-right, 0); }
+.cl-me-1 { @include rtl-property(margin-right, 0.25rem); }
+.cl-me-2 { @include rtl-property(margin-right, 0.5rem); }
+.cl-me-3 { @include rtl-property(margin-right, 1rem); }
+.cl-me-4 { @include rtl-property(margin-right, 1.5rem); }
+.cl-me-5 { @include rtl-property(margin-right, 3rem); }
+
+// Padding utilities
+.cl-ps-0 { @include rtl-property(padding-left, 0); }
+.cl-ps-1 { @include rtl-property(padding-left, 0.25rem); }
+.cl-ps-2 { @include rtl-property(padding-left, 0.5rem); }
+.cl-ps-3 { @include rtl-property(padding-left, 1rem); }
+.cl-ps-4 { @include rtl-property(padding-left, 1.5rem); }
+.cl-ps-5 { @include rtl-property(padding-left, 3rem); }
+
+.cl-pe-0 { @include rtl-property(padding-right, 0); }
+.cl-pe-1 { @include rtl-property(padding-right, 0.25rem); }
+.cl-pe-2 { @include rtl-property(padding-right, 0.5rem); }
+.cl-pe-3 { @include rtl-property(padding-right, 1rem); }
+.cl-pe-4 { @include rtl-property(padding-right, 1.5rem); }
+.cl-pe-5 { @include rtl-property(padding-right, 3rem); }
+
+// Border utilities
+.cl-border-start { @include rtl-property(border-left, 1px solid); }
+.cl-border-end { @include rtl-property(border-right, 1px solid); }
+
+.cl-border-start-0 { @include rtl-property(border-left, 0); }
+.cl-border-end-0 { @include rtl-property(border-right, 0); }
+
+// Position utilities
+.cl-start-0 { @include rtl-property(left, 0); }
+.cl-end-0 { @include rtl-property(right, 0); }
+
+.cl-start-50 { @include rtl-property(left, 50%); }
+.cl-end-50 { @include rtl-property(right, 50%); }
+
+.cl-start-100 { @include rtl-property(left, 100%); }
+.cl-end-100 { @include rtl-property(right, 100%); }
+
+// Rounded corner utilities
+.cl-rounded-start {
+  @include rtl-properties(
+    (border-top-left-radius: $border-radius),
+    (border-bottom-left-radius: $border-radius)
+  );
+}
+
+.cl-rounded-end {
+  @include rtl-properties(
+    (border-top-right-radius: $border-radius),
+    (border-bottom-right-radius: $border-radius)
+  );
+}
+
+// RTL specific display utilities
+[dir="rtl"] {
+  .cl-rtl-reverse {
+    flex-direction: row-reverse !important;
+  }
+
+  .cl-rtl-flip {
+    transform: scaleX(-1) !important;
+  }
+}
+
+// Bidirectional text support
+.cl-text-bidi {
+  unicode-bidi: bidi-override;
+}
+
+.cl-text-isolate {
+  unicode-bidi: isolate;
+}
+
+.cl-text-plaintext {
+  unicode-bidi: plaintext;
+}
+
+// Text direction utilities
+.cl-text-dir-ltr {
+  direction: ltr !important;
+}
+
+.cl-text-dir-rtl {
+  direction: rtl !important;
+}
+
+// Language-specific text alignment
+[lang|="ar"],
+[lang|="he"],
+[lang|="fa"] {
+  text-align: right;
+}

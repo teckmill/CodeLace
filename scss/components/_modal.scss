@@ -21,7 +21,7 @@ $modal-focus-ring-color: rgba($primary, 0.25) !default;
 .cl-modal {
   position: fixed;
   top: 0;
-  left: 0;
+  @include rtl-property(left, 0);
   z-index: 1050;
   width: 100%;
   height: 100%;
@@ -150,7 +150,9 @@ $modal-focus-ring-color: rgba($primary, 0.25) !default;
 // Close button
 [data-dismiss="modal"] {
   padding: 0.5rem;
-  margin: -0.5rem -0.5rem -0.5rem auto;
+  @include rtl-properties(
+    (margin: -0.5rem -0.5rem -0.5rem auto)
+  );
   background-color: transparent;
   border: 0;
   cursor: pointer;
@@ -187,7 +189,7 @@ $modal-focus-ring-color: rgba($primary, 0.25) !default;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
+  @include rtl-flex-direction(row-reverse);
   padding: $modal-footer-padding;
   border-top: $modal-border-width solid $modal-border-color;
   border-bottom-right-radius: calc(#{$modal-border-radius} - #{$modal-border-width});
@@ -202,7 +204,7 @@ $modal-focus-ring-color: rgba($primary, 0.25) !default;
 .cl-modal-backdrop {
   position: fixed;
   top: 0;
-  left: 0;
+  @include rtl-property(left, 0);
   z-index: 1040;
   width: 100vw;
   height: 100vh;
@@ -236,6 +238,20 @@ $modal-focus-ring-color: rgba($primary, 0.25) !default;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+// RTL specific adjustments
+[dir="rtl"] {
+  .cl-modal-header {
+    .cl-modal-title {
+      @include rtl-property(margin-right, 0);
+      @include rtl-property(margin-left, auto);
+    }
+  }
+
+  .cl-modal-footer {
+    justify-content: flex-start;
+  }
 }
 
 // Responsive styles
