@@ -1,5 +1,5 @@
 import BaseComponent, { ComponentOptions } from '../base-component';
-import { addClass, removeClass, hasClass } from '../util';
+import { addClass, removeClass } from '../util';
 
 interface CollapseOptions extends ComponentOptions {
   parent?: string | null;
@@ -199,8 +199,6 @@ export default class Collapse extends BaseComponent {
     if (this.element instanceof HTMLElement) {
       this.element.removeAttribute('aria-expanded');
       removeClass(this.element, 'collapse', 'show', 'collapsing');
-      this.element.style[this.dimension] = '';
-      this.element.style.display = '';
     }
 
     super.destroy();

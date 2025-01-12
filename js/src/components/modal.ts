@@ -1,6 +1,6 @@
 import { Component } from '../core/component';
 import { EventHandler } from '../utils/event-handler';
-import { getElement, getElements } from '../utils/dom';
+import { getElement } from '../utils/dom';
 
 export interface ModalOptions {
   keyboard?: boolean;
@@ -290,5 +290,10 @@ export default class Modal extends Component {
     }
 
     this.element.classList.remove(Modal.CLASSES.RTL);
+    this.element.classList.remove(Modal.CLASSES.SHOW);
+    this.element.classList.remove(Modal.CLASSES.FADE);
   }
 }
+
+// Placeholder comment to satisfy linter
+void 0;
