@@ -22,7 +22,7 @@ export default class Card extends Component {
     RTL: 'cl-rtl'
   };
 
-  private readonly options: CardOptions;
+  protected readonly options: CardOptions;
 
   constructor(element: HTMLElement, options: CardOptions = {}) {
     super(element);
@@ -42,26 +42,16 @@ export default class Card extends Component {
     }
 
     // Add event listeners for collapse toggle
-    EventHandler.on<'click'>(
-      this.element,
-      'click',
-      Card.SELECTORS.COLLAPSE_TOGGLE,
-      (event) => {
-        event.preventDefault();
-        this.toggleCollapse();
-      }
-    );
+    EventHandler.on<'click'>(this.element, 'click', Card.SELECTORS.COLLAPSE_TOGGLE, (event) => {
+      event.preventDefault();
+      this.toggleCollapse();
+    });
 
     // Add event listeners for dismiss
-    EventHandler.on<'click'>(
-      this.element,
-      'click',
-      Card.SELECTORS.DISMISS,
-      (event) => {
-        event.preventDefault();
-        this.dismiss();
-      }
-    );
+    EventHandler.on<'click'>(this.element, 'click', Card.SELECTORS.DISMISS, (event) => {
+      event.preventDefault();
+      this.dismiss();
+    });
 
     // Handle direction changes
     document.documentElement.addEventListener('directionchange', (event: Event) => {
