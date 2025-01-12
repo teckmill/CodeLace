@@ -13,8 +13,19 @@ export default {
   collectCoverageFrom: [
     'js/src/**/*.{ts,tsx}',
     '!**/node_modules/**',
-    '!**/dist/**'
+    '!**/dist/**',
+    '!**/types/**'
   ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'clover', 'json-summary'],
+  coverageThreshold: {
+    global: {
+      branches: 10,
+      functions: 10,
+      lines: 10,
+      statements: 10
+    }
+  },
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/',

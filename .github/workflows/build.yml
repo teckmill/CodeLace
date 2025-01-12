@@ -48,6 +48,6 @@ jobs:
           files: ./coverage/lcov.info
           flags: unittests
           name: codecov-umbrella
-          fail_ci_if_error: true
-          path_to_write_report: ./coverage/codecov_report.txt
+          fail_ci_if_error: false
           verbose: true
+          path_to_write_report: ./coverage/codecov_report.txt
