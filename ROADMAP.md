@@ -1,135 +1,110 @@
-# CodeLace Development Roadmap
+# CodeLace Framework Roadmap
 
 ## Current Version (1.0.0)
-- ✅ Core CSS framework implementation
-- ✅ Basic TypeScript components
-- ✅ Essential utilities and helpers
-- ✅ Basic documentation
-- ✅ Project structure and build system
-- ✅ Core component styles (alerts, cards, forms, modals, navbar)
-- ✅ TypeScript component implementations
-- ✅ GitHub templates and workflows
-- ✅ Documentation files (README, CONTRIBUTING, CODE_OF_CONDUCT, etc.)
 
-## Short-term Goals (1.x)
-### Version 1.1.0 (Q1 2025)
-- [ ] Enhanced accessibility features
-  - [ ] ARIA attributes implementation
-  - [ ] Keyboard navigation improvements
-  - [ ] Screen reader optimizations
-  - [ ] Focus management system
-- [ ] Additional component themes
-  - [ ] Dark theme
-  - [ ] High contrast theme
-  - [ ] Custom theme generator
-- [ ] RTL support
-  - [ ] Bidirectional text support
-  - [ ] RTL-aware component layouts
-  - [ ] RTL documentation
-- [ ] Improved documentation
-  - [ ] Interactive examples
-  - [ ] Component playground
-  - [ ] Best practices guide
-  - [ ] Migration guide
+### Core Features 
+- [x] Component Base Class
+- [x] Event Handler System
+- [x] DOM Utilities
+- [x] TypeScript Support
+- [x] RTL Support Framework
 
-### Version 1.2.0 (Q2 2025)
-- [ ] New components
-  - [ ] Date picker
-    - [ ] Basic calendar view
-    - [ ] Range selection
-    - [ ] Time selection
-  - [ ] Multi-select
-    - [ ] Search functionality
-    - [ ] Tags input
-    - [ ] Keyboard navigation
-  - [ ] Rich text editor
-    - [ ] Basic formatting
-    - [ ] Image upload
-    - [ ] Markdown support
-  - [ ] File uploader
-    - [ ] Drag and drop
-    - [ ] Progress indicator
-    - [ ] Preview functionality
-- [ ] Component customization API
-  - [ ] Theme customization
-  - [ ] Behavior configuration
-  - [ ] Event handling
-- [ ] Theme generator tool
-  - [ ] Visual theme editor
-  - [ ] CSS variables configuration
-  - [ ] Export functionality
+### Components
+#### Completed 
+- [x] Tab Component (with RTL)
+- [x] Card Component (with RTL)
+- [x] Navbar Component (with RTL)
+- [x] Dropdown Component (with RTL)
+- [x] Alert Component (with RTL)
 
-## Mid-term Goals (2.x)
-### Version 2.0.0 (Q3-Q4 2025)
-- [ ] Complete redesign with modern aesthetics
-  - [ ] New color system
-  - [ ] Typography refresh
-  - [ ] Spacing system update
-- [ ] Advanced animation system
-  - [ ] Transition library
-  - [ ] Animation presets
-  - [ ] Custom animation API
-- [ ] State management integration
-  - [ ] Redux integration
-  - [ ] Context API support
-  - [ ] Custom state handlers
-- [ ] Framework-specific wrappers
-  - [ ] React components
-  - [ ] Vue components
-  - [ ] Angular components
-- [ ] Interactive documentation website
-  - [ ] Live code editor
-  - [ ] Component showcase
-  - [ ] API reference
+#### In Progress 
+- [ ] Modal Component
+  - Basic structure
+  - Animations
+  - RTL support
+  - Accessibility
+- [ ] Form Components
+  - Input groups
+  - Validation
+  - RTL text input
+  - Bidirectional controls
 
-### Version 2.1.0 (Q1 2026)
-- [ ] Advanced grid system
-  - [ ] CSS Grid integration
-  - [ ] Responsive layouts
-  - [ ] Layout templates
-- [ ] Dark mode support
-  - [ ] System preference detection
-  - [ ] Smooth transitions
-  - [ ] Custom color schemes
-- [ ] Custom icon system
-  - [ ] SVG icon library
-  - [ ] Icon customization
-  - [ ] Icon generator
-- [ ] Performance optimizations
-  - [ ] Bundle size reduction
-  - [ ] Runtime performance
-  - [ ] Loading strategies
+#### Planned 
+- [ ] Tooltip Component
+- [ ] Popover Component
+- [ ] Accordion Component
+- [ ] Progress Component
+- [ ] Spinner Component
+- [ ] Toast Component
 
-## Long-term Vision (2026+)
-- [ ] Enterprise component suite
-  - [ ] Data tables
-  - [ ] Charts and graphs
-  - [ ] Complex forms
-- [ ] Visual builder/customizer
-  - [ ] Drag-and-drop interface
-  - [ ] Real-time preview
-  - [ ] Code generation
-- [ ] Design system integration
-  - [ ] Figma integration
-  - [ ] Sketch integration
-  - [ ] Design tokens
-- [ ] AI-powered features
-  - [ ] Component suggestions
-  - [ ] Code generation
-  - [ ] Layout optimization
-- [ ] Automated testing
-  - [ ] Accessibility testing
-  - [ ] Visual regression testing
-  - [ ] Performance monitoring
-- [ ] Advanced theming engine
-  - [ ] Dynamic themes
-  - [ ] Theme marketplace
-  - [ ] Theme analytics
+### RTL Support
+#### Completed 
+- [x] Core RTL utilities
+- [x] Direction-aware component base
+- [x] RTL test page
+- [x] Bidirectional navigation
+- [x] RTL-aware animations
+- [x] Dynamic direction switching
 
-## How to Contribute
-We welcome contributions! If you'd like to help with any of these features:
-1. Check the [issues](https://github.com/teckmill/CodeLace/issues) page
-2. Join our discussions
-3. Submit pull requests
+#### Planned Enhancements 
+- [ ] RTL-specific documentation
+- [ ] RTL testing guidelines
+- [ ] Language-specific styling
+- [ ] Complex text rendering support
+- [ ] Bidirectional data display
+- [ ] RTL-aware grid system
 
-This roadmap is a living document and will be updated based on community feedback and needs.
+### Documentation
+#### In Progress 
+- [ ] Component API documentation
+- [ ] RTL implementation guide
+- [ ] Accessibility guidelines
+- [ ] Migration guides
+- [ ] Example pages
+
+### Testing
+#### Completed 
+- [x] Unit test setup
+- [x] Component test utilities
+- [x] RTL test utilities
+
+#### Planned 
+- [ ] E2E testing setup
+- [ ] Visual regression tests
+- [ ] RTL-specific test suites
+- [ ] Performance benchmarks
+- [ ] Accessibility tests
+
+## Future Versions
+
+### Version 1.1.0
+- Enhanced RTL support
+- Additional components
+- Improved documentation
+- Extended test coverage
+
+### Version 1.2.0
+- Advanced animations
+- Theme customization
+- Plugin system
+- Performance optimizations
+
+### Version 2.0.0
+- Web Components support
+- Framework-agnostic implementation
+- Advanced state management
+- Server-side rendering support
+
+## Contributing
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+
+## Release Schedule
+- Weekly development releases
+- Monthly minor releases
+- Quarterly major releases
+
+## Notes
+- Priority is given to RTL support and accessibility
+- All new components must support RTL out of the box
+- Documentation must include RTL considerations
+- Testing must cover both LTR and RTL scenarios
