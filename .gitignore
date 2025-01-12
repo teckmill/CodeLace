@@ -6,7 +6,7 @@ yarn-error.log
 package-lock.json
 
 # Build output
-dist/
+# dist/
 # Allow build configuration
 !build/
 *.min.js
