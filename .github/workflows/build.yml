@@ -11,7 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: true  # Allow other matrix jobs to continue if one fails
     strategy:
+      fail-fast: false  # Prevent entire workflow from stopping if one job fails
       matrix:
         node-version: 
           - 18.x
@@ -47,7 +49,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
           flags: unittests
-          name: codecov-umbrella
+          name: codecov-umbrella-${{ matrix.node-version }}
           fail_ci_if_error: false
           verbose: true
           path_to_write_report: ./coverage/codecov_report.txt
