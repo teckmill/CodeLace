@@ -6,6 +6,7 @@ export interface ComponentOptions {
 export default class BaseComponent {
   protected element: Element;
   protected options: ComponentOptions;
+  private static instances = new Map<Element, BaseComponent>();
 
   constructor(options: ComponentOptions) {
     this.element = typeof options.element === 'string'
@@ -13,6 +14,9 @@ export default class BaseComponent {
       : options.element;
     this.options = { ...this.getDefaultOptions(), ...options };
     this.init();
+
+    // Store instance
+    BaseComponent.instances.set(this.element, this);
   }
 
   protected getDefaultOptions(): ComponentOptions {
@@ -31,6 +35,12 @@ export default class BaseComponent {
   }
 
   public destroy(): void {
+    // Remove instance
+    BaseComponent.instances.delete(this.element);
     // Cleanup
+  }
+
+  public static getInstance(element: Element): BaseComponent | undefined {
+    return BaseComponent.instances.get(element);
   }
 }

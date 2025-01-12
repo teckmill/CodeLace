@@ -1,13 +1,24 @@
 {
   "name": "codelace",
-  "description": "A modern, lightweight CSS framework for elegant web development with responsive design and mobile-first approach.",
   "version": "1.0.0",
-  "config": {
-    "version_short": "1.0",
-    "bundle_size_threshold": {
-      "css": "25 kB",
-      "js": "45 kB"
-    }
+  "description": "A modern, lightweight CSS framework for web development",
+  "main": "dist/js/codelace.js",
+  "module": "dist/js/codelace.esm.js",
+  "style": "dist/css/codelace.css",
+  "scripts": {
+    "start": "vite",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "rollup -c build/rollup.config.mjs",
+    "build:css": "postcss scss/codelace.scss -o dist/css/codelace.css",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint js/src/**/*.ts",
+    "lint:css": "stylelint scss/**/*.scss",
+    "test": "jest",
+    "bundlewatch": "bundlewatch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/codelace.git"
   },
   "keywords": [
     "css",
@@ -16,175 +27,42 @@
     "responsive",
     "front-end",
     "framework",
-    "web",
-    "flexbox",
-    "grid",
-    "modern",
-    "customizable",
-    "modular",
-    "lightweight",
-    "accessible",
-    "rtl-support"
+    "web"
   ],
-  "homepage": "https://codelace.dev",
-  "author": "The CodeLace Authors",
+  "author": "Your Name",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codelace/codelace.git"
-  },
   "bugs": {
-    "url": "https://github.com/codelace/codelace/issues"
+    "url": "https://github.com/yourusername/codelace/issues"
   },
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/codelace"
-    },
-    {
-      "type": "opencollective",
-      "url": "https://opencollective.com/codelace"
-    }
-  ],
-  "main": "dist/js/codelace.js",
-  "module": "dist/js/codelace.esm.js",
-  "sass": "scss/codelace.scss",
-  "style": "dist/css/codelace.css",
-  "types": "types/index.d.ts",
-  "browser": {
-    "./js/dist/alert": "./js/dist/alert.js",
-    "./js/dist/button": "./js/dist/button.js",
-    "./js/dist/carousel": "./js/dist/carousel.js",
-    "./js/dist/collapse": "./js/dist/collapse.js",
-    "./js/dist/dropdown": "./js/dist/dropdown.js",
-    "./js/dist/modal": "./js/dist/modal.js",
-    "./js/dist/offcanvas": "./js/dist/offcanvas.js",
-    "./js/dist/popover": "./js/dist/popover.js",
-    "./js/dist/scrollspy": "./js/dist/scrollspy.js",
-    "./js/dist/tab": "./js/dist/tab.js",
-    "./js/dist/toast": "./js/dist/toast.js",
-    "./js/dist/tooltip": "./js/dist/tooltip.js"
-  },
-  "scripts": {
-    "start": "npm-run-all --parallel watch docs-serve",
-    "css": "npm-run-all css-compile css-prefix css-rtl css-minify",
-    "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css scss/:dist/css/",
-    "css-lint": "npm-run-all --aggregate-output --continue-on-error --parallel css-lint-*",
-    "css-lint-stylelint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .cache/.stylelintcache",
-    "css-lint-vars": "fusv scss/ site/assets/scss/",
-    "css-minify": "npm-run-all --aggregate-output --parallel css-minify-*",
-    "css-minify-main": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output dist/css/ --batch --batch-suffix \".min\" \"dist/css/*.css\" \"!dist/css/*.min.css\" \"!dist/css/*rtl*.css\"",
-    "css-minify-rtl": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output dist/css/ --batch --batch-suffix \".min\" \"dist/css/*rtl.css\" \"!dist/css/*.min.css\"",
-    "css-prefix": "postcss --config build/postcss.config.mjs --replace \"dist/css/*.css\" \"!dist/css/*.rtl*.css\" \"!dist/css/*.min.css\"",
-    "css-rtl": "cross-env NODE_ENV=RTL postcss --config build/postcss.config.mjs --dir \"dist/css\" --ext \".rtl.css\" \"dist/css/*.css\" \"!dist/css/*.min.css\" \"!dist/css/*.rtl.css\"",
-    "css-test": "jest --config=scss/tests/jest.config.js",
-    "js": "npm-run-all js-compile js-minify js-test",
-    "js-compile": "npm-run-all --aggregate-output --parallel js-compile-*",
-    "js-compile-standalone": "rollup --environment BUNDLE:false --config build/rollup.config.mjs --sourcemap",
-    "js-compile-bundle": "rollup --environment BUNDLE:true --config build/rollup.config.mjs --sourcemap",
-    "js-compile-plugins": "node build/build-plugins.mjs",
-    "js-lint": "eslint --cache --cache-location .cache/.eslintcache --report-unused-disable-directives --ext .js,.mjs,.ts,.tsx .",
-    "js-minify": "npm-run-all --aggregate-output --parallel js-minify-*",
-    "js-minify-standalone": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/codelace.js.map,includeSources,url=codelace.min.js.map\" --output dist/js/codelace.min.js dist/js/codelace.js",
-    "js-minify-bundle": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/codelace.bundle.js.map,includeSources,url=codelace.bundle.min.js.map\" --output dist/js/codelace.bundle.min.js dist/js/codelace.bundle.js",
-    "js-test": "npm-run-all --aggregate-output --parallel js-test-*",
-    "js-test-karma": "karma start js/tests/karma.conf.js",
-    "js-test-integration": "rollup --config js/tests/integration/rollup.bundle.js",
-    "lint": "npm-run-all --continue-on-error --parallel js-lint css-lint docs-lint",
-    "lint-fix": "npm-run-all --continue-on-error --parallel js-lint-fix css-lint-fix",
-    "docs": "npm-run-all docs-build docs-lint",
-    "docs-build": "vitepress build docs",
-    "docs-compile": "npm run docs-build",
-    "docs-lint": "npm-run-all --parallel docs-lint-*",
-    "docs-lint-vnu": "node build/vnu-jar.mjs",
-    "docs-lint-links": "node build/check-links.mjs",
-    "docs-serve": "vitepress dev docs --port 3000",
-    "docs-serve-only": "npx sirv-cli _site --port 3000",
-    "update-deps": "ncu -u && npm update && npm install",
-    "release": "npm-run-all dist release-sri docs-build release-zip*",
-    "release-sri": "node build/generate-sri.mjs",
-    "release-version": "node build/change-version.mjs",
-    "release-zip": "cross-env-shell \"rm -rf codelace-$npm_package_version-dist && cp -r dist/ codelace-$npm_package_version-dist && zip -qr9 codelace-$npm_package_version-dist.zip codelace-$npm_package_version-dist && rm -rf codelace-$npm_package_version-dist\"",
-    "dist": "npm-run-all --parallel css js",
-    "test": "npm-run-all lint dist js-test docs-build docs-lint",
-    "watch": "npm-run-all --parallel watch-*",
-    "watch-css-main": "nodemon --watch scss/ --ext scss --exec \"npm-run-all css-lint css-compile css-prefix\"",
-    "watch-css-docs": "nodemon --watch docs/assets/scss/ --ext scss --exec \"npm run css-lint\"",
-    "watch-js-main": "nodemon --watch js/src/ --ext js,ts,tsx --exec \"npm-run-all js-lint js-compile\"",
-    "watch-js-docs": "nodemon --watch docs/assets/js/ --ext js --exec \"npm run js-lint\"",
-    "type-check": "tsc --noEmit",
-    "type-check-watch": "npm run type-check -- --watch",
-    "bundle-size": "bundlewatch --config .bundlewatch.config.json"
-  },
+  "homepage": "https://github.com/yourusername/codelace#readme",
   "devDependencies": {
-    "@babel/cli": "^7.23.0",
-    "@babel/core": "^7.23.0",
-    "@babel/preset-env": "^7.23.0",
-    "@babel/preset-typescript": "^7.23.0",
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-typescript": "^7.23.3",
     "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^25.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.0",
-    "@rollup/plugin-replace": "^5.0.0",
-    "@rollup/plugin-typescript": "^11.0.0",
-    "@types/node": "^20.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
     "@vitejs/plugin-vue": "^5.0.0",
     "autoprefixer": "^10.4.16",
     "bundlewatch": "^0.3.3",
-    "clean-css-cli": "^5.6.3",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jest": "^27.6.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "find-unused-sass-variables": "^5.0.0",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "karma": "^6.4.0",
-    "karma-chrome-launcher": "^3.2.0",
-    "karma-firefox-launcher": "^2.1.2",
-    "karma-jasmine": "^5.1.0",
-    "karma-rollup-preprocessor": "^7.0.8",
-    "nodemon": "^3.0.0",
-    "npm-run-all2": "^6.0.0",
-    "postcss": "^8.4.31",
+    "postcss": "^8.4.33",
     "postcss-cli": "^11.0.0",
-    "prettier": "^3.0.0",
-    "rollup": "^4.0.0",
-    "rollup-plugin-istanbul": "^4.0.0",
-    "rtlcss": "^4.1.0",
-    "sass": "^1.69.5",
-    "stylelint": "^16.0.0",
-    "stylelint-config-prettier-scss": "^1.0.0",
+    "rollup": "^4.9.5",
+    "sass": "^1.69.7",
+    "stylelint": "^16.1.0",
     "stylelint-config-standard-scss": "^13.0.0",
-    "stylelint-scss": "^6.0.0",
-    "terser": "^5.24.0",
-    "typescript": "^5.0.0",
-    "vite": "^5.0.0",
-    "vitepress": "^1.0.0",
-    "vue": "^3.0.0"
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11"
   },
-  "files": [
-    "dist/{css,js}/*.{css,js,map}",
-    "js/{src,dist}/**/*.{js,map}",
-    "js/index.{esm,umd}.js",
-    "scss/**/*.scss",
-    "!scss/tests/**",
-    "types/**/*.d.ts"
-  ],
-  "bundlewatch": {
-    "files": [
-      {
-        "path": "./dist/css/codelace.min.css",
-        "maxSize": "25 kB"
-      },
-      {
-        "path": "./dist/js/codelace.min.js",
-        "maxSize": "45 kB"
-      }
-    ]
+  "dependencies": {
+    "@floating-ui/dom": "^1.5.3",
+    "@popperjs/core": "^2.11.8"
   },
   "browserslist": [
     ">= 0.5%",
@@ -196,14 +74,5 @@
     "iOS >= 12",
     "Safari >= 12",
     "not Explorer <= 11"
-  ],
-  "dependencies": {
-    "@popperjs/core": "^2.11.8"
-  },
-  "peerDependencies": {
-    "@popperjs/core": "^2.11.8"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  ]
 }
