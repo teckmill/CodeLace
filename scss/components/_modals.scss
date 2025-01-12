@@ -95,7 +95,13 @@
 
   background-color: #000;
 
-  opacity: 50%;
+  opacity: 0;
+
+  transition: opacity 0.15s linear;
+
+  &.show {
+    opacity: 0.5;
+  }
 }
 
 // Modal header
@@ -256,23 +262,27 @@
 // Modal animations
 
 .cl-modal-fade {
-
-  transition: opacity 0.15s linear;
+  transition: $transition-fade;
 
   &:not(.show) {
-
-    opacity: 0%;
+    opacity: 0;
   }
 }
 
 .cl-modal.fade .cl-modal-dialog {
-
-  transition: transform 0.3s ease-out;
-
   transform: translate(0, -50px);
+  transition: $transition-modal;
 }
 
 .cl-modal.show .cl-modal-dialog {
-
   transform: none;
+}
+
+.cl-modal-backdrop {
+  opacity: 0;
+  transition: $transition-fade;
+
+  &.show {
+    opacity: 0.5;
+  }
 }

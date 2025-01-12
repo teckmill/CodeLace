@@ -1872,7 +1872,7 @@
           box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 .btn:disabled, .btn.disabled {
-  opacity: 0.65;
+  opacity: 65%;
   pointer-events: none;
 }
 
@@ -2556,15 +2556,15 @@
      -moz-appearance: none;
           appearance: none;
   color: inherit;
-  opacity: 0.5;
+  opacity: 50%;
   cursor: pointer;
 }
 .alert-close:hover {
-  opacity: 0.75;
+  opacity: 75%;
 }
 .alert-close:focus {
   outline: 0;
-  opacity: 0.75;
+  opacity: 75%;
 }
 
 .alert-content {
@@ -2642,10 +2642,7 @@
 
 .card-img-overlay {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   padding: 1.25rem;
   border-radius: calc(0.25rem - 1px);
 }
@@ -2695,7 +2692,7 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-.card-group > .card:not(:first-child):not(:last-child) {
+.card-group > .card:not(:first-child, :last-child) {
   border-radius: 0;
 }
 
@@ -2730,16 +2727,10 @@
   border-right: none;
 }
 [dir=rtl] .card-group > .card:first-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 [dir=rtl] .card-group > .card:last-child {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
+  border-radius: 0.25rem 0 0 0.25rem;
 }
 
 [dir=rtl] .card-link + .card-link {
@@ -2767,16 +2758,10 @@
   border-right: 0;
 }
 [dir=rtl] .card-group > .card:first-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 [dir=rtl] .card-group > .card:last-child {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
+  border-radius: 0.25rem 0 0 0.25rem;
 }
 
 .cl-navbar {
@@ -3395,7 +3380,7 @@
   opacity: 0.5;
 }
 .cl-modal-backdrop.fade {
-  opacity: 0;
+  opacity: 0%;
 }
 .cl-modal-backdrop.show {
   opacity: 0.5;
@@ -3413,13 +3398,13 @@
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  opacity: 0.5;
+  opacity: 50%;
   border-radius: 0.25rem;
 }
 .cl-modal-close:hover {
   color: #212529;
   text-decoration: none;
-  opacity: 0.75;
+  opacity: 75%;
 }
 .cl-modal-close:focus {
   outline: 0;

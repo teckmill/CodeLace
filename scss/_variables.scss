@@ -218,9 +218,10 @@ $modal-lg:                           800px !default;
 $modal-xl:                           1140px !default;
 
 // Transitions
-$transition-base:           all .15s ease-in-out !default;
-$transition-fade:           opacity .15s linear !default;
-$transition-collapse:       height .35s ease !default;
+$transition-base:           all 0.15s ease-in-out !default;
+$transition-fade:           opacity 0.15s linear !default;
+$transition-collapse:       height 0.35s ease !default;
+$transition-modal:         transform 0.3s ease-out !default;
 
 // Z-index master list
 $zindex-dropdown: 1000 !default;
