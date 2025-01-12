@@ -3,36 +3,55 @@
 @use "../mixins";
 
 // Button base styles
+
 .btn {
+
   display: inline-block;
+
   font-weight: variables.$font-weight-normal;
+
   line-height: variables.$line-height-base;
+
   text-align: center;
+
   text-decoration: none;
+
   vertical-align: middle;
+
   cursor: pointer;
+
   user-select: none;
+
   border: variables.$border-width solid transparent;
+
   padding: variables.$input-btn-padding-y variables.$input-btn-padding-x;
+
   font-size: variables.$font-size-base;
+
   border-radius: variables.$border-radius;
+
   transition: color 0.15s ease-in-out,
               background-color 0.15s ease-in-out,
               border-color 0.15s ease-in-out,
               box-shadow 0.15s ease-in-out;
 
   &:hover {
+
     text-decoration: none;
   }
 
   &:focus {
+
     outline: 0;
+
     box-shadow: variables.$input-btn-focus-box-shadow;
   }
 
   &:disabled,
   &.disabled {
-    opacity: 0.65;
+
+    opacity: 65%;
+
     pointer-events: none;
   }
 }
@@ -40,103 +59,148 @@
 // Button variants
 @each $color, $value in variables.$theme-colors {
   .btn-#{$color} {
+
     color: mixins.color-contrast($value);
+
     background-color: $value;
+
     border-color: $value;
 
     &:hover {
+
       color: mixins.color-contrast(color.scale($value, $lightness: -10%));
+
       background-color: color.scale($value, $lightness: -10%);
+
       border-color: color.scale($value, $lightness: -10%);
     }
 
     &:focus {
+
       color: mixins.color-contrast(color.scale($value, $lightness: -10%));
+
       background-color: color.scale($value, $lightness: -10%);
+
       border-color: color.scale($value, $lightness: -10%);
+
       box-shadow: 0 0 0 0.2rem rgba($value, 0.5);
     }
 
     &:active,
     &.active {
+
       color: mixins.color-contrast(color.scale($value, $lightness: -10%));
+
       background-color: color.scale($value, $lightness: -10%);
+
       border-color: color.scale($value, $lightness: -10%);
 
       &:focus {
+
         box-shadow: 0 0 0 0.2rem rgba($value, 0.5);
       }
     }
 
     &:disabled,
     &.disabled {
+
       color: mixins.color-contrast($value);
+
       background-color: $value;
+
       border-color: $value;
     }
   }
 
   .btn-outline-#{$color} {
+
     color: $value;
+
     border-color: $value;
 
     &:hover {
+
       color: mixins.color-contrast($value);
+
       background-color: $value;
+
       border-color: $value;
     }
 
     &:focus {
+
       box-shadow: 0 0 0 0.2rem rgba($value, 0.5);
     }
 
     &:active,
     &.active {
+
       color: mixins.color-contrast($value);
+
       background-color: $value;
+
       border-color: $value;
 
       &:focus {
+
         box-shadow: 0 0 0 0.2rem rgba($value, 0.5);
       }
     }
 
     &:disabled,
     &.disabled {
+
       color: $value;
+
       background-color: transparent;
     }
   }
 }
 
 // Button sizes
+
 .btn-lg {
+
   padding: variables.$input-btn-padding-y-lg variables.$input-btn-padding-x-lg;
+
   font-size: variables.$font-size-lg;
+
   border-radius: variables.$border-radius-lg;
 }
 
 .btn-sm {
+
   padding: variables.$input-btn-padding-y-sm variables.$input-btn-padding-x-sm;
+
   font-size: variables.$font-size-sm;
+
   border-radius: variables.$border-radius-sm;
 }
 
 // Block button
+
 .btn-block {
+
   display: block;
+
   width: 100%;
 
   + .btn-block {
+
     margin-top: 0.5rem;
   }
 }
 
 // RTL support
+
 [dir="rtl"] {
+
   .btn {
+
     &.dropdown-toggle::after {
+
       margin-left: 0;
+
       margin-right: 0.255em;
     }
   }

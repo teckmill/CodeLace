@@ -8,14 +8,20 @@
 // Set the container width, and override it for fixed navbars in media queries.
 
 .container {
+
   width: 100%;
+
   padding-right: $grid-gutter-width * 0.5;
+
   padding-left: $grid-gutter-width * 0.5;
+
   margin-right: auto;
+
   margin-left: auto;
 
   @each $breakpoint, $container-max-width in $container-max-widths {
     @include breakpoint-up($breakpoint) {
+
       max-width: $container-max-width;
     }
   }
@@ -27,10 +33,15 @@
 // fluid, full width layouts.
 
 .container-fluid {
+
   width: 100%;
+
   padding-right: $grid-gutter-width * 0.5;
+
   padding-left: $grid-gutter-width * 0.5;
+
   margin-right: auto;
+
   margin-left: auto;
 }
 
@@ -39,21 +50,30 @@
 // Rows contain and clear the floats of your columns.
 
 .row {
+
   display: flex;
+
   flex-wrap: wrap;
+
   margin-right: $grid-gutter-width * -0.5;
+
   margin-left: $grid-gutter-width * -0.5;
 }
 
 // Remove the negative margin from default .row, then the horizontal padding
 // from all immediate children columns (to prevent runaway style inheritance).
+
 .no-gutters {
+
   margin-right: 0;
+
   margin-left: 0;
 
   > .col,
   > [class*="col-"] {
+
     padding-right: 0;
+
     padding-left: 0;
   }
 }
@@ -68,35 +88,50 @@
   // Allow columns to stretch full width below their breakpoints
   @for $i from 1 through $grid-columns {
     .col#{$infix}-#{$i} {
+
       flex: 0 0 math.percentage(math.div($i, $grid-columns));
+
       max-width: math.percentage(math.div($i, $grid-columns));
     }
   }
 
   .col#{$infix}-auto {
+
     flex: 0 0 auto;
+
     width: auto;
+
     max-width: 100%;
   }
 
   .col#{$infix} {
+
     flex-basis: 0;
+
     flex-grow: 1;
+
     max-width: 100%;
   }
 
-  .order#{$infix}-first { order: -1; }
+  .order#{$infix}-first {
 
-  .order#{$infix}-last { order: $grid-columns + 1; }
+ order: -1; }
+
+  .order#{$infix}-last {
+
+ order: $grid-columns + 1; }
 
   @for $i from 0 through $grid-columns {
-    .order#{$infix}-#{$i} { order: $i; }
+    .order#{$infix}-#{$i} {
+
+ order: $i; }
   }
 
   // `$columns - 1` because offsetting by the width of an entire row isn't possible
   @for $i from 0 through ($grid-columns - 1) {
     @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
       .offset#{$infix}-#{$i} {
+
         margin-left: math.percentage(math.div($i, $grid-columns));
       }
     }
@@ -104,14 +139,20 @@
 }
 
 // RTL support
+
 [dir="rtl"] {
+
   .row {
+
     margin-right: $grid-gutter-width * -0.5;
+
     margin-left: $grid-gutter-width * -0.5;
   }
 
   .col {
+
     padding-right: $grid-gutter-width * 0.5;
+
     padding-left: $grid-gutter-width * 0.5;
   }
 
@@ -121,7 +162,9 @@
     @for $i from 0 through ($grid-columns - 1) {
       @if not ($infix == "" and $i == 0) {
         .offset#{$infix}-#{$i} {
+
           margin-right: math.percentage(math.div($i, $grid-columns));
+
           margin-left: 0;
         }
       }
@@ -130,12 +173,39 @@
 }
 
 // Flex utilities
-.d-flex { display: flex !important; }
-.flex-row { flex-direction: row !important; }
-.flex-column { flex-direction: column !important; }
-.justify-content-start { justify-content: flex-start !important; }
-.justify-content-center { justify-content: center !important; }
-.justify-content-end { justify-content: flex-end !important; }
-.align-items-start { align-items: flex-start !important; }
-.align-items-center { align-items: center !important; }
-.align-items-end { align-items: flex-end !important; }
+
+.d-flex {
+
+ display: flex !important; }
+
+.flex-row {
+
+ flex-direction: row !important; }
+
+.flex-column {
+
+ flex-direction: column !important; }
+
+.justify-content-start {
+
+ justify-content: flex-start !important; }
+
+.justify-content-center {
+
+ justify-content: center !important; }
+
+.justify-content-end {
+
+ justify-content: flex-end !important; }
+
+.align-items-start {
+
+ align-items: flex-start !important; }
+
+.align-items-center {
+
+ align-items: center !important; }
+
+.align-items-end {
+
+ align-items: flex-end !important; }

@@ -23,114 +23,186 @@ $modal-content-box-shadow-xs:        $box-shadow-sm !default;
 $modal-content-box-shadow-sm-up:     $box-shadow !default;
 
 // Base styles
+
 .cl-modal {
+
   position: fixed;
+
   top: 0;
+
   left: 0;
+
   z-index: $zindex-modal;
+
   display: none;
+
   width: 100%;
+
   height: 100%;
+
   overflow: hidden;
+
   outline: 0;
 }
 
 .cl-modal-dialog {
+
   position: relative;
+
   width: auto;
+
   margin: $modal-dialog-margin;
+
   pointer-events: none;
 
   // When fading in the modal, animate it to slide down
+
   .cl-modal.fade & {
     @include transition(transform .3s ease-out);
+
     transform: translate(0, -50px);
   }
 
   .cl-modal.show & {
+
     transform: none;
   }
 
   // Vertically center the Modal
+
   &-centered {
+
     display: flex;
+
     align-items: center;
+
     min-height: calc(100% - (#{$modal-dialog-margin} * 2));
   }
 
   // Sizing
-  &-sm { max-width: $modal-sm; }
-  &-lg { max-width: $modal-lg; }
-  &-xl { max-width: $modal-xl; }
+
+  &-sm {
+
+ max-width: $modal-sm; }
+
+  &-lg {
+
+ max-width: $modal-lg; }
+
+  &-xl {
+
+ max-width: $modal-xl; }
 }
 
 .cl-modal-content {
+
   position: relative;
+
   display: flex;
+
   flex-direction: column;
+
   width: 100%;
+
   pointer-events: auto;
+
   background-color: $modal-content-bg;
+
   background-clip: padding-box;
+
   border: $modal-content-border-width solid $modal-content-border-color;
+
   border-radius: $modal-content-border-radius;
+
   outline: 0;
 
   @include box-shadow($modal-content-box-shadow-xs);
 
   // Removes the top border-radius when the header is present
+
   > .cl-modal-header {
+
     border-top-left-radius: $modal-content-inner-border-radius;
+
     border-top-right-radius: $modal-content-inner-border-radius;
   }
 
   // Removes the bottom border-radius when the footer is present
+
   > .cl-modal-footer {
+
     border-bottom-right-radius: $modal-content-inner-border-radius;
+
     border-bottom-left-radius: $modal-content-inner-border-radius;
   }
 }
 
 .cl-modal-header {
+
   display: flex;
+
   flex-shrink: 0;
+
   align-items: center;
+
   justify-content: space-between;
+
   padding: $modal-header-padding;
+
   border-bottom: $modal-header-border-width solid $modal-header-border-color;
+
   border-top-left-radius: $modal-header-border-radius;
+
   border-top-right-radius: $modal-header-border-radius;
 
   .close {
+
     padding: $modal-header-padding-y $modal-header-padding-x;
+
     margin: (-$modal-header-padding-y) (-$modal-header-padding-x) (-$modal-header-padding-y) auto;
   }
 }
 
 .cl-modal-title {
+
   margin-bottom: 0;
+
   line-height: $modal-title-line-height;
 }
 
 .cl-modal-body {
+
   position: relative;
+
   flex: 1 1 auto;
+
   padding: $modal-inner-padding;
 }
 
 .cl-modal-footer {
+
   display: flex;
+
   flex-wrap: wrap;
+
   flex-shrink: 0;
+
   align-items: center;
+
   justify-content: flex-end;
+
   padding: $modal-inner-padding;
+
   border-top: $modal-footer-border-width solid $modal-footer-border-color;
+
   border-bottom-right-radius: $modal-content-inner-border-radius;
+
   border-bottom-left-radius: $modal-content-inner-border-radius;
 
   // Easily place margin between footer elements
+
   > * {
+
     margin: $modal-footer-margin;
   }
 }
@@ -138,12 +210,16 @@ $modal-content-box-shadow-sm-up:     $box-shadow !default;
 // Scale up the modal
 @include breakpoint-up(sm) {
   // Automatically set modal's width for larger viewports
+
   .cl-modal-dialog {
+
     max-width: $modal-md;
+
     margin: $modal-dialog-margin-y-sm-up auto;
   }
 
   .cl-modal-dialog-centered {
+
     min-height: calc(100% - (#{$modal-dialog-margin-y-sm-up} * 2));
   }
 
@@ -153,43 +229,75 @@ $modal-content-box-shadow-sm-up:     $box-shadow !default;
 }
 
 // Backdrop
+
 .cl-modal-backdrop {
+
   position: fixed;
+
   top: 0;
+
   left: 0;
+
   z-index: $zindex-modal-backdrop;
+
   width: 100vw;
+
   height: 100vh;
+
   background-color: $modal-backdrop-bg;
+
   opacity: $modal-backdrop-opacity;
 
   // Fade for backdrop
-  &.fade { opacity: 0; }
-  &.show { opacity: $modal-backdrop-opacity; }
+
+  &.fade {
+
+ opacity: 0%; }
+
+  &.show {
+
+ opacity: $modal-backdrop-opacity; }
 }
 
 // Close icon
+
 .cl-modal-close {
+
   position: absolute;
+
   top: $modal-header-padding-y;
+
   right: $modal-header-padding-x;
+
   z-index: 1;
+
   padding: $modal-header-padding-y;
+
   color: $body-color;
+
   background: transparent;
+
   border: 0;
+
   appearance: none;
-  opacity: .5;
+
+  opacity: 50%;
+
   border-radius: $border-radius;
 
   &:hover {
+
     color: $body-color;
+
     text-decoration: none;
-    opacity: .75;
+
+    opacity: 75%;
   }
 
   &:focus {
+
     outline: 0;
+
     box-shadow: 0 0 0 $input-btn-focus-width rgba($primary, .25);
   }
 }

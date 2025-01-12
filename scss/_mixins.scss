@@ -45,60 +45,82 @@
 
 // Flexbox utilities
 @mixin flex-center {
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 }
 
 // Typography
 @mixin font-size($size) {
+
   font-size: $size;
+
   line-height: $line-height-base;
 }
 
 // Transitions
 @mixin transition($property: all) {
+
   transition: $property $transition-base;
 }
 
 // Shadows
 @mixin box-shadow($shadow: $box-shadow) {
+
   box-shadow: $shadow;
 }
 
 // Grid mixins
 @mixin make-container($gutter: $grid-gutter-width) {
+
   width: 100%;
+
   padding-right: calc($gutter / 2);
+
   padding-left: calc($gutter / 2);
+
   margin-right: auto;
+
   margin-left: auto;
 }
 
 @mixin make-row($gutter: $grid-gutter-width) {
+
   display: flex;
+
   flex-wrap: wrap;
+
   margin-right: calc($gutter / -2);
+
   margin-left: calc($gutter / -2);
 }
 
 @mixin make-col($size, $columns: $grid-columns) {
+
   flex: 0 0 math.percentage(math.div($size, $columns));
+
   max-width: math.percentage(math.div($size, $columns));
 }
 
 // RTL mixins
 @mixin rtl-property($property, $value) {
+
   #{$property}: $value;
 
   [dir="rtl"] & {
+
     #{$property}: $value;
   }
 }
 
 @mixin rtl-properties($properties) {
+
   [dir="rtl"] & {
     @each $property, $value in $properties {
+
       #{$property}: $value;
     }
   }
@@ -109,7 +131,6 @@
   $r: color.channel($background, "red", $space: rgb);
   $g: color.channel($background, "green", $space: rgb);
   $b: color.channel($background, "blue", $space: rgb);
-
   $yiq: math.div(($r * 299) + ($g * 587) + ($b * 114), 1000);
 
   @return if($yiq >= 128, $body-color, $white);
@@ -123,29 +144,41 @@
   $hover-border: color.scale($border, $lightness: -12.5%)
 ) {
   $lightness: color.channel($background, "lightness", $space: hsl);
+
   color: if($lightness > 50%, #000, #fff);
+
   background-color: $background;
+
   border-color: $border;
 
   &:hover {
     $hover-lightness: color.channel($hover-background, "lightness", $space: hsl);
+
     color: if($hover-lightness > 50%, #000, #fff);
+
     background-color: $hover-background;
+
     border-color: $hover-border;
   }
 
   &:focus {
+
     outline: 0;
+
     box-shadow: 0 0 0 0.2rem color.scale($background, $alpha: -75%);
   }
 
   &:active {
+
     background-color: color.scale($background, $lightness: -15%);
+
     border-color: color.scale($border, $lightness: -17.5%);
   }
 
   &:disabled {
+
     background-color: color.scale($background, $lightness: 20%);
+
     border-color: color.scale($border, $lightness: 20%);
   }
 }

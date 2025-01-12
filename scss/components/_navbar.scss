@@ -6,112 +6,167 @@
 // -------------------------
 
 .cl-navbar {
+
   position: relative;
+
   display: flex;
+
   flex-wrap: wrap;
+
   align-items: center;
+
   justify-content: space-between;
+
   padding: 0.5rem 1rem;
 
   > .container,
   > .container-fluid {
+
     display: flex;
+
     flex-wrap: wrap;
+
     align-items: center;
+
     justify-content: space-between;
   }
 }
 
 .cl-navbar-brand {
+
   display: inline-block;
+
   padding-top: 0.3125rem;
+
   padding-bottom: 0.3125rem;
+
   margin-right: 1rem;
+
   font-size: 1.25rem;
+
   line-height: inherit;
+
   white-space: nowrap;
 
   &:hover,
   &:focus {
+
     text-decoration: none;
   }
 }
 
 .cl-navbar-nav {
+
   display: flex;
+
   flex-direction: column;
+
   padding-left: 0;
+
   margin-bottom: 0;
+
   list-style: none;
 
   .cl-nav-link {
+
     padding-right: 0;
+
     padding-left: 0;
   }
 
   .cl-dropdown-menu {
+
     position: static;
+
     float: none;
   }
 }
 
 .cl-navbar-text {
+
   display: inline-block;
+
   padding-top: 0.5rem;
+
   padding-bottom: 0.5rem;
 }
 
 .cl-navbar-collapse {
+
   flex-basis: 100%;
+
   flex-grow: 1;
+
   align-items: center;
 }
 
 .cl-navbar-toggler {
+
   padding: 0.25rem 0.75rem;
+
   font-size: 1.25rem;
+
   line-height: 1;
+
   background-color: transparent;
+
   border: variables.$border-width solid transparent;
+
   border-radius: variables.$border-radius;
 
   &:hover,
   &:focus {
+
     text-decoration: none;
   }
 }
 
 .cl-navbar-toggler-icon {
+
   display: inline-block;
+
   width: 1.5em;
+
   height: 1.5em;
+
   vertical-align: middle;
+
   content: "";
+
   background: no-repeat center center;
+
   background-size: 100% 100%;
 }
 
 // Navbar themes
+
 .cl-navbar-light {
+
   .cl-navbar-brand {
+
     color: variables.$gray-900;
 
     &:hover,
     &:focus {
+
       color: variables.$gray-900;
     }
   }
 
   .cl-navbar-nav {
+
     .cl-nav-link {
+
       color: variables.$gray-600;
 
       &:hover,
       &:focus {
+
         color: variables.$gray-700;
       }
 
       &.disabled {
+
         color: variables.$gray-500;
       }
     }
@@ -120,27 +175,34 @@
     .active > .cl-nav-link,
     .cl-nav-link.show,
     .cl-nav-link.active {
+
       color: variables.$gray-900;
     }
   }
 
   .cl-navbar-toggler {
+
     color: variables.$gray-600;
+
     border-color: rgba(variables.$gray-900, 0.1);
   }
 
   .cl-navbar-toggler-icon {
+
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><path stroke='#{variables.$gray-600}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
   }
 
   .cl-navbar-text {
+
     color: variables.$gray-600;
 
     a {
+
       color: variables.$gray-900;
 
       &:hover,
       &:focus {
+
         color: variables.$gray-900;
       }
     }
@@ -148,25 +210,32 @@
 }
 
 .cl-navbar-dark {
+
   .cl-navbar-brand {
+
     color: variables.$white;
 
     &:hover,
     &:focus {
+
       color: variables.$white;
     }
   }
 
   .cl-navbar-nav {
+
     .cl-nav-link {
+
       color: rgba(variables.$white, 0.75);
 
       &:hover,
       &:focus {
+
         color: variables.$white;
       }
 
       &.disabled {
+
         color: rgba(variables.$white, 0.5);
       }
     }
@@ -175,27 +244,34 @@
     .active > .cl-nav-link,
     .cl-nav-link.show,
     .cl-nav-link.active {
+
       color: variables.$white;
     }
   }
 
   .cl-navbar-toggler {
+
     color: rgba(variables.$white, 0.75);
+
     border-color: rgba(variables.$white, 0.1);
   }
 
   .cl-navbar-toggler-icon {
+
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><path stroke='#{rgba(variables.$white, 0.75)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>");
   }
 
   .cl-navbar-text {
+
     color: rgba(variables.$white, 0.75);
 
     a {
+
       color: variables.$white;
 
       &:hover,
       &:focus {
+
         color: variables.$white;
       }
     }
@@ -203,7 +279,9 @@
 }
 
 // RTL support
+
 [dir="rtl"] {
+
   .cl-navbar-brand {
     @include mixins.rtl-property(margin-right, 0);
     @include mixins.rtl-property(margin-left, 1rem);

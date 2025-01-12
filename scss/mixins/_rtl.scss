@@ -27,14 +27,17 @@ $rtl-properties: (
 
 // RTL mixin for single property
 @mixin rtl-property($property, $value) {
+
   #{$property}: $value;
 
   [dir="rtl"] & {
     @if map-has-key($rtl-properties, $property) {
       $rtl-prop: map-get($rtl-properties, $property);
       @if type-of($rtl-prop) == "map" {
+
         #{$property}: map-get($rtl-prop, $value);
       } @else {
+
         #{$rtl-prop}: $value;
       }
     }
@@ -50,6 +53,7 @@ $rtl-properties: (
 
 // RTL mixin for transforms
 @mixin rtl-transform($transform) {
+
   transform: $transform;
 
   [dir="rtl"] & {
@@ -60,6 +64,7 @@ $rtl-properties: (
     @if str-index($transform, "rotate") {
       $rtl-transform: str-replace($transform, "rotate(", "rotate(-");
     }
+
     transform: $rtl-transform;
   }
 }
@@ -67,13 +72,19 @@ $rtl-properties: (
 // RTL mixin for background positions
 @mixin rtl-background-position($x-pos, $y-pos: null) {
   @if $y-pos == null {
+
     background-position: $x-pos;
+
     [dir="rtl"] & {
+
       background-position: right-or-left($x-pos);
     }
   } @else {
+
     background-position: $x-pos $y-pos;
+
     [dir="rtl"] & {
+
       background-position: right-or-left($x-pos) $y-pos;
     }
   }
@@ -81,25 +92,44 @@ $rtl-properties: (
 
 // RTL mixin for absolute positioning
 @mixin rtl-position($top: null, $right: null, $bottom: null, $left: null) {
-  @if $top != null { top: $top; }
-  @if $right != null { right: $right; }
-  @if $bottom != null { bottom: $bottom; }
-  @if $left != null { left: $left; }
+  @if $top != null {
+
+ top: $top; }
+  @if $right != null {
+
+ right: $right; }
+  @if $bottom != null {
+
+ bottom: $bottom; }
+  @if $left != null {
+
+ left: $left; }
 
   [dir="rtl"] & {
-    @if $right != null { left: $right; right: auto; }
-    @if $left != null { right: $left; left: auto; }
+    @if $right != null {
+
+ left: $right;
+
+ right: auto; }
+    @if $left != null {
+
+ right: $left;
+
+ left: auto; }
   }
 }
 
 // RTL mixin for flex direction
 @mixin rtl-flex-direction($direction) {
+
   flex-direction: $direction;
 
   [dir="rtl"] & {
     @if $direction == row {
+
       flex-direction: row-reverse;
     } @else if $direction == row-reverse {
+
       flex-direction: row;
     }
   }
@@ -107,12 +137,15 @@ $rtl-properties: (
 
 // RTL mixin for icons and symbols
 @mixin rtl-icon($content, $rtl-content: null) {
+
   content: $content;
 
   [dir="rtl"] & {
     @if $rtl-content != null {
+
       content: $rtl-content;
     } @else {
+
       transform: scale(-1, 1);
     }
   }

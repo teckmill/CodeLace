@@ -9,8 +9,19 @@
     "scss/at-rule-no-unknown": true,
     "selector-class-pattern": null,
     "no-descending-specificity": null,
-    "scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9]+$",
-    "scss/selector-no-redundant-nesting-selector": true
+    "scss/dollar-variable-pattern": null,
+    "scss/selector-no-redundant-nesting-selector": true,
+    "scss/at-if-no-null": null,
+    "scss/no-global-function-names": null,
+    "color-function-notation": "modern",
+    "alpha-value-notation": "percentage",
+    "color-hex-length": "short",
+    "declaration-empty-line-before": "always",
+    "rule-empty-line-before": "always",
+    "declaration-block-no-redundant-longhand-properties": true,
+    "value-keyword-case": "lower",
+    "no-duplicate-selectors": null,
+    "scss/comment-no-empty": null
   },
   "ignoreFiles": [
     "dist/**",

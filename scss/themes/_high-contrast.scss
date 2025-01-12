@@ -3,27 +3,27 @@
 
 // Theme variables
 $hc-theme-colors: (
-  "primary": #0066cc,
-  "secondary": #666666,
+  "primary": #06c,
+  "secondary": #666,
   "success": #008000,
-  "info": #0099cc,
-  "warning": #cc6600,
-  "danger": #cc0000,
-  "light": #ffffff,
-  "dark": #000000,
-  "body": #ffffff,
-  "muted": #666666
+  "info": #09c,
+  "warning": #c60,
+  "danger": #c00,
+  "light": #fff,
+  "dark": #000,
+  "body": #fff,
+  "muted": #666
 ) !default;
-
-$hc-theme-bg: #ffffff !default;
-$hc-theme-surface: #ffffff !default;
-$hc-theme-border: #000000 !default;
-$hc-theme-text: #000000 !default;
-$hc-theme-text-muted: #333333 !default;
-$hc-theme-focus-ring: #0066cc !default;
+$hc-theme-bg: #fff !default;
+$hc-theme-surface: #fff !default;
+$hc-theme-border: #000 !default;
+$hc-theme-text: #000 !default;
+$hc-theme-text-muted: #333 !default;
+$hc-theme-focus-ring: #06c !default;
 $hc-theme-focus-ring-width: 3px !default;
 
 // High contrast theme class
+
 [data-theme="high-contrast"] {
   // Base colors
   --cl-body-bg: #{$hc-theme-bg};
@@ -39,217 +39,316 @@ $hc-theme-focus-ring-width: 3px !default;
   }
 
   // Enhanced focus styles
+
   *:focus {
+
     outline: var(--cl-focus-ring-width) solid var(--cl-focus-ring-color) !important;
+
     outline-offset: 2px !important;
   }
 
   // Increased contrast for all components
   // Buttons
+
   .cl-btn {
+
     border-width: 2px;
+
     font-weight: 600;
 
     &-primary {
+
       background-color: var(--cl-primary);
+
       border-color: var(--cl-dark);
+
       color: var(--cl-light);
     }
 
     &-secondary {
+
       background-color: var(--cl-light);
+
       border-color: var(--cl-dark);
+
       color: var(--cl-dark);
     }
 
     &:disabled {
-      opacity: 0.5;
+
+      opacity: 50%;
+
       border-style: dashed;
     }
   }
 
   // Forms
+
   .cl-form-control {
+
     border-width: 2px;
+
     border-color: var(--cl-dark);
 
     &:focus {
+
       border-color: var(--cl-focus-ring-color);
+
       box-shadow: none;
     }
 
     &::placeholder {
+
       color: var(--cl-text-muted);
-      opacity: 1;
+
+      opacity: 100%;
     }
 
     &:disabled {
+
       background-color: #f0f0f0;
+
       border-style: dashed;
     }
   }
 
   // Links
+
   a {
+
     text-decoration: underline;
+
     color: var(--cl-primary);
 
     &:hover {
+
       color: var(--cl-dark);
     }
 
     &:focus {
+
       outline: var(--cl-focus-ring-width) solid var(--cl-focus-ring-color);
+
       outline-offset: 2px;
     }
   }
 
   // Tables
+
   .cl-table {
+
     border: 2px solid var(--cl-dark);
 
     th, td {
+
       border: 1px solid var(--cl-dark);
     }
 
     th {
+
       background-color: #f0f0f0;
+
       font-weight: 600;
     }
   }
 
   // Alerts
+
   .cl-alert {
+
     border-width: 2px;
+
     font-weight: 500;
 
     @each $color, $value in $hc-theme-colors {
       &-#{$color} {
+
         background-color: var(--cl-light);
+
         border-color: var(--cl-#{$color});
+
         color: var(--cl-dark);
       }
     }
   }
 
   // Cards
+
   .cl-card {
+
     border-width: 2px;
+
     border-color: var(--cl-dark);
 
     &-header, &-footer {
+
       background-color: #f0f0f0;
+
       border-width: 2px;
     }
   }
 
   // Modal
+
   .cl-modal {
+
     &-content {
+
       border-width: 2px;
+
       border-color: var(--cl-dark);
     }
 
     &-header, &-footer {
+
       border-width: 2px;
+
       background-color: #f0f0f0;
     }
 
     &-backdrop {
-      background-color: rgba(0, 0, 0, 0.75);
+
+      background-color: rgb(0 0 0 / 75%);
     }
   }
 
   // Tabs
+
   .cl-tabs {
+
     .cl-tab-link {
+
       border-width: 2px;
+
       font-weight: 500;
 
       &.active {
+
         background-color: var(--cl-light);
+
         border-color: var(--cl-dark);
+
         border-bottom-color: var(--cl-light);
       }
     }
   }
 
   // Lists
+
   .cl-list-group {
+
     &-item {
+
       border-width: 2px;
+
       border-color: var(--cl-dark);
 
       &.active {
+
         background-color: var(--cl-primary);
+
         color: var(--cl-light);
+
         font-weight: 600;
       }
     }
   }
 
   // Progress bars
+
   .cl-progress {
+
     border: 2px solid var(--cl-dark);
+
     background-color: var(--cl-light);
 
     &-bar {
+
       background-color: var(--cl-primary);
     }
   }
 
   // Badges
+
   .cl-badge {
+
     border: 1px solid var(--cl-dark);
+
     font-weight: 600;
   }
 
   // Dropdowns
+
   .cl-dropdown-menu {
+
     border-width: 2px;
+
     border-color: var(--cl-dark);
 
     .cl-dropdown-item {
+
       &:hover, &:focus {
+
         background-color: var(--cl-primary);
+
         color: var(--cl-light);
       }
 
       &.active {
+
         background-color: var(--cl-primary);
+
         color: var(--cl-light);
+
         font-weight: 600;
       }
     }
   }
 
   // Custom checkboxes and radios
+
   .cl-custom-control {
+
     &-label {
+
       &::before {
+
         border-width: 2px;
+
         border-color: var(--cl-dark);
       }
     }
 
     &-input:checked ~ .cl-custom-control-label::before {
+
       background-color: var(--cl-primary);
+
       border-color: var(--cl-dark);
     }
   }
 
   // Skip links
+
   .cl-skip-link {
+
     background-color: var(--cl-light);
+
     border: 2px solid var(--cl-dark);
+
     color: var(--cl-dark);
+
     padding: 1rem;
+
     margin: 1rem;
+
     font-weight: 600;
+
     text-decoration: none;
 
     &:focus {
+
       outline: var(--cl-focus-ring-width) solid var(--cl-focus-ring-color);
+
       outline-offset: 2px;
     }
   }
