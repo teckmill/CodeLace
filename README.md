@@ -15,6 +15,16 @@ A modern, lightweight CSS framework with TypeScript components, focusing on perf
 
 ## Components
 
+### Form Components
+- Input - Text input with validation and icon support
+- TextArea - Auto-resizing text area with validation
+- Select - Modern select with search and multiple selection
+- Radio - Flexible radio button group with layouts
+- Checkbox - Checkbox group with indeterminate state
+- Switch - Toggle switch with multiple sizes and states
+- NumberInput - Numeric input with increment/decrement controls
+
+### Navigation Components
 - Alert System
 - Tab System
 - Popover
@@ -22,10 +32,20 @@ A modern, lightweight CSS framework with TypeScript components, focusing on perf
 - Dropdown
 - Toast Notifications
 - Collapse/Accordion
-- Forms
-- Cards
 - Navbar
-- More coming soon...
+- Breadcrumbs
+- Pagination
+
+### Data Display Components
+- DataTable - Advanced table with sorting and filtering
+- Carousel - Touch-enabled slider with autoplay
+- Lightbox - Image gallery with fullscreen mode
+
+### Layout Components
+- Grid System
+- Container
+- Flex Layout Utilities
+- Cards
 
 ## Installation
 
@@ -46,6 +66,42 @@ yarn add codelace
 
 <!-- JavaScript -->
 <script src="https://unpkg.com/codelace@1.0.0/dist/js/codelace.min.js"></script>
+```
+
+## Quick Start
+
+```html
+<!-- Include the CSS -->
+<link rel="stylesheet" href="https://unpkg.com/@codinglace/css/dist/css/codelace.min.css">
+
+<!-- Include the JavaScript -->
+<script src="https://unpkg.com/@codinglace/css/dist/js/codelace.min.js"></script>
+
+<!-- Or use ES modules -->
+<script type="module">
+  import { Switch, Input, Select } from '@codinglace/css';
+
+  // Initialize components
+  const switch = new Switch('#themeSwitch', {
+    label: 'Dark Mode',
+    onChange: (checked) => document.body.classList.toggle('dark', checked)
+  });
+
+  const input = new Input('#search', {
+    type: 'search',
+    placeholder: 'Search...',
+    icon: '🔍'
+  });
+
+  const select = new Select('#language', {
+    searchable: true,
+    options: [
+      { value: 'en', label: 'English' },
+      { value: 'es', label: 'Spanish' },
+      { value: 'fr', label: 'French' }
+    ]
+  });
+</script>
 ```
 
 ## Usage
@@ -71,6 +127,80 @@ const popover = new Popover('#myPopover', {
 const modal = new Modal('#myModal', {
   backdrop: true,
   keyboard: true
+});
+```
+
+### Form Components
+
+```typescript
+// Switch component
+const themeSwitch = new Switch('#themeSwitch', {
+  checked: false,
+  size: 'large',
+  label: 'Dark Mode',
+  onChange: (checked) => document.body.classList.toggle('dark', checked)
+});
+
+// Input with validation
+const emailInput = new Input('#email', {
+  type: 'email',
+  label: 'Email Address',
+  validation: {
+    required: true,
+    pattern: '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'
+  },
+  helperText: 'Enter a valid email address'
+});
+
+// Select with search
+const countrySelect = new Select('#country', {
+  searchable: true,
+  multiple: true,
+  placeholder: 'Select countries',
+  options: [
+    { value: 'us', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'ca', label: 'Canada' }
+  ]
+});
+
+// NumberInput with validation
+const ageInput = new NumberInput('#age', {
+  min: 18,
+  max: 100,
+  label: 'Age',
+  validation: (value) => value >= 18 ? true : 'Must be 18 or older'
+});
+```
+
+### Data Display Components
+
+```typescript
+// DataTable with sorting and filtering
+const table = new DataTable('#users', {
+  columns: [
+    { field: 'name', title: 'Name', sortable: true },
+    { field: 'email', title: 'Email', filterable: true },
+    { field: 'role', title: 'Role' }
+  ],
+  data: users,
+  pagination: true,
+  pageSize: 10
+});
+
+// Carousel with autoplay
+const carousel = new Carousel('#featured', {
+  autoplay: true,
+  interval: 5000,
+  navigation: true,
+  pagination: true
+});
+
+// Lightbox gallery
+const gallery = new Lightbox('#gallery', {
+  thumbnails: true,
+  fullscreen: true,
+  slideshow: true
 });
 ```
 

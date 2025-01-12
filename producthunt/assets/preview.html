@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLace Playground</title>
+    <link rel="stylesheet" href="../../dist/css/codelace.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --accent-color: #ec4899;
+            --success-color: #22c55e;
+            --warning-color: #eab308;
+            --error-color: #ef4444;
+            --text-color: #1f2937;
+            --bg-color: #ffffff;
+            --code-bg: #1a1a1a;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-color);
+            background: #f8fafc;
+        }
+
+        .playground {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--bg-color);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .playground-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .playground-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .playground-description {
+            color: #6b7280;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .component-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .component-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .component-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .component-title {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .component-preview {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Button Styles */
+        .button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .button i {
+            font-size: 1.25rem;
+        }
+
+        .button.primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .button.secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .button.success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .button.warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .button.error {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .button.outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .button[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .alert.info {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .alert.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .alert.warning {
+            background: rgba(234, 179, 8, 0.1);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--error-color);
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+
+        .card-footer {
+            padding: 1rem;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            min-width: 400px;
+        }
+
+        .modal.active {
+            display: block;
+            animation: modalIn 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .backdrop.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: toastIn 0.3s ease;
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip:hover::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .tooltip:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--text-color);
+            margin-bottom: -5px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge.primary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+        }
+
+        .badge.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success-color);
+        }
+
+        /* Progress */
+        .progress {
+            width: 100%;
+            height: 0.5rem;
+            background: var(--border-color);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 9999px;
+            transition: width 0.3s ease;
+        }
+
+        /* Code */
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: #e5e7eb;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+            display: none;
+            min-width: 200px;
+            z-index: 100;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        /* Grid System */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .grid-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .color-option {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="playground">
+        <div class="playground-header">
+            <h1 class="playground-title">CodeLace Playground</h1>
+            <p class="playground-description">
+                Explore our components and features in this interactive playground.
+                Click, hover, and interact with the elements to see them in action.
+            </p>
+        </div>
+
+        <div class="component-grid">
+            <!-- Buttons -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-cursor-fill"></i>
+                    </div>
+                    <h3 class="component-title">Buttons</h3>
+                </div>
+                <div class="component-preview">
+                    <button class="button primary">
+                        <i class="ri-rocket-fill"></i>
+                        Primary
+                    </button>
+                    <button class="button secondary">Secondary</button>
+                    <button class="button success">Success</button>
+                    <button class="button warning">Warning</button>
+                    <button class="button error">Error</button>
+                    <button class="button outline">Outline</button>
+                    <button class="button primary" disabled>Disabled</button>
+                </div>
+            </div>
+
+            <!-- Forms -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-file-list-fill"></i>
+                    </div>
+                    <h3 class="component-title">Forms</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-input" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" placeholder="Enter email">
+                    </div>
+                    <button class="button primary">Submit</button>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-alert-fill"></i>
+                    </div>
+                    <h3 class="component-title">Alerts</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="alert info">
+                        <i class="ri-information-fill"></i>
+                        This is an info alert
+                    </div>
+                    <div class="alert success">
+                        <i class="ri-checkbox-circle-fill"></i>
+                        This is a success alert
+                    </div>
+                    <div class="alert warning">
+                        <i class="ri-alert-fill"></i>
+                        This is a warning alert
+                    </div>
+                    <div class="alert error">
+                        <i class="ri-close-circle-fill"></i>
+                        This is an error alert
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-layout-card-fill"></i>
+                    </div>
+                    <h3 class="component-title">Cards</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="margin: 0;">Card Title</h4>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin: 0;">This is the card content. You can put any content here.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="button primary">Action</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-window-fill"></i>
+                    </div>
+                    <h3 class="component-title">Modal</h3>
+                </div>
+                <div class="component-preview">
+                    <button class="button primary" onclick="showModal()">Open Modal</button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-folder-fill"></i>
+                    </div>
+                    <h3 class="component-title">Tabs</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="tabs">
+                        <div class="tab active" onclick="switchTab(0)">Tab 1</div>
+                        <div class="tab" onclick="switchTab(1)">Tab 2</div>
+                        <div class="tab" onclick="switchTab(2)">Tab 3</div>
+                    </div>
+                    <div class="tab-content active">Content for Tab 1</div>
+                    <div class="tab-content">Content for Tab 2</div>
+                    <div class="tab-content">Content for Tab 3</div>
+                </div>
+            </div>
+
+            <!-- Tooltips -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-chat-1-fill"></i>
+                    </div>
+                    <h3 class="component-title">Tooltips</h3>
+                </div>
+                <div class="component-preview">
+                    <button class="button primary tooltip" data-tooltip="This is a tooltip">
+                        Hover me
+                    </button>
+                </div>
+            </div>
+
+            <!-- Badges -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-price-tag-fill"></i>
+                    </div>
+                    <h3 class="component-title">Badges</h3>
+                </div>
+                <div class="component-preview">
+                    <span class="badge primary">Primary Badge</span>
+                    <span class="badge success">Success Badge</span>
+                </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-bar-chart-fill"></i>
+                    </div>
+                    <h3 class="component-title">Progress</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dropdown -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-arrow-down-s-fill"></i>
+                    </div>
+                    <h3 class="component-title">Dropdown</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="dropdown">
+                        <button class="button primary" onclick="toggleDropdown(this)">
+                            Dropdown
+                            <i class="ri-arrow-down-s-line"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <div class="dropdown-item">Item 1</div>
+                            <div class="dropdown-item">Item 2</div>
+                            <div class="dropdown-item">Item 3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid System -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-layout-grid-fill"></i>
+                    </div>
+                    <h3 class="component-title">Grid System</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="grid-demo">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code -->
+            <div class="component-card">
+                <div class="component-header">
+                    <div class="component-icon">
+                        <i class="ri-code-s-slash-fill"></i>
+                    </div>
+                    <h3 class="component-title">Code</h3>
+                </div>
+                <div class="component-preview">
+                    <div class="code-block">
+                        <pre><code>import { Button } from '@codinglace/css';
+
+const button = new Button('#myButton');
+button.onClick(() => {
+    console.log('Button clicked!');
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Component -->
+    <div class="modal" id="demo-modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Welcome to CodeLace</h3>
+            <button class="modal-close" onclick="hideModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <p>This is a demo of our modal component. It's fully customizable and animated!</p>
+            <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-input" placeholder="Enter your name">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="button primary" onclick="hideModal()">Close</button>
+        </div>
+    </div>
+    <div class="backdrop" onclick="hideModal()"></div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <div class="color-picker">
+            <div class="color-option" style="background: #6366f1;" onclick="changeTheme('#6366f1', '#a855f7')"></div>
+            <div class="color-option" style="background: #ec4899;" onclick="changeTheme('#ec4899', '#f43f5e')"></div>
+            <div class="color-option" style="background: #22c55e;" onclick="changeTheme('#22c55e', '#10b981')"></div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function showModal() {
+            document.getElementById('demo-modal').classList.add('active');
+            document.querySelector('.backdrop').classList.add('active');
+        }
+
+        function hideModal() {
+            document.getElementById('demo-modal').classList.remove('active');
+            document.querySelector('.backdrop').classList.remove('active');
+        }
+
+        // Tab Functions
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+        }
+
+        // Dropdown Functions
+        function toggleDropdown(element) {
+            const dropdown = element.closest('.dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Toast Functions
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="ri-information-fill"></i>
+                ${message}
+            `;
+            document.getElementById('toast-container').appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Theme Functions
+        function changeTheme(primary, secondary) {
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--secondary-color', secondary);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Initialize tooltips
+        document.querySelectorAll('[data-tooltip]').forEach(element => {
+            element.addEventListener('mouseover', () => {
+                showToast(element.getAttribute('data-tooltip'));
+            });
+        });
+    </script>
+</body>
+</html>

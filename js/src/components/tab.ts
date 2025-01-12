@@ -14,7 +14,7 @@ export class Tab extends Component {
   private static readonly FADE_CLASS = 'cl-fade';
   private static readonly SHOW_CLASS = 'cl-show';
 
-  private readonly options: TabOptions;
+  protected readonly options: TabOptions;
   private readonly tabs: HTMLElement[];
   private readonly panes: HTMLElement[];
   private activeTab: HTMLElement | null;

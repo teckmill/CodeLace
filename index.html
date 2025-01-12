@@ -1,69 +1,528 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeLace - Modern CSS Framework</title>
-    <link rel="stylesheet" href="/scss/codelace.scss">
+    <link rel="stylesheet" href="dist/css/codelace.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <style>
+        .demo-section {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--cl-border-color);
+        }
+        .component-preview {
+            padding: 1.5rem;
+            border: 1px solid var(--cl-border-color);
+            border-radius: var(--cl-border-radius);
+            margin: 1rem 0;
+        }
+        .code-preview {
+            margin-top: 1rem;
+        }
+        [data-theme="dark"] {
+            --cl-bg-primary: #1a1a1a;
+            --cl-bg-secondary: #2a2a2a;
+            --cl-text-primary: #ffffff;
+            --cl-text-secondary: #a0a0a0;
+            --cl-border-color: #404040;
+        }
+        .theme-switch {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+        }
+    </style>
 </head>
 <body>
+    <div class="theme-switch" id="themeSwitch"></div>
+    
     <nav class="navbar">
         <div class="container">
             <a class="navbar-brand" href="#">CodeLace</a>
+            <div class="navbar-menu">
+                <a href="#form">Form</a>
+                <a href="#data">Data</a>
+                <a href="#navigation">Navigation</a>
+                <a href="#layout">Layout</a>
+                <a href="#playground">Playground</a>
+            </div>
         </div>
     </nav>
 
     <main class="container">
-        <section class="row mt-5">
-            <div class="col-md-6">
-                <h1>Welcome to CodeLace</h1>
-                <p class="lead">A modern, lightweight CSS framework for elegant web development.</p>
+        <section class="hero mt-5">
+            <h1>CodeLace</h1>
+            <p class="lead">A modern, lightweight CSS framework with TypeScript components.</p>
+            <div class="mt-3">
                 <button class="btn btn-primary">Get Started</button>
-                <button class="btn btn-outline-primary">Documentation</button>
+                <button class="btn btn-outline">Documentation</button>
             </div>
         </section>
 
-        <section class="row mt-5">
-            <div class="col-12">
-                <h2>Grid System</h2>
+        <section id="form" class="demo-section">
+            <h2>Form Components</h2>
+            
+            <div class="component-preview">
+                <h3>Switch</h3>
+                <div id="demoSwitch"></div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Column 1</h5>
-                        <p>This is a 4-column wide card on medium screens.</p>
-                    </div>
-                </div>
+
+            <div class="component-preview">
+                <h3>Input</h3>
+                <div id="demoInput"></div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Column 2</h5>
-                        <p>This is a 4-column wide card on medium screens.</p>
-                    </div>
-                </div>
+
+            <div class="component-preview">
+                <h3>TextArea</h3>
+                <div id="demoTextArea"></div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Column 3</h5>
-                        <p>This is a 4-column wide card on medium screens.</p>
-                    </div>
-                </div>
+
+            <div class="component-preview">
+                <h3>Select</h3>
+                <div id="demoSelect"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Radio</h3>
+                <div id="demoRadio"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Checkbox</h3>
+                <div id="demoCheckbox"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Number Input</h3>
+                <div id="demoNumber"></div>
             </div>
         </section>
 
-        <section class="row mt-5">
-            <div class="col-12">
-                <h2>Buttons</h2>
-                <button class="btn btn-primary">Primary</button>
-                <button class="btn btn-secondary">Secondary</button>
-                <button class="btn btn-success">Success</button>
-                <button class="btn btn-danger">Danger</button>
+        <section id="data" class="demo-section">
+            <h2>Data Display Components</h2>
+            
+            <div class="component-preview">
+                <h3>Data Table</h3>
+                <div id="demoTable"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Carousel</h3>
+                <div id="demoCarousel"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Lightbox</h3>
+                <div id="demoLightbox"></div>
+            </div>
+        </section>
+
+        <section id="navigation" class="demo-section">
+            <h2>Navigation Components</h2>
+
+            <div class="component-preview">
+                <h3>Tabs</h3>
+                <div id="demoTabs"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Breadcrumbs</h3>
+                <div id="demoBreadcrumbs"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Pagination</h3>
+                <div id="demoPagination"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Dropdown</h3>
+                <div id="demoDropdown"></div>
+            </div>
+        </section>
+
+        <section id="layout" class="demo-section">
+            <h2>Layout Components</h2>
+
+            <div class="component-preview">
+                <h3>Grid</h3>
+                <div class="grid">
+                    <div class="col-4">Column 1</div>
+                    <div class="col-4">Column 2</div>
+                    <div class="col-4">Column 3</div>
+                </div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Card</h3>
+                <div class="card">
+                    <div class="card-header">Header</div>
+                    <div class="card-body">Content</div>
+                    <div class="card-footer">Footer</div>
+                </div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Modal</h3>
+                <div id="demoModal"></div>
+            </div>
+
+            <div class="component-preview">
+                <h3>Collapse</h3>
+                <div id="demoCollapse"></div>
+            </div>
+        </section>
+
+        <section id="playground" class="demo-section">
+            <h2>Component Playground</h2>
+            <div class="tabs" id="playgroundTabs">
+                <div class="tab-list">
+                    <button class="tab-item active" data-tab="switch">Switch</button>
+                    <button class="tab-item" data-tab="input">Input</button>
+                    <button class="tab-item" data-tab="select">Select</button>
+                    <button class="tab-item" data-tab="number">Number</button>
+                    <button class="tab-item" data-tab="textarea">TextArea</button>
+                    <button class="tab-item" data-tab="radio">Radio</button>
+                    <button class="tab-item" data-tab="checkbox">Checkbox</button>
+                    <button class="tab-item" data-tab="modal">Modal</button>
+                    <button class="tab-item" data-tab="tabs">Tabs</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" data-tab="switch">
+                        <div id="switchPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="input">
+                        <div id="inputPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="select">
+                        <div id="selectPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="number">
+                        <div id="numberPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="textarea">
+                        <div id="textareaPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="radio">
+                        <div id="radioPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="checkbox">
+                        <div id="checkboxPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="modal">
+                        <div id="modalPlayground"></div>
+                    </div>
+                    <div class="tab-pane" data-tab="tabs">
+                        <div id="tabsPlayground"></div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <script type="module" src="/js/codelace.js"></script>
+    <script src="dist/js/codelace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add code copy buttons to all examples
+            document.querySelectorAll('.code-preview').forEach((preview, index) => {
+                new CodeLace.CodeBlock(`#codeBlock${index}`, {
+                    language: 'javascript',
+                    code: preview.querySelector('code').textContent,
+                    showCopy: true,
+                    showPreview: false
+                });
+            });
+
+            // Theme Switch
+            const themeSwitch = new CodeLace.Switch('#themeSwitch', {
+                label: 'Dark Mode',
+                size: 'large',
+                onChange: (checked) => {
+                    document.documentElement.setAttribute('data-theme', checked ? 'dark' : 'light');
+                    localStorage.setItem('theme', checked ? 'dark' : 'light');
+                }
+            });
+
+            // Restore theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeSwitch.checked = savedTheme === 'dark';
+
+            // Form Components
+            new CodeLace.Input('#demoInput', {
+                type: 'text',
+                label: 'Username',
+                placeholder: 'Enter username',
+                icon: '👤'
+            });
+
+            new CodeLace.TextArea('#demoTextArea', {
+                label: 'Message',
+                placeholder: 'Type your message',
+                autoResize: true,
+                minRows: 3
+            });
+
+            new CodeLace.Select('#demoSelect', {
+                label: 'Country',
+                searchable: true,
+                options: [
+                    { value: 'us', label: 'United States' },
+                    { value: 'uk', label: 'United Kingdom' },
+                    { value: 'ca', label: 'Canada' }
+                ]
+            });
+
+            new CodeLace.Radio('#demoRadio', {
+                label: 'Size',
+                options: [
+                    { value: 'sm', label: 'Small' },
+                    { value: 'md', label: 'Medium' },
+                    { value: 'lg', label: 'Large' }
+                ]
+            });
+
+            new CodeLace.Checkbox('#demoCheckbox', {
+                label: 'Notifications',
+                options: [
+                    { value: 'email', label: 'Email' },
+                    { value: 'sms', label: 'SMS' },
+                    { value: 'push', label: 'Push' }
+                ]
+            });
+
+            new CodeLace.NumberInput('#demoNumber', {
+                label: 'Quantity',
+                min: 0,
+                max: 100,
+                step: 1,
+                prefix: '#'
+            });
+
+            // Data Components
+            new CodeLace.DataTable('#demoTable', {
+                columns: [
+                    { field: 'name', title: 'Name' },
+                    { field: 'email', title: 'Email' },
+                    { field: 'role', title: 'Role' }
+                ],
+                data: [
+                    { name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+                    { name: 'Jane Smith', email: 'jane@example.com', role: 'User' }
+                ]
+            });
+
+            new CodeLace.Carousel('#demoCarousel', {
+                autoplay: true,
+                navigation: true,
+                pagination: true,
+                items: [
+                    { src: 'assets/slide1.jpg', alt: 'Slide 1' },
+                    { src: 'assets/slide2.jpg', alt: 'Slide 2' }
+                ]
+            });
+
+            new CodeLace.Lightbox('#demoLightbox', {
+                items: [
+                    { src: 'assets/image1.jpg', thumb: 'assets/thumb1.jpg' },
+                    { src: 'assets/image2.jpg', thumb: 'assets/thumb2.jpg' }
+                ]
+            });
+
+            // Navigation Components
+            new CodeLace.Tabs('#demoTabs', {
+                items: [
+                    { id: 'tab1', label: 'Tab 1', content: 'Content 1' },
+                    { id: 'tab2', label: 'Tab 2', content: 'Content 2' }
+                ]
+            });
+
+            new CodeLace.Breadcrumbs('#demoBreadcrumbs', {
+                items: [
+                    { label: 'Home', href: '#' },
+                    { label: 'Components', href: '#' },
+                    { label: 'Navigation', href: '#' }
+                ]
+            });
+
+            new CodeLace.Pagination('#demoPagination', {
+                total: 100,
+                perPage: 10,
+                current: 1
+            });
+
+            new CodeLace.Dropdown('#demoDropdown', {
+                label: 'Options',
+                items: [
+                    { label: 'Option 1', value: '1' },
+                    { label: 'Option 2', value: '2' }
+                ]
+            });
+
+            // Layout Components
+            new CodeLace.Modal('#demoModal', {
+                trigger: '#openModal',
+                title: 'Modal Title',
+                content: 'Modal Content'
+            });
+
+            new CodeLace.Collapse('#demoCollapse', {
+                items: [
+                    { title: 'Section 1', content: 'Content 1' },
+                    { title: 'Section 2', content: 'Content 2' }
+                ]
+            });
+
+            // Playground
+            const playgroundTabs = new CodeLace.Tabs('#playgroundTabs');
+
+            // Switch Playground
+            new CodeLace.Playground('#switchPlayground', {
+                component: 'Switch',
+                template: '<div></div>',
+                properties: {
+                    label: 'Toggle',
+                    size: 'medium',
+                    disabled: false
+                }
+            });
+
+            // Input Playground
+            new CodeLace.Playground('#inputPlayground', {
+                component: 'Input',
+                template: '<div></div>',
+                properties: {
+                    type: 'text',
+                    label: 'Input',
+                    placeholder: 'Enter text',
+                    icon: '🔍'
+                }
+            });
+
+            // Select Playground
+            new CodeLace.Playground('#selectPlayground', {
+                component: 'Select',
+                template: '<div></div>',
+                properties: {
+                    label: 'Select',
+                    searchable: true,
+                    options: [
+                        { value: '1', label: 'Option 1' },
+                        { value: '2', label: 'Option 2' }
+                    ]
+                }
+            });
+
+            // Number Playground
+            new CodeLace.Playground('#numberPlayground', {
+                component: 'NumberInput',
+                template: '<div></div>',
+                properties: {
+                    label: 'Number',
+                    min: 0,
+                    max: 100,
+                    step: 1
+                }
+            });
+
+            // TextArea Playground
+            new CodeLace.Playground('#textareaPlayground', {
+                component: 'TextArea',
+                template: '<div></div>',
+                properties: {
+                    label: 'Message',
+                    placeholder: 'Type your message',
+                    autoResize: true,
+                    minRows: 3,
+                    maxRows: 10
+                }
+            });
+
+            // Radio Playground
+            new CodeLace.Playground('#radioPlayground', {
+                component: 'Radio',
+                template: '<div></div>',
+                properties: {
+                    label: 'Size',
+                    inline: true,
+                    options: [
+                        { value: 'sm', label: 'Small' },
+                        { value: 'md', label: 'Medium' },
+                        { value: 'lg', label: 'Large' }
+                    ]
+                }
+            });
+
+            // Checkbox Playground
+            new CodeLace.Playground('#checkboxPlayground', {
+                component: 'Checkbox',
+                template: '<div></div>',
+                properties: {
+                    label: 'Notifications',
+                    inline: true,
+                    options: [
+                        { value: 'email', label: 'Email' },
+                        { value: 'sms', label: 'SMS' },
+                        { value: 'push', label: 'Push' }
+                    ]
+                }
+            });
+
+            // Modal Playground
+            new CodeLace.Playground('#modalPlayground', {
+                component: 'Modal',
+                template: `
+                    <div>
+                        <button class="btn btn-primary" id="openModal">Open Modal</button>
+                        <div id="modal"></div>
+                    </div>
+                `,
+                properties: {
+                    title: 'Modal Title',
+                    content: 'Modal Content',
+                    size: 'medium',
+                    closeOnOverlay: true,
+                    showClose: true
+                }
+            });
+
+            // Tabs Playground
+            new CodeLace.Playground('#tabsPlayground', {
+                component: 'Tabs',
+                template: '<div></div>',
+                properties: {
+                    items: [
+                        { id: 'tab1', label: 'Tab 1', content: 'Content 1' },
+                        { id: 'tab2', label: 'Tab 2', content: 'Content 2' },
+                        { id: 'tab3', label: 'Tab 3', content: 'Content 3' }
+                    ],
+                    orientation: 'horizontal',
+                    size: 'medium'
+                }
+            });
+
+            // Interactive Demos
+            const interactiveDemos = {
+                switch: document.querySelector('#demoSwitch'),
+                input: document.querySelector('#demoInput'),
+                select: document.querySelector('#demoSelect'),
+                number: document.querySelector('#demoNumber'),
+                modal: document.querySelector('#demoModal'),
+                tabs: document.querySelector('#demoTabs')
+            };
+
+            // Add event listeners for interactive demos
+            Object.entries(interactiveDemos).forEach(([component, element]) => {
+                if (element) {
+                    element.addEventListener('change', (event) => {
+                        console.log(`${component} changed:`, event.detail);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

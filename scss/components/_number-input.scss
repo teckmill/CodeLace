@@ -1,0 +1,196 @@
+.cl-number-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &.cl-number-input-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    .cl-number-input-container {
+      pointer-events: none;
+    }
+  }
+
+  &.cl-number-input-readonly {
+    .cl-number-input-controls {
+      display: none;
+    }
+  }
+
+  // Sizes
+  &.cl-number-input-small {
+    font-size: var(--cl-font-size-sm);
+
+    .cl-number-input-field {
+      padding: 0.375rem 0.75rem;
+      padding-right: 2rem;
+    }
+
+    .cl-number-input-controls {
+      button {
+        height: 1rem;
+      }
+    }
+  }
+
+  &.cl-number-input-medium {
+    font-size: var(--cl-font-size-base);
+
+    .cl-number-input-field {
+      padding: 0.5rem 1rem;
+      padding-right: 2.5rem;
+    }
+
+    .cl-number-input-controls {
+      button {
+        height: 1.25rem;
+      }
+    }
+  }
+
+  &.cl-number-input-large {
+    font-size: var(--cl-font-size-lg);
+
+    .cl-number-input-field {
+      padding: 0.625rem 1.25rem;
+      padding-right: 3rem;
+    }
+
+    .cl-number-input-controls {
+      button {
+        height: 1.5rem;
+      }
+    }
+  }
+
+  .cl-number-input-label {
+    color: var(--cl-text-primary);
+    font-weight: 500;
+  }
+
+  .cl-number-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .cl-number-input-field {
+    width: 100%;
+    border: 1px solid var(--cl-border-color);
+    border-radius: var(--cl-border-radius);
+    background: var(--cl-bg-primary);
+    color: var(--cl-text-primary);
+    transition: all 0.2s ease;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &::placeholder {
+      color: var(--cl-text-secondary);
+    }
+
+    &:hover {
+      border-color: var(--cl-primary);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--cl-primary);
+      box-shadow: 0 0 0 2px var(--cl-primary-alpha);
+    }
+
+    &.has-error {
+      border-color: var(--cl-danger);
+
+      &:focus {
+        box-shadow: 0 0 0 2px var(--cl-danger-alpha);
+      }
+    }
+
+    &:disabled {
+      background-color: var(--cl-bg-disabled);
+      cursor: not-allowed;
+    }
+
+    &:read-only {
+      background-color: var(--cl-bg-secondary);
+      cursor: default;
+    }
+  }
+
+  .cl-number-input-prefix,
+  .cl-number-input-suffix {
+    position: absolute;
+    color: var(--cl-text-secondary);
+    user-select: none;
+  }
+
+  .cl-number-input-prefix {
+    left: 0.75rem;
+    & + .cl-number-input-field {
+      padding-left: 2rem;
+    }
+  }
+
+  .cl-number-input-suffix {
+    right: 2.5rem;
+    & ~ .cl-number-input-field {
+      padding-right: 3.5rem;
+    }
+  }
+
+  .cl-number-input-controls {
+    position: absolute;
+    right: 0.5rem;
+    height: calc(100% - 2px);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    button {
+      padding: 0;
+      width: 1.5rem;
+      border: none;
+      background: transparent;
+      color: var(--cl-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--cl-primary);
+      }
+
+      &:focus {
+        outline: none;
+        color: var(--cl-primary);
+      }
+
+      &:disabled {
+        color: var(--cl-text-disabled);
+        cursor: not-allowed;
+      }
+
+      .cl-number-input-arrow {
+        font-size: 0.75em;
+        line-height: 1;
+      }
+    }
+  }
+
+  .cl-number-input-helper {
+    font-size: 0.875em;
+    color: var(--cl-text-secondary);
+
+    &.has-error {
+      color: var(--cl-danger);
+    }
+  }
+}
