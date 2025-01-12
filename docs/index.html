@@ -61,19 +61,33 @@
 
     <div class="features">
         <h2>Getting Started</h2>
+        <h3>Installation</h3>
+        <p>Install using npm:</p>
         <pre><code>npm install codelace</code></pre>
         
+        <p>Or using yarn:</p>
+        <pre><code>yarn add codelace</code></pre>
+        
         <h3>Usage</h3>
-        <pre><code>// Import CSS
+        <p>Import the CSS:</p>
+        <pre><code>// Using ES modules
 import 'codelace/css';
 
-// Import TypeScript components
-import { Modal } from 'codelace';</code></pre>
+// Using CommonJS
+require('codelace/css');</code></pre>
+
+        <p>Import TypeScript components:</p>
+        <pre><code>// Import specific components
+import { Modal, Button, Dropdown } from 'codelace';
+
+// Use in your code
+const modal = new Modal('#myModal');
+modal.show();</code></pre>
     </div>
 
     <footer style="text-align: center; padding: 2rem; background: #f9fafb;">
         <p>Released under the MIT License</p>
-        <p>© 2025 CodeLace. Built with ❤️ by Teck Mill</p>
+        <p> 2025 CodeLace. Built with by Teck Mill</p>
     </footer>
 </body>
 </html>
