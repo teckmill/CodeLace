@@ -1,17 +1,8 @@
-// Colors
-$primary: #007bff !default;
-$secondary: #6c757d !default;
-$success: #28a745 !default;
-$info: #17a2b8 !default;
-$warning: #ffc107 !default;
-$danger: #dc3545 !default;
-$light: #f8f9fa !default;
-$dark: #343a40 !default;
+@use "sass:color";
 
-// Typography
-$font-family-base: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
-$font-size-base: 1rem !default;
-$line-height-base: 1.5 !default;
+// Grid
+$grid-columns: 12 !default;
+$grid-gutter-width: 1.5rem !default;
 
 // Breakpoints
 $breakpoints: (
@@ -23,10 +14,36 @@ $breakpoints: (
   xxl: 1400px
 ) !default;
 
-// Grid
-$grid-columns: 12 !default;
-$grid-gutter-width: 1.5rem !default;
-$grid-row-columns: 6 !default;
+// Container max widths
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
+
+// Colors
+$primary: #0d6efd !default;
+$secondary: #6c757d !default;
+$success: #198754 !default;
+$info: #0dcaf0 !default;
+$warning: #ffc107 !default;
+$danger: #dc3545 !default;
+$light: #f8f9fa !default;
+$dark: #212529 !default;
+
+// Theme colors
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+) !default;
 
 // Spacing
 $spacer: 1rem !default;
@@ -39,15 +56,56 @@ $spacers: (
   5: $spacer * 3
 ) !default;
 
-// Border
+// Body
+$body-bg: #fff !default;
+$body-color: $dark !default;
+
+// Links
+$link-color: $primary !default;
+$link-decoration: none !default;
+$link-hover-color: darken($link-color, 15%) !default;
+$link-hover-decoration: underline !default;
+
+// Components
 $border-width: 1px !default;
 $border-color: #dee2e6 !default;
 $border-radius: .25rem !default;
-$border-radius-lg: .3rem !default;
 $border-radius-sm: .2rem !default;
+$border-radius-lg: .3rem !default;
+$border-radius-pill: 50rem !default;
 
-// Components
-$transition-base: all .2s ease-in-out !default;
-$box-shadow: 0 .5rem 1rem rgba(#000, .15) !default;
-$box-shadow-sm: 0 .125rem .25rem rgba(#000, .075) !default;
-$box-shadow-lg: 0 1rem 3rem rgba(#000, .175) !default;
+// Buttons
+$btn-padding-y: .375rem !default;
+$btn-padding-x: .75rem !default;
+$btn-font-size: 1rem !default;
+$btn-line-height: 1.5 !default;
+$btn-border-width: $border-width !default;
+$btn-border-radius: $border-radius !default;
+
+// Alerts
+$alert-padding-y: .75rem !default;
+$alert-padding-x: 1.25rem !default;
+$alert-margin-bottom: 1rem !default;
+$alert-border-radius: $border-radius !default;
+$alert-border-width: $border-width !default;
+$alert-dismissible-padding-r: $alert-padding-x * 3 !default;
+
+// Modal
+$modal-inner-padding: 1rem !default;
+$modal-header-padding: 1rem !default;
+$modal-content-bg: $body-bg !default;
+$modal-content-border-width: $border-width !default;
+$modal-content-border-radius: $border-radius-lg !default;
+$modal-backdrop-bg: #000 !default;
+$modal-backdrop-opacity: .5 !default;
+$modal-header-border-color: $border-color !default;
+$modal-footer-border-color: $modal-header-border-color !default;
+
+// Z-index
+$zindex-dropdown: 1000 !default;
+$zindex-sticky: 1020 !default;
+$zindex-fixed: 1030 !default;
+$zindex-modal-backdrop: 1040 !default;
+$zindex-modal: 1050 !default;
+$zindex-popover: 1060 !default;
+$zindex-tooltip: 1070 !default;

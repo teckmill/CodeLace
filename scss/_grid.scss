@@ -1,52 +1,68 @@
+@use "sass:math";
+@use "sass:map";
+@use "variables" as *;
+@use "mixins" as *;
+
 // Container
 .container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: $grid-gutter-width * 0.5;
-  padding-left: $grid-gutter-width * 0.5;
-
-  @each $breakpoint, $width in $breakpoints {
+  @include make-container();
+  
+  @each $breakpoint, $container-max-width in $container-max-widths {
     @include breakpoint-up($breakpoint) {
-      @if $width > 0 {
-        max-width: $width;
-      }
+      max-width: $container-max-width;
     }
   }
 }
 
 .container-fluid {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: $grid-gutter-width * 0.5;
-  padding-left: $grid-gutter-width * 0.5;
+  @include make-container();
 }
 
 // Row
 .row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -$grid-gutter-width * 0.5;
-  margin-left: -$grid-gutter-width * 0.5;
+  @include make-row();
 }
 
 // Columns
-@each $breakpoint in map-keys($breakpoints) {
-  $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
-
+@each $breakpoint in map.keys($breakpoints) {
   @include breakpoint-up($breakpoint) {
-    // Basic columns
+    $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
+
     @for $i from 1 through $grid-columns {
       .col#{$infix}-#{$i} {
         @include make-col($i);
       }
     }
 
-    // Offset
-    @for $i from 0 through ($grid-columns - 1) {
+    .col#{$infix}-auto {
+      flex: 0 0 auto;
+      width: auto;
+      max-width: 100%;
+    }
+
+    @for $i from 0 through $grid-columns {
       .offset#{$infix}-#{$i} {
-        margin-left: percentage($i / $grid-columns);
+        margin-left: if($i == 0, 0, math.percentage(math.div($i, $grid-columns)));
+      }
+    }
+  }
+}
+
+// RTL support
+[dir="rtl"] {
+  .row {
+    flex-direction: row-reverse;
+  }
+
+  @each $breakpoint in map.keys($breakpoints) {
+    @include breakpoint-up($breakpoint) {
+      $infix: if($breakpoint == xs, "", "-#{$breakpoint}");
+
+      @for $i from 0 through $grid-columns {
+        .offset#{$infix}-#{$i} {
+          margin-right: if($i == 0, 0, math.percentage(math.div($i, $grid-columns)));
+          margin-left: 0;
+        }
       }
     }
   }

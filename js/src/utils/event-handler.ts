@@ -9,6 +9,7 @@ type EventMap = {
   mouseout: MouseEvent;
   focus: FocusEvent;
   blur: FocusEvent;
+  transitionend: TransitionEvent;
   [key: string]: Event;
 };
 
@@ -57,7 +58,7 @@ export class EventHandler {
       }
     }) as EventListener;
 
-    element.addEventListener(eventType, originalHandler);
+    element.addEventListener(eventType as string, originalHandler);
 
     this.handlers.push({
       element,
@@ -91,7 +92,7 @@ export class EventHandler {
     });
 
     handlers.forEach(h => {
-      h.element.removeEventListener(h.eventType, h.originalHandler);
+      h.element.removeEventListener(h.eventType as string, h.originalHandler);
       const index = this.handlers.indexOf(h);
       if (index > -1) {
         this.handlers.splice(index, 1);
@@ -107,7 +108,7 @@ export class EventHandler {
     eventType: T,
     detail?: any
   ): void {
-    const event = new CustomEvent(eventType, {
+    const event = new CustomEvent(eventType.toString(), {
       bubbles: true,
       cancelable: true,
       detail
@@ -121,7 +122,7 @@ export class EventHandler {
    */
   public static removeAll(): void {
     this.handlers.forEach(h => {
-      h.element.removeEventListener(h.eventType, h.originalHandler);
+      h.element.removeEventListener(h.eventType as string, h.originalHandler);
     });
     this.handlers = [];
   }

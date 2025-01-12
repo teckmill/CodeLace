@@ -1,13 +1,17 @@
+@use "sass:math";
+@use "sass:map";
+@use "sass:color";
+
 // Breakpoint mixins
 @mixin breakpoint-up($name) {
-  $min: map-get($breakpoints, $name);
+  $min: map.get($breakpoints, $name);
   @media (min-width: $min) {
     @content;
   }
 }
 
 @mixin breakpoint-down($name) {
-  $max: map-get($breakpoints, $name);
+  $max: map.get($breakpoints, $name);
   @media (max-width: $max) {
     @content;
   }
@@ -36,21 +40,56 @@
   box-shadow: $shadow;
 }
 
+// RTL property mixin
+@mixin rtl-property($property, $value) {
+  #{$property}: $value;
+  [dir="rtl"] & {
+    #{if($property == "padding-left", "padding-right",
+         if($property == "padding-right", "padding-left",
+         if($property == "margin-left", "margin-right",
+         if($property == "margin-right", "margin-left",
+         if($property == "border-left", "border-right",
+         if($property == "border-right", "border-left",
+         if($property == "left", "right",
+         if($property == "right", "left", $property))))))))}:
+    $value;
+  }
+}
+
 // Grid column
 @mixin make-col($size, $columns: $grid-columns) {
-  flex: 0 0 percentage($size / $columns);
-  max-width: percentage($size / $columns);
+  flex: 0 0 math.percentage(math.div($size, $columns));
+  max-width: math.percentage(math.div($size, $columns));
 }
 
 // Button variants
-@mixin button-variant($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%)) {
-  color: color-contrast($background);
+@mixin button-variant(
+  $background,
+  $border,
+  $hover-background: color.adjust($background, $lightness: -7.5%),
+  $hover-border: color.adjust($border, $lightness: -10%)
+) {
+  color: color.adjust($background, $lightness: 90%);
   background-color: $background;
   border-color: $border;
 
   &:hover {
-    color: color-contrast($hover-background);
+    color: color.adjust($hover-background, $lightness: 90%);
     background-color: $hover-background;
     border-color: $hover-border;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem color.adjust($background, $alpha: -0.5);
+  }
+
+  &:active {
+    background-color: color.adjust($background, $lightness: -10%);
+    border-color: color.adjust($border, $lightness: -12.5%);
+  }
+
+  &:disabled {
+    background-color: color.adjust($background, $lightness: 20%);
+    border-color: color.adjust($border, $lightness: 20%);
   }
 }

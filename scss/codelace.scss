@@ -3,25 +3,27 @@
  * A modern, lightweight CSS framework
  */
 
+@use "sass:math";
+@use "sass:map";
+@use "sass:color";
+
 // Core
-@import "variables";
-@import "mixins";
+@use "variables";
+@use "mixins";
 
 // Layout
-@import "grid";
+@use "grid";
 
 // Components
-@import "components/buttons";
-@import "components/alerts";
-@import "components/cards";
-@import "components/forms";
-@import "components/modals";
-@import "components/navbar";
-@import "components/tabs";
-
-// Themes
-@import "themes/dark";
-@import "themes/high-contrast";
+@use "components/buttons";
+@use "components/alerts";
+@use "components/cards";
+@use "components/navbar";
+@use "components/tabs";
+@use "components/modal";
 
 // Utilities
-@import "utilities";
+@use "utilities";
+
+// RTL Support
+@use "rtl";
