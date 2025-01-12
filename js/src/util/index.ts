@@ -1,17 +1,17 @@
 // DOM manipulation
-export const getElement = (selector: string | Element): Element | null => {
+export const getElement = (selector: string | HTMLElement): HTMLElement | null => {
   return typeof selector === 'string'
     ? document.querySelector(selector)
     : selector;
 };
 
-export const getAllElements = (selector: string): Element[] => {
+export const getAllElements = (selector: string): HTMLElement[] => {
   return Array.from(document.querySelectorAll(selector));
 };
 
 // Event handling
 export const on = (
-  element: Element,
+  element: HTMLElement,
   event: string,
   handler: EventListenerOrEventListenerObject,
   options?: AddEventListenerOptions
@@ -20,7 +20,7 @@ export const on = (
 };
 
 export const off = (
-  element: Element,
+  element: HTMLElement,
   event: string,
   handler: EventListenerOrEventListenerObject,
   options?: EventListenerOptions
@@ -29,20 +29,20 @@ export const off = (
 };
 
 // Class manipulation
-export const hasClass = (element: Element, className: string): boolean => {
+export const hasClass = (element: HTMLElement, className: string): boolean => {
   return element.classList.contains(className);
 };
 
-export const addClass = (element: Element, ...classNames: string[]): void => {
+export const addClass = (element: HTMLElement, ...classNames: string[]): void => {
   element.classList.add(...classNames);
 };
 
-export const removeClass = (element: Element, ...classNames: string[]): void => {
+export const removeClass = (element: HTMLElement, ...classNames: string[]): void => {
   element.classList.remove(...classNames);
 };
 
 export const toggleClass = (
-  element: Element,
+  element: HTMLElement,
   className: string,
   force?: boolean
 ): void => {
@@ -51,7 +51,7 @@ export const toggleClass = (
 
 // Animation
 export const fadeIn = (
-  element: Element,
+  element: HTMLElement,
   duration = 300,
   display = 'block'
 ): Promise<void> => {
@@ -78,7 +78,7 @@ export const fadeIn = (
   });
 };
 
-export const fadeOut = (element: Element, duration = 300): Promise<void> => {
+export const fadeOut = (element: HTMLElement, duration = 300): Promise<void> => {
   return new Promise((resolve) => {
     const start = performance.now();
     const initialOpacity = parseFloat(getComputedStyle(element).opacity);
