@@ -8,7 +8,7 @@ describe('Card Component', () => {
     cardElement = document.createElement('div');
     cardElement.classList.add('cl-card');
     document.body.appendChild(cardElement);
-    card = new Card({ element: cardElement });
+    card = new Card(cardElement);
   });
 
   afterEach(() => {
@@ -21,6 +21,10 @@ describe('Card Component', () => {
 
   it('should add card classes', () => {
     expect(cardElement.classList.contains('cl-card')).toBeTruthy();
+  });
+
+  it('should have default options', () => {
+    expect(card['options'].rtl).toBe(false);
   });
 
   it('should handle header and footer', () => {
