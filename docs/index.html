@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLace - Modern CSS Framework</title>
+    <link rel="stylesheet" href="../dist/css/codelace.min.css">
+    <style>
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white;
+        }
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .feature-card {
+            padding: 2rem;
+            border-radius: 0.5rem;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>CodeLace</h1>
+        <p>A modern, lightweight CSS framework with TypeScript components</p>
+        <div style="margin-top: 2rem;">
+            <a href="https://github.com/teckmill/codelace" class="button primary">GitHub</a>
+            <a href="https://www.npmjs.com/package/codelace" class="button secondary">npm</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <h2>Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Modern CSS</h3>
+                <p>Built with modern CSS features and best practices for optimal performance and maintainability.</p>
+            </div>
+            <div class="feature-card">
+                <h3>TypeScript Components</h3>
+                <p>Includes TypeScript components for enhanced development experience and type safety.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Responsive Design</h3>
+                <p>Mobile-first approach ensures your applications look great on all devices.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <h2>Getting Started</h2>
+        <pre><code>npm install codelace</code></pre>
+        
+        <h3>Usage</h3>
+        <pre><code>// Import CSS
+import 'codelace/css';
+
+// Import TypeScript components
+import { Modal } from 'codelace';</code></pre>
+    </div>
+
+    <footer style="text-align: center; padding: 2rem; background: #f9fafb;">
+        <p>Released under the MIT License</p>
+        <p>© 2025 CodeLace. Built with ❤️ by Teck Mill</p>
+    </footer>
+</body>
+</html>
