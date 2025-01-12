@@ -1,304 +1,186 @@
-import BaseComponent, { ComponentOptions } from '../base-component';
-import { addClass, removeClass, hasClass } from '../util';
+import { Component } from '../core/component';
+import { getElement, getElements, reflow } from '../utils/dom';
+import { EventHandler } from '../utils/event-handler';
 
-interface TabOptions extends ComponentOptions {
-  activeTab?: string | null;
-  keyboard?: boolean;
-  vertical?: boolean;
-  onShow?: (tabId: string) => void;
-  onShown?: (tabId: string) => void;
-  onHide?: (tabId: string) => void;
-  onHidden?: (tabId: string) => void;
+export interface TabOptions {
+  activeTab?: string;
+  rtl?: boolean;
 }
 
-interface TabItem {
-  trigger: HTMLElement;
-  content: HTMLElement;
-  id: string;
-  panel: HTMLElement;
-}
+export class Tab extends Component {
+  private static readonly DATA_TOGGLE = 'data-cl-toggle';
+  private static readonly DATA_TARGET = 'data-cl-target';
+  private static readonly ACTIVE_CLASS = 'cl-active';
+  private static readonly FADE_CLASS = 'cl-fade';
+  private static readonly SHOW_CLASS = 'cl-show';
 
-export default class Tab extends BaseComponent {
-  protected declare options: TabOptions;
-  private tabs: TabItem[] = [];
-  private activeTab: TabItem | null = null;
-  private boundHandleKeydown = ((e: Event) => {
-    if (e instanceof KeyboardEvent) {
-      this.handleKeydown(e);
-    }
-  }) as EventListener;
+  private readonly options: TabOptions;
+  private readonly tabs: HTMLElement[];
+  private readonly panes: HTMLElement[];
+  private activeTab: HTMLElement | null;
 
-  protected getDefaultOptions(): TabOptions {
-    return {
-      ...super.getDefaultOptions(),
-      activeTab: null,
-      keyboard: true,
-      vertical: false,
-      onShow: () => {},
-      onShown: () => {},
-      onHide: () => {},
-      onHidden: () => {}
+  constructor(element: HTMLElement, options: TabOptions = {}) {
+    super(element);
+
+    this.options = {
+      activeTab: '',
+      rtl: false,
+      ...options
     };
-  }
 
-  protected init(): void {
-    if (!(this.element instanceof HTMLElement)) return;
+    this.tabs = Array.from(getElements<HTMLElement>('[data-cl-toggle="tab"]', this.element));
+    this.panes = this.tabs.map(tab => {
+      const target = tab.getAttribute(Tab.DATA_TARGET);
+      return getElement<HTMLElement>(target!) || null;
+    }).filter((pane): pane is HTMLElement => pane !== null);
 
-    addClass(this.element, 'cl-tabs');
-    
-    // Find all tab triggers and content
-    this.initializeTabs();
-    
-    if (this.tabs.length > 0) {
-      // Set initial active tab
-      const initialTab = this.options.activeTab 
-        ? this.tabs.find(tab => tab.id === this.options.activeTab)
-        : this.tabs[0];
-        
-      if (initialTab) {
-        this.activate(initialTab.id);
-      }
-    }
-
-    this.bindEvents();
-  }
-
-  private initializeTabs(): void {
-    if (!(this.element instanceof HTMLElement)) return;
-
-    // Find all tab triggers
-    const triggers = this.element.querySelectorAll('[data-toggle="tab"]');
-    const tabList = this.element.querySelector('.cl-tabs-list');
-    
-    // Set up tablist
-    if (tabList) {
-      tabList.setAttribute('role', 'tablist');
-      tabList.setAttribute('aria-orientation', this.options.vertical ? 'vertical' : 'horizontal');
-    }
-    
-    triggers.forEach((trigger, index) => {
-      if (!(trigger instanceof HTMLElement)) return;
-
-      const targetId = trigger.getAttribute('href')?.substring(1) || 
-                      trigger.getAttribute('data-target')?.substring(1);
-                      
-      if (!targetId) return;
-
-      const content = document.getElementById(targetId);
-      if (!content) return;
-
-      // Generate unique IDs if not present
-      if (!trigger.id) {
-        trigger.id = `tab-${targetId}`;
-      }
-
-      // Set up ARIA attributes for the tab
-      trigger.setAttribute('role', 'tab');
-      trigger.setAttribute('aria-controls', targetId);
-      trigger.setAttribute('aria-selected', 'false');
-      trigger.setAttribute('tabindex', '-1');
-      trigger.setAttribute('aria-description', 'Press Enter or Space to activate tab');
-      
-      // Set up tab panel
-      content.setAttribute('role', 'tabpanel');
-      content.setAttribute('aria-labelledby', trigger.id);
-      content.setAttribute('tabindex', '0');
-      content.setAttribute('hidden', '');
-      
-      // Create live region for announcements
-      const liveRegion = document.createElement('div');
-      liveRegion.setAttribute('aria-live', 'polite');
-      liveRegion.setAttribute('class', 'cl-sr-only');
-      content.appendChild(liveRegion);
-
-      // Add to tabs collection
-      this.tabs.push({
-        trigger,
-        content,
-        id: targetId,
-        panel: content
-      });
-    });
-  }
-
-  private bindEvents(): void {
-    // Click events
-    this.tabs.forEach(tab => {
-      tab.trigger.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.activate(tab.id);
-      });
-
-      // Add keyboard activation
-      tab.trigger.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          this.activate(tab.id);
-        }
-      });
-
-      // Focus management
-      tab.trigger.addEventListener('focus', () => {
-        if (!hasClass(tab.trigger, 'active')) {
-          tab.trigger.setAttribute('tabindex', '0');
-        }
-      });
-
-      tab.trigger.addEventListener('blur', () => {
-        if (!hasClass(tab.trigger, 'active')) {
-          tab.trigger.setAttribute('tabindex', '-1');
-        }
-      });
-    });
-
-    // Keyboard navigation
-    if (this.options.keyboard) {
-      this.element.addEventListener('keydown', this.boundHandleKeydown);
-    }
-  }
-
-  private handleKeydown(event: KeyboardEvent): void {
-    if (!this.activeTab) return;
-
-    const currentIndex = this.tabs.findIndex(tab => tab.id === this.activeTab?.id);
-    let nextIndex: number;
-
-    const isVertical = this.options.vertical;
-    const isHorizontal = !isVertical;
-
-    switch (event.key) {
-      case 'ArrowRight':
-        if (isHorizontal) {
-          event.preventDefault();
-          nextIndex = currentIndex + 1;
-          if (nextIndex >= this.tabs.length) nextIndex = 0;
-          this.activate(this.tabs[nextIndex].id);
-        }
-        break;
-
-      case 'ArrowLeft':
-        if (isHorizontal) {
-          event.preventDefault();
-          nextIndex = currentIndex - 1;
-          if (nextIndex < 0) nextIndex = this.tabs.length - 1;
-          this.activate(this.tabs[nextIndex].id);
-        }
-        break;
-
-      case 'ArrowDown':
-        if (isVertical) {
-          event.preventDefault();
-          nextIndex = currentIndex + 1;
-          if (nextIndex >= this.tabs.length) nextIndex = 0;
-          this.activate(this.tabs[nextIndex].id);
-        }
-        break;
-
-      case 'ArrowUp':
-        if (isVertical) {
-          event.preventDefault();
-          nextIndex = currentIndex - 1;
-          if (nextIndex < 0) nextIndex = this.tabs.length - 1;
-          this.activate(this.tabs[nextIndex].id);
-        }
-        break;
-
-      case 'Home':
-        event.preventDefault();
-        this.activate(this.tabs[0].id);
-        break;
-
-      case 'End':
-        event.preventDefault();
-        this.activate(this.tabs[this.tabs.length - 1].id);
-        break;
-    }
-  }
-
-  private async deactivateCurrentTab(): Promise<void> {
-    if (!this.activeTab) return;
-
-    const { trigger, content, id } = this.activeTab;
-
-    this.options.onHide?.(id);
-
-    // Update ARIA attributes and classes
-    trigger.setAttribute('aria-selected', 'false');
-    trigger.tabIndex = -1;
-    removeClass(trigger, 'active');
-
-    // Hide content
-    content.setAttribute('hidden', '');
-    content.querySelector('.cl-sr-only')?.textContent = `Tab panel ${trigger.textContent} is now hidden`;
-    
-    this.options.onHidden?.(id);
     this.activeTab = null;
+
+    this.init();
   }
 
-  public async activate(tabId: string): Promise<void> {
-    const tab = this.tabs.find(t => t.id === tabId);
-    if (!tab || tab === this.activeTab) return;
+  private init(): void {
+    // Set initial active tab
+    if (this.options.activeTab) {
+      const tab = this.tabs.find(t => t.getAttribute(Tab.DATA_TARGET) === this.options.activeTab);
+      if (tab) {
+        this.activate(tab);
+      }
+    } else if (this.tabs.length) {
+      this.activate(this.tabs[0]);
+    }
+
+    // Add event listeners
+    EventHandler.on<'click'>(this.element, 'click', `[${Tab.DATA_TOGGLE}="tab"]`, (event) => {
+      event.preventDefault();
+      const tab = event.currentTarget as HTMLElement;
+      this.activate(tab);
+    });
+
+    // Handle keyboard navigation
+    EventHandler.on<'keydown'>(this.element, 'keydown', `[${Tab.DATA_TOGGLE}="tab"]`, (event) => {
+      const target = event.target as HTMLElement;
+      const key = event.key;
+      const isRTL = this.options.rtl;
+
+      let nextTab: HTMLElement | null = null;
+
+      switch (key) {
+        case isRTL ? 'ArrowLeft' : 'ArrowRight':
+        case 'ArrowDown':
+          event.preventDefault();
+          nextTab = this.getNextTab(target);
+          break;
+
+        case isRTL ? 'ArrowRight' : 'ArrowLeft':
+        case 'ArrowUp':
+          event.preventDefault();
+          nextTab = this.getPreviousTab(target);
+          break;
+
+        case 'Home':
+          event.preventDefault();
+          nextTab = this.tabs[0];
+          break;
+
+        case 'End':
+          event.preventDefault();
+          nextTab = this.tabs[this.tabs.length - 1];
+          break;
+      }
+
+      if (nextTab) {
+        nextTab.focus();
+        this.activate(nextTab);
+      }
+    });
+
+    // Handle direction changes
+    document.documentElement.addEventListener('directionchange', (event: Event) => {
+      if (event instanceof CustomEvent) {
+        this.options.rtl = event.detail.direction === 'rtl';
+      }
+    });
+  }
+
+  private activate(tab: HTMLElement): void {
+    if (this.activeTab === tab) return;
 
     // Deactivate current tab
-    await this.deactivateCurrentTab();
+    if (this.activeTab) {
+      this.deactivate(this.activeTab);
+    }
 
-    const { trigger, content, id } = tab;
-    this.options.onShow?.(id);
+    // Activate new tab
+    const target = tab.getAttribute(Tab.DATA_TARGET);
+    const pane = getElement<HTMLElement>(target!);
 
-    // Update ARIA attributes and classes
-    trigger.setAttribute('aria-selected', 'true');
-    trigger.tabIndex = 0;
-    addClass(trigger, 'active');
-    
-    // Show content and announce to screen readers
-    content.removeAttribute('hidden');
-    content.querySelector('.cl-sr-only')?.textContent = `Tab panel ${trigger.textContent} is now visible`;
-    
-    // Focus management
-    trigger.focus();
-    
+    if (!pane) return;
+
+    tab.classList.add(Tab.ACTIVE_CLASS);
+    tab.setAttribute('aria-selected', 'true');
+    tab.removeAttribute('tabindex');
+
+    pane.classList.add(Tab.ACTIVE_CLASS);
+    if (pane.classList.contains(Tab.FADE_CLASS)) {
+      // Trigger reflow
+      reflow(pane);
+      pane.classList.add(Tab.SHOW_CLASS);
+    }
+
     this.activeTab = tab;
-    this.options.onShown?.(id);
+
+    // Dispatch event
+    EventHandler.trigger(tab, 'cl.tab.shown', {
+      relatedTarget: pane
+    });
   }
 
-  public getActiveTab(): string | null {
-    return this.activeTab?.id || null;
+  private deactivate(tab: HTMLElement): void {
+    const target = tab.getAttribute(Tab.DATA_TARGET);
+    const pane = getElement<HTMLElement>(target!);
+
+    if (!pane) return;
+
+    tab.classList.remove(Tab.ACTIVE_CLASS);
+    tab.setAttribute('aria-selected', 'false');
+    tab.setAttribute('tabindex', '-1');
+
+    pane.classList.remove(Tab.ACTIVE_CLASS);
+    if (pane.classList.contains(Tab.FADE_CLASS)) {
+      pane.classList.remove(Tab.SHOW_CLASS);
+    }
+
+    // Dispatch event
+    EventHandler.trigger(tab, 'cl.tab.hidden', {
+      relatedTarget: pane
+    });
+  }
+
+  private getNextTab(tab: HTMLElement): HTMLElement | null {
+    const index = this.tabs.indexOf(tab);
+    return index < this.tabs.length - 1 ? this.tabs[index + 1] : this.tabs[0];
+  }
+
+  private getPreviousTab(tab: HTMLElement): HTMLElement | null {
+    const index = this.tabs.indexOf(tab);
+    return index > 0 ? this.tabs[index - 1] : this.tabs[this.tabs.length - 1];
   }
 
   public destroy(): void {
-    if (this.options.keyboard) {
-      this.element.removeEventListener('keydown', this.boundHandleKeydown);
-    }
+    // Remove event listeners
+    EventHandler.off(this.element, 'click');
+    EventHandler.off(this.element, 'keydown');
 
+    // Remove classes
     this.tabs.forEach(tab => {
-      // Remove event listeners
-      tab.trigger.removeEventListener('click', () => this.activate(tab.id));
-      
-      // Remove ARIA attributes
-      tab.trigger.removeAttribute('role');
-      tab.trigger.removeAttribute('aria-controls');
-      tab.trigger.removeAttribute('aria-selected');
-      tab.trigger.removeAttribute('aria-description');
-      tab.trigger.removeAttribute('tabindex');
-      
-      tab.content.removeAttribute('role');
-      tab.content.removeAttribute('aria-labelledby');
-      tab.content.removeAttribute('tabindex');
-      tab.content.removeAttribute('hidden');
-      
-      // Remove live region
-      const liveRegion = tab.content.querySelector('.cl-sr-only');
-      if (liveRegion) {
-        liveRegion.remove();
-      }
+      tab.classList.remove(Tab.ACTIVE_CLASS);
+      tab.removeAttribute('aria-selected');
+      tab.removeAttribute('tabindex');
     });
 
-    const tabList = this.element.querySelector('.cl-tabs-list');
-    if (tabList) {
-      tabList.removeAttribute('role');
-      tabList.removeAttribute('aria-orientation');
-    }
-
-    super.destroy();
+    this.panes.forEach(pane => {
+      pane.classList.remove(Tab.ACTIVE_CLASS, Tab.SHOW_CLASS);
+    });
   }
 }

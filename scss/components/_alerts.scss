@@ -1,62 +1,101 @@
-// Alert component styles
+// Alerts
+// -------------------------
 
+// Variables
+$alert-padding-y: 0.75rem !default;
+$alert-padding-x: 1.25rem !default;
+$alert-margin-bottom: 1rem !default;
+$alert-border-radius: $border-radius !default;
+$alert-link-font-weight: 500 !default;
+$alert-border-width: 1px !default;
+$alert-bg-scale: -80% !default;
+$alert-border-scale: -70% !default;
+$alert-color-scale: 40% !default;
+$alert-dismissible-padding-r: $alert-padding-x * 3 !default;
+
+// Base styles
 .cl-alert {
   position: relative;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: $alert-margin-bottom;
+  border: $alert-border-width solid transparent;
+  border-radius: $alert-border-radius;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 
-  // Alert variants
-  &.cl-alert-primary {
-    color: #004085;
-    background-color: #cce5ff;
-    border-color: #b8daff;
+  // Headings
+  h1, h2, h3, h4, h5, h6 {
+    color: inherit;
+  }
+}
+
+// Dismissible alerts
+.cl-alert-dismissible {
+  @include rtl-property(padding-right, $alert-dismissible-padding-r);
+  @include rtl-property(padding-left, $alert-padding-x);
+
+  // Adjust close button position
+  .cl-close {
+    position: absolute;
+    top: 0;
+    @include rtl-property(right, 0);
+    @include rtl-property(left, auto);
+    z-index: 2;
+    padding: $alert-padding-y * 1.25 $alert-padding-x;
+    color: inherit;
+  }
+}
+
+// Alert variants
+@each $color, $value in $theme-colors {
+  .cl-alert-#{$color} {
+    @include alert-variant(
+      shift-color($value, $alert-bg-scale),
+      shift-color($value, $alert-border-scale),
+      shift-color($value, $alert-color-scale)
+    );
+  }
+}
+
+// Alert links
+.cl-alert-link {
+  font-weight: $alert-link-font-weight;
+  color: inherit;
+  text-decoration: underline;
+
+  &:hover {
+    color: inherit;
+  }
+}
+
+// RTL specific adjustments
+[dir="rtl"] {
+  .cl-alert {
+    text-align: right;
   }
 
-  &.cl-alert-secondary {
-    color: #383d41;
-    background-color: #e2e3e5;
-    border-color: #d6d8db;
+  .cl-alert-dismissible {
+    padding-left: $alert-dismissible-padding-r;
+    padding-right: $alert-padding-x;
+
+    .cl-close {
+      right: auto;
+      left: 0;
+    }
   }
 
-  &.cl-alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+  // Icon support
+  .cl-alert-icon {
+    @include rtl-property(margin-right, 0);
+    @include rtl-property(margin-left, 0.5rem);
+    float: right;
   }
 
-  &.cl-alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  }
-
-  &.cl-alert-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-  }
-
-  &.cl-alert-info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-  }
-
-  &.cl-alert-light {
-    color: #818182;
-    background-color: #fefefe;
-    border-color: #fdfdfe;
-  }
-
-  &.cl-alert-dark {
-    color: #1b1e21;
-    background-color: #d6d8d9;
-    border-color: #c6c8ca;
+  // Additional content
+  .cl-alert-content {
+    @include rtl-property(margin-left, 0);
+    @include rtl-property(margin-right, 2rem);
   }
 }
 
@@ -98,30 +137,4 @@
   color: inherit;
   margin-top: 0;
   margin-bottom: 0.5rem;
-}
-
-// Alert link
-.cl-alert-link {
-  font-weight: 700;
-  color: inherit;
-  text-decoration: underline;
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-// Dismissible alert
-.cl-alert-dismissible {
-  padding-right: 4rem;
-}
-
-// Fade animation
-.cl-alert-fade {
-  opacity: 0;
-  transition: opacity 0.15s linear;
-
-  &.show {
-    opacity: 1;
-  }
 }
