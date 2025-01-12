@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensures full git history for coverage
       
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -40,6 +42,13 @@ jobs:
       
       - name: Test with Coverage
         run: npm run test:coverage
+      
+      - name: Debug Codecov Upload
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Ref: $GITHUB_REF"
+          echo "SHA: $GITHUB_SHA"
+          ls -l coverage
       
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
