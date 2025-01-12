@@ -13,12 +13,15 @@
     "declarationDir": "types",
     "sourceMap": true,
     "outDir": "dist/js",
-    "rootDir": "js/src",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@/*": ["js/src/*"]
     }
   },
-  "include": ["js/src/**/*"],
+  "include": [
+    "js/src/**/*", 
+    "__tests__/**/*"
+  ],
   "exclude": ["node_modules", "dist"]
 }
