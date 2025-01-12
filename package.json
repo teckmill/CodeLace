@@ -162,39 +162,5 @@
   "sideEffects": [
     "*.css",
     "*.scss"
-  ],
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "jsdom",
-    "testMatch": [
-      "**/__tests__/**/*.[jt]s?(x)",
-      "**/?(*.)+(spec|test).[tj]s?(x)"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": [
-        "ts-jest",
-        {
-          "tsconfig": "tsconfig.json",
-          "diagnostics": {
-            "warnOnly": true
-          }
-        }
-      ]
-    },
-    "roots": [
-      "<rootDir>/__tests__",
-      "<rootDir>/js/src"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(@codelace)/)"
-    ]
-  }
+  ]
 }
