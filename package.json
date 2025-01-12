@@ -31,7 +31,7 @@
     "build:css": "npm run css:compile && npm run css:prefix && npm run css:minify",
     "css:compile": "sass scss/codelace.scss dist/css/codelace.css --style expanded --source-map",
     "css:prefix": "postcss dist/css/codelace.css --config build/postcss.config.mjs --replace",
-    "css:minify": "cleancss -O2 --format breakWith=lf --output dist/css/codelace.min.css dist/css/codelace.css",
+    "css:minify": "cleancss -O2 --format breakWith=lf --output dist/css/codelace.min.css dist/css/codelace.css --skip-advanced",
     "clean": "npx rimraf dist types coverage",
     "lint:js": "eslint js/src/**/*.ts",
     "lint:css": "stylelint scss/**/*.scss",
