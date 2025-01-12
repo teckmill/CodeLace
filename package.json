@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "codelace",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A modern, lightweight CSS framework with TypeScript components",
   "main": "dist/js/codelace.js",
   "module": "dist/js/codelace.esm.js",
