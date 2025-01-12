@@ -1,0 +1,55 @@
+# Development files
+.git
+.github
+.vscode
+.idea
+*.log
+*.lock
+.DS_Store
+.env*
+
+# Source files (since we publish compiled files)
+js/
+build/
+test/
+coverage/
+docs/
+examples/
+
+# Configuration files
+.eslintrc*
+.prettierrc*
+.stylelintrc*
+.editorconfig
+.gitignore
+.travis.yml
+tsconfig.json
+jest.config.js
+vite.config.ts
+*.config.js
+*.config.mjs
+
+# Documentation and examples
+docs/
+examples/
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Test files
+__tests__/
+*.test.ts
+*.spec.ts
+coverage/
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.temp/

@@ -1,0 +1,250 @@
+// Form component styles
+
+// Form control base styles
+.cl-form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+  &::placeholder {
+    color: #6c757d;
+    opacity: 1;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+  }
+}
+
+// Form groups
+.cl-form-group {
+  margin-bottom: 1rem;
+}
+
+// Form labels
+.cl-form-label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+// Form text
+.cl-form-text {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #6c757d;
+}
+
+// Form validation states
+.cl-form-valid {
+  border-color: #28a745;
+
+  &:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  }
+}
+
+.cl-form-invalid {
+  border-color: #dc3545;
+
+  &:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+}
+
+// Form validation feedback
+.cl-valid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #28a745;
+}
+
+.cl-invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+// Show validation feedback
+.cl-was-validated {
+  .cl-form-control:valid ~ .cl-valid-feedback,
+  .cl-form-control:invalid ~ .cl-invalid-feedback {
+    display: block;
+  }
+}
+
+// Form row
+.cl-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+
+  > .cl-form-group {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+
+// Form inline
+.cl-form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+
+  .cl-form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .cl-form-group {
+    display: flex;
+    flex: 0 0 auto;
+    flex-flow: row wrap;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .cl-form-label {
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+  }
+}
+
+// Form check
+.cl-form-check {
+  position: relative;
+  display: block;
+  padding-left: 1.25rem;
+
+  .cl-form-check-input {
+    position: absolute;
+    margin-top: 0.3rem;
+    margin-left: -1.25rem;
+  }
+
+  .cl-form-check-label {
+    margin-bottom: 0;
+  }
+}
+
+// Form check inline
+.cl-form-check-inline {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 0;
+  margin-right: 0.75rem;
+
+  .cl-form-check-input {
+    position: static;
+    margin-top: 0;
+    margin-right: 0.3125rem;
+    margin-left: 0;
+  }
+}
+
+// Custom select
+.cl-custom-select {
+  display: inline-block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  appearance: none;
+
+  &:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+
+// Custom file input
+.cl-custom-file {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  margin-bottom: 0;
+
+  .cl-custom-file-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    margin: 0;
+    opacity: 0;
+
+    &:focus ~ .cl-custom-file-label {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  .cl-custom-file-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      display: block;
+      height: calc(1.5em + 0.75rem);
+      padding: 0.375rem 0.75rem;
+      line-height: 1.5;
+      color: #495057;
+      content: "Browse";
+      background-color: #e9ecef;
+      border-left: inherit;
+      border-radius: 0 0.25rem 0.25rem 0;
+    }
+  }
+}

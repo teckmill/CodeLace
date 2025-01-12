@@ -1,0 +1,127 @@
+// Alert component styles
+
+.cl-alert {
+  position: relative;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  // Alert variants
+  &.cl-alert-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+  }
+
+  &.cl-alert-secondary {
+    color: #383d41;
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+  }
+
+  &.cl-alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+
+  &.cl-alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+
+  &.cl-alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+  }
+
+  &.cl-alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+  }
+
+  &.cl-alert-light {
+    color: #818182;
+    background-color: #fefefe;
+    border-color: #fdfdfe;
+  }
+
+  &.cl-alert-dark {
+    color: #1b1e21;
+    background-color: #d6d8d9;
+    border-color: #c6c8ca;
+  }
+}
+
+// Close button
+.cl-alert-close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  appearance: none;
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+  margin-left: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+    text-decoration: none;
+    opacity: 0.75;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+
+// Alert content
+.cl-alert-content {
+  flex: 1;
+}
+
+// Alert heading
+.cl-alert-heading {
+  color: inherit;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+// Alert link
+.cl-alert-link {
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// Dismissible alert
+.cl-alert-dismissible {
+  padding-right: 4rem;
+}
+
+// Fade animation
+.cl-alert-fade {
+  opacity: 0;
+  transition: opacity 0.15s linear;
+
+  &.show {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,370 @@
+// Utility classes
+
+// Display
+.cl-d-none {
+  display: none !important;
+}
+
+.cl-d-inline {
+  display: inline !important;
+}
+
+.cl-d-inline-block {
+  display: inline-block !important;
+}
+
+.cl-d-block {
+  display: block !important;
+}
+
+.cl-d-flex {
+  display: flex !important;
+}
+
+.cl-d-inline-flex {
+  display: inline-flex !important;
+}
+
+// Flex utilities
+.cl-flex-row {
+  flex-direction: row !important;
+}
+
+.cl-flex-column {
+  flex-direction: column !important;
+}
+
+.cl-flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.cl-flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
+.cl-justify-content-start {
+  justify-content: flex-start !important;
+}
+
+.cl-justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.cl-justify-content-center {
+  justify-content: center !important;
+}
+
+.cl-justify-content-between {
+  justify-content: space-between !important;
+}
+
+.cl-justify-content-around {
+  justify-content: space-around !important;
+}
+
+.cl-align-items-start {
+  align-items: flex-start !important;
+}
+
+.cl-align-items-end {
+  align-items: flex-end !important;
+}
+
+.cl-align-items-center {
+  align-items: center !important;
+}
+
+.cl-align-items-baseline {
+  align-items: baseline !important;
+}
+
+.cl-align-items-stretch {
+  align-items: stretch !important;
+}
+
+// Spacing utilities
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: ($spacer * 0.25),
+  2: ($spacer * 0.5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3)
+);
+
+@each $prop, $abbrev in (margin: m, padding: p) {
+  @each $size, $length in $spacers {
+    .cl-#{$abbrev}-#{$size} {
+      #{$prop}: $length !important;
+    }
+    .cl-#{$abbrev}t-#{$size} {
+      #{$prop}-top: $length !important;
+    }
+    .cl-#{$abbrev}r-#{$size} {
+      #{$prop}-right: $length !important;
+    }
+    .cl-#{$abbrev}b-#{$size} {
+      #{$prop}-bottom: $length !important;
+    }
+    .cl-#{$abbrev}l-#{$size} {
+      #{$prop}-left: $length !important;
+    }
+    .cl-#{$abbrev}x-#{$size} {
+      #{$prop}-right: $length !important;
+      #{$prop}-left: $length !important;
+    }
+    .cl-#{$abbrev}y-#{$size} {
+      #{$prop}-top: $length !important;
+      #{$prop}-bottom: $length !important;
+    }
+  }
+}
+
+// Text utilities
+.cl-text-left {
+  text-align: left !important;
+}
+
+.cl-text-right {
+  text-align: right !important;
+}
+
+.cl-text-center {
+  text-align: center !important;
+}
+
+.cl-text-justify {
+  text-align: justify !important;
+}
+
+.cl-text-nowrap {
+  white-space: nowrap !important;
+}
+
+.cl-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Font weight
+.cl-font-weight-light {
+  font-weight: 300 !important;
+}
+
+.cl-font-weight-normal {
+  font-weight: 400 !important;
+}
+
+.cl-font-weight-bold {
+  font-weight: 700 !important;
+}
+
+// Colors
+.cl-text-primary {
+  color: #007bff !important;
+}
+
+.cl-text-secondary {
+  color: #6c757d !important;
+}
+
+.cl-text-success {
+  color: #28a745 !important;
+}
+
+.cl-text-danger {
+  color: #dc3545 !important;
+}
+
+.cl-text-warning {
+  color: #ffc107 !important;
+}
+
+.cl-text-info {
+  color: #17a2b8 !important;
+}
+
+.cl-text-light {
+  color: #f8f9fa !important;
+}
+
+.cl-text-dark {
+  color: #343a40 !important;
+}
+
+.cl-text-muted {
+  color: #6c757d !important;
+}
+
+// Background colors
+.cl-bg-primary {
+  background-color: #007bff !important;
+}
+
+.cl-bg-secondary {
+  background-color: #6c757d !important;
+}
+
+.cl-bg-success {
+  background-color: #28a745 !important;
+}
+
+.cl-bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.cl-bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.cl-bg-info {
+  background-color: #17a2b8 !important;
+}
+
+.cl-bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.cl-bg-dark {
+  background-color: #343a40 !important;
+}
+
+// Border utilities
+.cl-border {
+  border: 1px solid #dee2e6 !important;
+}
+
+.cl-border-0 {
+  border: 0 !important;
+}
+
+.cl-border-top {
+  border-top: 1px solid #dee2e6 !important;
+}
+
+.cl-border-right {
+  border-right: 1px solid #dee2e6 !important;
+}
+
+.cl-border-bottom {
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.cl-border-left {
+  border-left: 1px solid #dee2e6 !important;
+}
+
+// Border radius
+.cl-rounded {
+  border-radius: 0.25rem !important;
+}
+
+.cl-rounded-top {
+  border-top-left-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+}
+
+.cl-rounded-right {
+  border-top-right-radius: 0.25rem !important;
+  border-bottom-right-radius: 0.25rem !important;
+}
+
+.cl-rounded-bottom {
+  border-bottom-right-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+.cl-rounded-left {
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+.cl-rounded-circle {
+  border-radius: 50% !important;
+}
+
+.cl-rounded-0 {
+  border-radius: 0 !important;
+}
+
+// Visibility
+.cl-visible {
+  visibility: visible !important;
+}
+
+.cl-invisible {
+  visibility: hidden !important;
+}
+
+// Clearfix
+.cl-clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+// Position
+.cl-position-static {
+  position: static !important;
+}
+
+.cl-position-relative {
+  position: relative !important;
+}
+
+.cl-position-absolute {
+  position: absolute !important;
+}
+
+.cl-position-fixed {
+  position: fixed !important;
+}
+
+.cl-position-sticky {
+  position: sticky !important;
+}
+
+// Fixed top/bottom
+.cl-fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.cl-fixed-bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+// Overflow
+.cl-overflow-auto {
+  overflow: auto !important;
+}
+
+.cl-overflow-hidden {
+  overflow: hidden !important;
+}
+
+// Shadow
+.cl-shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.cl-shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.cl-shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.cl-shadow-none {
+  box-shadow: none !important;
+}
