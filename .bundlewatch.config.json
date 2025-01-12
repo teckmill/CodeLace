@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "path": "./dist/css/codelace.min.css",
+      "maxSize": "25 kB",
+      "compression": "gzip"
+    },
+    {
+      "path": "./dist/css/codelace.rtl.min.css",
+      "maxSize": "25 kB",
+      "compression": "gzip"
+    },
+    {
+      "path": "./dist/js/codelace.min.js",
+      "maxSize": "45 kB",
+      "compression": "gzip"
+    },
+    {
+      "path": "./dist/js/codelace.bundle.min.js",
+      "maxSize": "65 kB",
+      "compression": "gzip"
+    }
+  ],
+  "ci": {
+    "trackBranches": ["main", "develop"]
+  }
+}

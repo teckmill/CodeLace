@@ -1,0 +1,56 @@
+// Breakpoint mixins
+@mixin breakpoint-up($name) {
+  $min: map-get($breakpoints, $name);
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($name) {
+  $max: map-get($breakpoints, $name);
+  @media (max-width: $max) {
+    @content;
+  }
+}
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Typography
+@mixin font-size($size) {
+  font-size: $size;
+  line-height: $line-height-base;
+}
+
+// Transitions
+@mixin transition($property: all) {
+  transition: $property $transition-base;
+}
+
+// Shadows
+@mixin box-shadow($shadow: $box-shadow) {
+  box-shadow: $shadow;
+}
+
+// Grid column
+@mixin make-col($size, $columns: $grid-columns) {
+  flex: 0 0 percentage($size / $columns);
+  max-width: percentage($size / $columns);
+}
+
+// Button variants
+@mixin button-variant($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%)) {
+  color: color-contrast($background);
+  background-color: $background;
+  border-color: $border;
+
+  &:hover {
+    color: color-contrast($hover-background);
+    background-color: $hover-background;
+    border-color: $hover-border;
+  }
+}
