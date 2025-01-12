@@ -1,14 +1,15 @@
 import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
+import terser from '@rollup/plugin-terser';
 
 const ESM = process.env.ESM === 'true';
 const BUNDLE = process.env.BUNDLE === 'true';
+const PROD = process.env.NODE_ENV === 'production';
 
 const input = 'js/src/index.ts';
-const external = BUNDLE ? [] : ['@popperjs/core'];
+const external = BUNDLE ? [] : ['@popperjs/core', '@floating-ui/dom'];
 
 const plugins = [
   nodeResolve(),
@@ -16,7 +17,8 @@ const plugins = [
   typescript({
     tsconfig: './tsconfig.json',
     declaration: true,
-    declarationDir: './types'
+    declarationDir: './types',
+    sourceMap: true
   }),
   babel({
     exclude: 'node_modules/**',
@@ -35,38 +37,68 @@ const plugins = [
       }],
       '@babel/preset-typescript'
     ]
-  }),
-  replace({
-    preventAssignment: true,
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
   })
 ];
 
-const rollupConfig = {
-  input,
-  plugins,
-  external,
-  output: []
-};
+if (PROD) {
+  plugins.push(
+    terser({
+      compress: {
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        warnings: false
+      }
+    })
+  );
+}
 
-if (ESM) {
-  rollupConfig.output.push({
-    format: 'esm',
-    file: 'dist/js/codelace.esm.js',
-    sourcemap: true,
-    exports: 'named'
+const createOutput = (format, suffix) => ({
+  format,
+  file: `dist/js/codelace${suffix}.js`,
+  name: format === 'umd' ? 'CodeLace' : undefined,
+  sourcemap: true,
+  exports: 'named',
+  globals: BUNDLE ? {} : {
+    '@popperjs/core': 'Popper',
+    '@floating-ui/dom': 'FloatingUI'
+  }
+});
+
+const configs = [];
+
+// ESM build
+configs.push({
+  input,
+  output: createOutput('esm', '.esm'),
+  plugins,
+  external
+});
+
+// UMD build
+configs.push({
+  input,
+  output: createOutput('umd', BUNDLE ? '.bundle' : ''),
+  plugins,
+  external
+});
+
+if (PROD) {
+  // Minified ESM build
+  configs.push({
+    input,
+    output: createOutput('esm', '.esm.min'),
+    plugins: [...plugins, terser()],
+    external
   });
-} else {
-  rollupConfig.output.push({
-    format: 'umd',
-    name: 'CodeLace',
-    file: BUNDLE ? 'dist/js/codelace.bundle.js' : 'dist/js/codelace.js',
-    sourcemap: true,
-    exports: 'named',
-    globals: BUNDLE ? {} : {
-      '@popperjs/core': 'Popper'
-    }
+
+  // Minified UMD build
+  configs.push({
+    input,
+    output: createOutput('umd', BUNDLE ? '.bundle.min' : '.min'),
+    plugins: [...plugins, terser()],
+    external
   });
 }
 
-export default rollupConfig;
+export default configs;

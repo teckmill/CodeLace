@@ -7,7 +7,8 @@ package-lock.json
 
 # Build output
 dist/
-build/
+# Allow build configuration
+!build/
 *.min.js
 *.min.css
 

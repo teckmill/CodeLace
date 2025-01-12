@@ -15,7 +15,12 @@ export default class Dropdown extends BaseComponent {
   private menu: HTMLElement | null = null;
   private trigger: HTMLElement | null = null;
   private isShown = false;
-  private clickOutsideHandler: (event: MouseEvent) => void;
+  private clickOutsideHandler = (event: MouseEvent): void => {
+    if (!(event.target instanceof Node)) return;
+    if (this.element && !this.element.contains(event.target)) {
+      this.hide();
+    }
+  };
 
   protected getDefaultOptions(): DropdownOptions {
     return {
@@ -52,6 +57,7 @@ export default class Dropdown extends BaseComponent {
   private initializeTrigger(): void {
     if (!this.trigger) return;
 
+    addClass(this.trigger, 'cl-dropdown-toggle');
     this.trigger.setAttribute('aria-haspopup', 'true');
     this.trigger.setAttribute('aria-expanded', 'false');
   }
@@ -60,57 +66,68 @@ export default class Dropdown extends BaseComponent {
     if (!this.menu) return;
 
     addClass(this.menu, 'cl-dropdown-menu');
-    this.menu.setAttribute('role', 'menu');
-    this.menu.style.position = 'absolute';
+    this.menu.setAttribute('aria-hidden', 'true');
+    
+    // Set initial position
+    this.updateMenuPosition();
   }
 
   private bindEvents(): void {
     if (!this.trigger || !this.menu) return;
 
-    // Click events
-    this.trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.toggle();
-    });
-
-    // Hover events
     if (this.options.hover) {
-      this.element.addEventListener('mouseenter', () => this.show());
-      this.element.addEventListener('mouseleave', () => this.hide());
+      this.element?.addEventListener('mouseenter', () => this.show());
+      this.element?.addEventListener('mouseleave', () => this.hide());
+    } else {
+      this.trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.toggle();
+      });
     }
 
-    // Close on click outside
-    this.clickOutsideHandler = this.handleClickOutside.bind(this);
-  }
-
-  private handleClickOutside(event: MouseEvent): void {
-    if (!this.element.contains(event.target as Node)) {
-      this.hide();
+    if (this.options.closeOnClick) {
+      this.menu.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a, button')) {
+          this.hide();
+        }
+      });
     }
   }
 
-  private updatePosition(): void {
-    if (!this.trigger || !this.menu) return;
+  private updateMenuPosition(): void {
+    if (!this.menu || !this.trigger) return;
 
     const triggerRect = this.trigger.getBoundingClientRect();
-    const { placement, offset } = this.options;
+    const offset = this.options.offset ?? 0;
 
-    switch (placement) {
+    switch (this.options.placement) {
       case 'top':
-        this.menu.style.bottom = `${window.innerHeight - triggerRect.top + offset!}px`;
-        this.menu.style.left = `${triggerRect.left}px`;
+        Object.assign(this.menu.style, {
+          bottom: '100%',
+          left: '0',
+          marginBottom: `${offset}px`
+        });
         break;
       case 'right':
-        this.menu.style.top = `${triggerRect.top}px`;
-        this.menu.style.left = `${triggerRect.right + offset!}px`;
+        Object.assign(this.menu.style, {
+          top: '0',
+          left: '100%',
+          marginLeft: `${offset}px`
+        });
         break;
       case 'left':
-        this.menu.style.top = `${triggerRect.top}px`;
-        this.menu.style.right = `${window.innerWidth - triggerRect.left + offset!}px`;
+        Object.assign(this.menu.style, {
+          top: '0',
+          right: '100%',
+          marginRight: `${offset}px`
+        });
         break;
       default: // bottom
-        this.menu.style.top = `${triggerRect.bottom + offset!}px`;
-        this.menu.style.left = `${triggerRect.left}px`;
+        Object.assign(this.menu.style, {
+          top: '100%',
+          left: '0',
+          marginTop: `${offset}px`
+        });
     }
   }
 
@@ -120,34 +137,30 @@ export default class Dropdown extends BaseComponent {
     this.options.onShow?.();
     this.isShown = true;
 
-    // Update ARIA
     this.trigger.setAttribute('aria-expanded', 'true');
-
-    // Position the menu
-    this.updatePosition();
-
-    // Show the menu
-    await fadeIn(this.menu);
+    this.menu.setAttribute('aria-hidden', 'false');
 
     // Add click outside listener
     document.addEventListener('click', this.clickOutsideHandler);
+
+    // Show menu with animation
+    await fadeIn(this.menu);
   }
 
   public async hide(): Promise<void> {
     if (!this.isShown || !this.menu || !this.trigger) return;
 
     this.options.onHide?.();
-
-    // Update ARIA
-    this.trigger.setAttribute('aria-expanded', 'false');
-
-    // Hide the menu
-    await fadeOut(this.menu);
-
     this.isShown = false;
+
+    this.trigger.setAttribute('aria-expanded', 'false');
+    this.menu.setAttribute('aria-hidden', 'true');
 
     // Remove click outside listener
     document.removeEventListener('click', this.clickOutsideHandler);
+
+    // Hide menu with animation
+    await fadeOut(this.menu);
   }
 
   public toggle(): void {
@@ -159,17 +172,20 @@ export default class Dropdown extends BaseComponent {
   }
 
   public destroy(): void {
-    document.removeEventListener('click', this.clickOutsideHandler);
-
-    if (this.options.hover) {
-      this.element.removeEventListener('mouseenter', () => this.show());
-      this.element.removeEventListener('mouseleave', () => this.hide());
-    }
-
     if (this.trigger) {
       this.trigger.removeEventListener('click', () => this.toggle());
     }
 
+    if (this.menu) {
+      this.menu.removeEventListener('click', () => this.hide());
+    }
+
+    if (this.element) {
+      this.element.removeEventListener('mouseenter', () => this.show());
+      this.element.removeEventListener('mouseleave', () => this.hide());
+    }
+
+    document.removeEventListener('click', this.clickOutsideHandler);
     super.destroy();
   }
 }

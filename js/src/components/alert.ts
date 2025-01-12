@@ -29,8 +29,9 @@ export default class Alert extends BaseComponent {
       this.setupDismissButton();
     }
 
-    if (this.options.duration > 0) {
-      setTimeout(() => this.close(), this.options.duration);
+    const duration = this.options.duration ?? 0;
+    if (duration > 0) {
+      setTimeout(() => this.close(), duration);
     }
   }
 
@@ -56,5 +57,6 @@ export default class Alert extends BaseComponent {
     if (this.closeButton) {
       this.closeButton.removeEventListener('click', () => this.close());
     }
+    super.destroy();
   }
 }
