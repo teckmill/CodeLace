@@ -1,51 +1,21 @@
-const eslint = require('eslint');
-const tseslint = require('@typescript-eslint/eslint-plugin');
-const tsParser = require('@typescript-eslint/parser');
-const prettierConfig = require('eslint-config-prettier');
-const jest = require('eslint-plugin-jest');
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import jest from 'eslint-plugin-jest';
 
-module.exports = [
+export default tseslint.config(
+  eslint.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    files: ['js/src/**/*.ts'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module'
-      },
-      globals: {
-        browser: 'readonly',
-        node: 'readonly',
-        es6: 'readonly'
-      }
-    },
+    files: ['**/*.{js,ts}'],
     plugins: {
-      '@typescript-eslint': tseslint
+      jest
     },
     rules: {
-      ...tseslint.configs['recommended'].rules,
-      ...prettierConfig.rules,
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      'no-console': ['warn', { allow: ['warn', 'error'] }]
+      'no-console': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   },
   {
-    files: ['**/*.test.ts', '**/*.spec.ts'],
-    plugins: {
-      jest: jest
-    },
-    languageOptions: {
-      globals: {
-        describe: 'readonly',
-        it: 'readonly',
-        expect: 'readonly',
-        jest: 'readonly'
-      }
-    },
-    rules: {
-      ...jest.configs.recommended.rules
-    }
+    ignores: ['dist/', 'node_modules/', 'coverage/']
   }
-];
+);
