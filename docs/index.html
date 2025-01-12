@@ -5,89 +5,310 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeLace - Modern CSS Framework</title>
     <link rel="stylesheet" href="../dist/css/codelace.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
     <style>
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            color: white;
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --text-color: #1f2937;
+            --bg-color: #ffffff;
+            --code-bg: #1a1b26;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.8rem 1.6rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .button.primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
         .features {
-            padding: 4rem 2rem;
+            padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
+
         .feature-card {
             padding: 2rem;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             background: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .docs-section {
+            background: #f9fafb;
+            padding: 6rem 2rem;
+        }
+
+        .docs-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: #e5e7eb;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--text-color);
+            color: white;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="logo">CodeLace</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#docs">Documentation</a>
+                <a href="https://github.com/teckmill/codelace">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="hero">
         <h1>CodeLace</h1>
         <p>A modern, lightweight CSS framework with TypeScript components</p>
-        <div style="margin-top: 2rem;">
-            <a href="https://github.com/teckmill/codelace" class="button primary">GitHub</a>
+        <div>
+            <a href="https://github.com/teckmill/codelace" class="button primary">Get Started</a>
             <a href="https://www.npmjs.com/package/codelace" class="button secondary">npm</a>
         </div>
     </div>
 
-    <div class="features">
-        <h2>Features</h2>
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Features</h2>
+            <p>Everything you need to build modern web applications</p>
+        </div>
         <div class="feature-grid">
             <div class="feature-card">
+                <div class="feature-icon">📦</div>
                 <h3>Modern CSS</h3>
-                <p>Built with modern CSS features and best practices for optimal performance and maintainability.</p>
+                <p>Built with modern CSS features including CSS Grid, Flexbox, and Custom Properties for optimal performance.</p>
             </div>
             <div class="feature-card">
+                <div class="feature-icon">🔥</div>
                 <h3>TypeScript Components</h3>
-                <p>Includes TypeScript components for enhanced development experience and type safety.</p>
+                <p>First-class TypeScript support with type definitions and interactive components out of the box.</p>
             </div>
             <div class="feature-card">
+                <div class="feature-icon">📱</div>
                 <h3>Responsive Design</h3>
-                <p>Mobile-first approach ensures your applications look great on all devices.</p>
+                <p>Mobile-first approach ensures your applications look great on all devices and screen sizes.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="features">
-        <h2>Getting Started</h2>
-        <h3>Installation</h3>
-        <p>Install using npm:</p>
-        <pre><code>npm install codelace</code></pre>
-        
-        <p>Or using yarn:</p>
-        <pre><code>yarn add codelace</code></pre>
-        
-        <h3>Usage</h3>
-        <p>Import the CSS:</p>
-        <pre><code>// Using ES modules
+    <section class="docs-section" id="docs">
+        <div class="docs-content">
+            <div class="section-title">
+                <h2>Getting Started</h2>
+                <p>Quick start guide to using CodeLace in your project</p>
+            </div>
+            
+            <h3>Installation</h3>
+            <p>Install using npm:</p>
+            <div class="code-block">
+                <code>npm install codelace</code>
+            </div>
+            
+            <p>Or using yarn:</p>
+            <div class="code-block">
+                <code>yarn add codelace</code>
+            </div>
+            
+            <h3>Usage</h3>
+            <p>Import the CSS:</p>
+            <div class="code-block">
+                <code>// Using ES modules
 import 'codelace/css';
 
 // Using CommonJS
-require('codelace/css');</code></pre>
+require('codelace/css');</code>
+            </div>
 
-        <p>Import TypeScript components:</p>
-        <pre><code>// Import specific components
+            <p>Import and use TypeScript components:</p>
+            <div class="code-block">
+                <code>// Import specific components
 import { Modal, Button, Dropdown } from 'codelace';
 
-// Use in your code
+// Initialize components
 const modal = new Modal('#myModal');
-modal.show();</code></pre>
-    </div>
+modal.show();</code>
+            </div>
+        </div>
+    </section>
 
-    <footer style="text-align: center; padding: 2rem; background: #f9fafb;">
+    <footer class="footer">
         <p>Released under the MIT License</p>
         <p> 2025 CodeLace. Built with by Teck Mill</p>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-typescript.min.js"></script>
 </body>
 </html>
