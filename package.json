@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "codelace",
+  "name": "@teckmill/codelace",
   "version": "1.0.0",
   "description": "A modern, lightweight CSS framework with TypeScript components",
   "main": "dist/js/codelace.js",
