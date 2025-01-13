@@ -22,6 +22,9 @@ export default class Navbar extends Component {
     SHOW: 'cl-show',
     COLLAPSE: 'cl-collapse',
     COLLAPSING: 'cl-collapsing',
+    STICKY: 'cl-sticky',
+    FIXED_TOP: 'cl-fixed-top',
+    FIXED_BOTTOM: 'cl-fixed-bottom',
     RTL: 'cl-rtl'
   };
 
