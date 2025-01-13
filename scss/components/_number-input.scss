@@ -161,6 +161,7 @@
     }
 
     &:disabled {
+
       background-color: var(--cl-disabled-bg);
 
       cursor: not-allowed;
@@ -168,11 +169,13 @@
       opacity: 60%;
 
       &:hover {
+
         border-color: var(--cl-border-color);
       }
     }
 
     &:read-only {
+
       background-color: var(--cl-bg-secondary);
 
       cursor: default;
@@ -181,6 +184,7 @@
 
   .cl-number-input-prefix,
   .cl-number-input-suffix {
+
     position: absolute;
 
     color: var(--cl-text-secondary);
@@ -189,22 +193,27 @@
   }
 
   .cl-number-input-prefix {
+
     left: 0.75rem;
   }
 
   .cl-number-input-prefix + .cl-number-input-field {
+
     padding-left: 2rem;
   }
 
   .cl-number-input-suffix {
+
     right: 2.5rem;
   }
 
   .cl-number-input-suffix ~ .cl-number-input-field {
+
     padding-right: 3.5rem;
   }
 
   .cl-number-input-controls {
+
     position: absolute;
 
     right: 0.5rem;
