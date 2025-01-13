@@ -8,7 +8,7 @@ interface CodeBlockOptions {
 }
 
 export class CodeBlock extends Component {
-    private options: CodeBlockOptions;
+    protected readonly options: CodeBlockOptions;
     private previewElement!: HTMLElement;
     private codeElement!: HTMLElement;
 

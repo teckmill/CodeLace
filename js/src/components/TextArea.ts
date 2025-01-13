@@ -24,7 +24,7 @@ interface TextAreaOptions {
 }
 
 export class TextArea extends Component {
-    protected options: TextAreaOptions;
+    protected readonly options: TextAreaOptions;
     private value: string = '';
     private error: string | null = null;
     private isDirty: boolean = false;

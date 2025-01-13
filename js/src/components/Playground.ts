@@ -10,7 +10,7 @@ export class Playground extends Component {
     private editor!: HTMLTextAreaElement;
     private preview!: HTMLDivElement;
     private component: any;
-    private options: PlaygroundOptions;
+    protected readonly options: PlaygroundOptions;
 
     constructor(selector: string, options: PlaygroundOptions) {
         super(selector);

@@ -28,7 +28,7 @@ export default class Modal extends Component {
     STATIC: 'cl-modal-static'
   };
 
-  private readonly options: ModalOptions;
+  protected readonly options: ModalOptions;
   private dialog: HTMLElement | null;
   private backdrop: HTMLElement | null;
   private isShown: boolean;
@@ -66,15 +66,10 @@ export default class Modal extends Component {
       this.element.classList.add(Modal.CLASSES.RTL);
     }
 
-    EventHandler.on<'click'>(
-      this.element,
-      'click',
-      Modal.SELECTORS.DATA_DISMISS,
-      (event) => {
-        event.preventDefault();
-        this.hide();
-      }
-    );
+    EventHandler.on<'click'>(this.element, 'click', Modal.SELECTORS.DATA_DISMISS, (event) => {
+      event.preventDefault();
+      this.hide();
+    });
 
     // Handle direction changes
     document.documentElement.addEventListener('directionchange', (event: Event) => {

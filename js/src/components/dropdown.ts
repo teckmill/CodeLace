@@ -28,7 +28,7 @@ export default class Dropdown extends Component {
     }
   };
 
-  private readonly options: DropdownOptions;
+  protected readonly options: DropdownOptions;
   private menu: HTMLElement | null;
   private isOpen: boolean;
 
@@ -64,23 +64,13 @@ export default class Dropdown extends Component {
     }
 
     // Add event listeners for dropdown toggle
-    EventHandler.on<'click'>(
-      this.element,
-      'click',
-      Dropdown.SELECTORS.TOGGLE,
-      (event) => {
-        event.preventDefault();
-        this.toggle();
-      }
-    );
+    EventHandler.on<'click'>(this.element, 'click', Dropdown.SELECTORS.TOGGLE, (event) => {
+      event.preventDefault();
+      this.toggle();
+    });
 
     // Add keyboard navigation
-    EventHandler.on<'keydown'>(
-      this.element,
-      'keydown',
-      Dropdown.SELECTORS.TOGGLE,
-      (event) => this.handleKeyDown(event)
-    );
+    EventHandler.on<'keydown'>(this.element, 'keydown', Dropdown.SELECTORS.TOGGLE, (event) => this.handleKeyDown(event));
 
     // Handle direction changes
     document.documentElement.addEventListener('directionchange', (event: Event) => {
