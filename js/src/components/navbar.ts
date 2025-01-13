@@ -20,14 +20,12 @@ export default class Navbar extends Component {
 
   private static readonly CLASSES = {
     SHOW: 'cl-show',
-    COLLAPSED: 'cl-collapsed',
-    STICKY: 'cl-sticky',
-    FIXED_TOP: 'cl-fixed-top',
-    FIXED_BOTTOM: 'cl-fixed-bottom',
+    COLLAPSE: 'cl-collapse',
+    COLLAPSING: 'cl-collapsing',
     RTL: 'cl-rtl'
   };
 
-  private readonly options: NavbarOptions;
+  protected readonly options: NavbarOptions;
   private collapse: HTMLElement | null;
 
   constructor(element: HTMLElement, options: NavbarOptions = {}) {
