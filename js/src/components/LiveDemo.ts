@@ -41,9 +41,9 @@ export class LiveDemo extends Component {
     }
 
     private setupEditor() {
-        // @ts-ignore - Monaco editor setup
+        // @ts-expect-error Monaco editor is loaded globally
         if (window.monaco) {
-            // @ts-ignore
+            // @ts-expect-error Using Monaco editor API
             monaco.editor.create(this.editor, {
                 value: this.options.code,
                 language: 'typescript',
@@ -106,7 +106,12 @@ export class LiveDemo extends Component {
             preview.innerHTML = '';
             preview.appendChild(component);
         } catch (error) {
-            console.error('Preview update failed:', error);
+            this.handlePreviewError(error);
         }
+    }
+
+    private handlePreviewError(error: unknown) {
+        const preview = this.querySelector<HTMLElement>('.cl-live-demo-preview-content');
+        preview.innerHTML = `<div class="cl-preview-error">Failed to render preview</div>`;
     }
 }

@@ -45,14 +45,18 @@ export class Playground extends Component {
             const componentElement = this.preview.firstElementChild;
             
             if (componentElement) {
-                // @ts-ignore - Dynamic component creation
+                // @ts-expect-error CodeLace components are registered globally
                 this.component = new window.CodeLace[this.options.component](
                     componentElement,
                     props
                 );
             }
         } catch (error) {
-            console.error('Invalid JSON:', error);
+            this.handlePreviewError(error);
         }
+    }
+
+    private handlePreviewError(error: unknown) {
+        this.preview.innerHTML = `<div class="cl-preview-error">Invalid JSON configuration</div>`;
     }
 }

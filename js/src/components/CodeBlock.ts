@@ -67,8 +67,20 @@ export class CodeBlock extends Component {
             await navigator.clipboard.writeText(code);
             this.showCopySuccess();
         } catch (err) {
-            console.error('Failed to copy code:', err);
+            // Handle clipboard error silently
+            this.handleCopyError(err);
         }
+    }
+
+    private handleCopyError(error: unknown) {
+        const button = this.querySelector<HTMLButtonElement>('.cl-copy-button');
+        const text = button.querySelector<HTMLSpanElement>('.cl-copy-text')!;
+        text.textContent = 'Failed to copy';
+        button.classList.add('error');
+        setTimeout(() => {
+            text.textContent = 'Copy';
+            button.classList.remove('error');
+        }, 2000);
     }
 
     private showCopySuccess() {
@@ -94,9 +106,9 @@ export class CodeBlock extends Component {
     updateCode(code: string) {
         this.options.code = code;
         this.render();
-        // @ts-ignore
+        // @ts-expect-error Prism is loaded globally
         if (window.Prism) {
-            // @ts-ignore
+            // @ts-expect-error Using Prism API
             Prism.highlightElement(this.codeElement);
         }
     }
