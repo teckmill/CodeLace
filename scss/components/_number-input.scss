@@ -162,7 +162,9 @@
 
     &:disabled {
       background-color: var(--cl-disabled-bg);
+
       cursor: not-allowed;
+
       opacity: 60%;
 
       &:hover {
@@ -172,6 +174,7 @@
 
     &:read-only {
       background-color: var(--cl-bg-secondary);
+
       cursor: default;
     }
   }
@@ -179,7 +182,9 @@
   .cl-number-input-prefix,
   .cl-number-input-suffix {
     position: absolute;
+
     color: var(--cl-text-secondary);
+
     user-select: none;
   }
 
@@ -201,7 +206,9 @@
 
   .cl-number-input-controls {
     position: absolute;
+
     right: 0.5rem;
+
     height: calc(100% - 2px);
 
     display: flex;
