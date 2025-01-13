@@ -15,43 +15,47 @@ class TestComponent extends Component {
     }
 
     public querySelector<T extends HTMLElement>(selector: string): T {
-        return this.querySelector(selector);
+        return super.querySelector(selector);
     }
 
     public querySelectorAll<T extends HTMLElement>(selector: string): NodeListOf<T> {
-        return this.querySelectorAll(selector);
+        return super.querySelectorAll(selector);
     }
 
     public addClass(className: string): void {
-        this.addClass(className);
+        super.addClass(className);
     }
 
     public removeClass(className: string): void {
-        this.removeClass(className);
+        super.removeClass(className);
     }
 
     public toggleClass(className: string): void {
-        this.toggleClass(className);
+        super.toggleClass(className);
     }
 
     public hasClass(className: string): boolean {
-        return this.hasClass(className);
+        return super.hasClass(className);
     }
 
     public setStyle(property: string, value: string): void {
-        this.setStyle(property, value);
+        super.setStyle(property, value);
     }
 
     public getStyle(property: string): string {
-        return this.getStyle(property);
+        return super.getStyle(property);
     }
 
     public setData(key: string, value: string): void {
-        this.setData(key, value);
+        super.setData(key, value);
     }
 
     public getData(key: string): string {
-        return this.getData(key);
+        const value = super.getData(key);
+        if (!value) {
+            throw new Error(`Data attribute ${key} not found`);
+        }
+        return value;
     }
 
     public on<K extends keyof HTMLElementEventMap>(
@@ -59,7 +63,7 @@ class TestComponent extends Component {
         handler: (event: HTMLElementEventMap[K]) => void,
         options?: boolean | AddEventListenerOptions
     ): void {
-        this.on(event, handler, options);
+        super.on(event, handler, options);
     }
 
     public off<K extends keyof HTMLElementEventMap>(
@@ -67,7 +71,7 @@ class TestComponent extends Component {
         handler: (event: HTMLElementEventMap[K]) => void,
         options?: boolean | EventListenerOptions
     ): void {
-        this.off(event, handler, options);
+        super.off(event, handler, options);
     }
 }
 

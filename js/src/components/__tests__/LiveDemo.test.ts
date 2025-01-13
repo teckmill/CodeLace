@@ -126,8 +126,14 @@ describe('LiveDemo', () => {
 
     describe('Preview Updates', () => {
         it('should update preview content', () => {
+            const testComponent = document.createElement('div');
+            testComponent.textContent = 'Test Component';
+            const mockComponent = () => testComponent;
+
+            liveDemo['updatePreview']('return (' + mockComponent.toString() + ')()');
+            
             const previewContent = container.querySelector('.cl-live-demo-preview-content');
-            expect(previewContent?.textContent).toBe('Failed to render preview');
+            expect(previewContent?.textContent).toBe('Test Component');
         });
 
         it('should handle preview update errors gracefully', () => {

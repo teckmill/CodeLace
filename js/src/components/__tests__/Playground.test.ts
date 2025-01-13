@@ -47,7 +47,7 @@ describe('Playground', () => {
 
         it('should render preview with initial template', () => {
             const preview = container.querySelector('.cl-playground-preview');
-            expect(preview?.innerHTML).toBe('<div class="cl-preview-error">Invalid JSON configuration</div>');
+            expect(preview?.innerHTML).toBe(testOptions.template);
         });
     });
 
@@ -108,6 +108,10 @@ describe('Playground', () => {
         });
 
         it('should create new component instance when template changes', () => {
+            const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
+            editor.value = JSON.stringify({ text: 'Test Button' });
+            editor.dispatchEvent(new Event('input'));
+            
             const firstInstance = playground['component'];
             playground['options'].template = '<button class="cl-button-new"></button>';
             playground['updatePreview']();
