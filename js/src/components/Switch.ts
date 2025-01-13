@@ -11,7 +11,7 @@ interface SwitchOptions {
 }
 
 export class Switch extends Component {
-    protected options: SwitchOptions;
+    protected readonly options: SwitchOptions;
     private isChecked: boolean;
 
     constructor(selector: string, options: SwitchOptions = {}) {

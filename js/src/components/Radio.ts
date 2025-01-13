@@ -15,7 +15,7 @@ interface RadioOptions {
 }
 
 export class Radio extends Component {
-    protected options: RadioOptions;
+    protected readonly options: RadioOptions;
     private items: RadioOption[] = [];
     private selectedValue: string | null = null;
 

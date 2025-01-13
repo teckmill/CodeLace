@@ -12,7 +12,7 @@ interface LightboxOptions {
 }
 
 export class Lightbox extends Component {
-    protected options: LightboxOptions;
+    protected readonly options: LightboxOptions;
     private images: HTMLImageElement[] = [];
     private currentIndex: number = 0;
     private isOpen: boolean = false;

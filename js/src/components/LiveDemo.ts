@@ -7,7 +7,7 @@ interface LiveDemoOptions {
 }
 
 export class LiveDemo extends Component {
-    private options: LiveDemoOptions;
+    protected readonly options: LiveDemoOptions;
     private editor!: HTMLElement;
     private preview!: HTMLElement;
     private resizeHandle!: HTMLElement;

@@ -2,9 +2,9 @@
  * Base component class that all CodeLace components inherit from.
  * Provides common functionality and type safety for DOM manipulation.
  */
-export class Component {
+export abstract class Component {
     protected element: HTMLElement;
-    protected options: Record<string, any>;
+    protected options: Record<string, any> = {};
 
     /**
      * Creates a new Component instance

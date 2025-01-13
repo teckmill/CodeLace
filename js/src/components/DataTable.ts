@@ -9,7 +9,7 @@ interface DataTableOptions {
 }
 
 export class DataTable extends Component {
-    protected options: DataTableOptions;
+    protected readonly options: DataTableOptions;
     private data: any[];
     private columns: string[];
     private currentPage: number = 1;

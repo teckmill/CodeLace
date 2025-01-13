@@ -17,7 +17,7 @@ interface SelectOptions {
 }
 
 export class Select extends Component {
-    protected options: SelectOptions;
+    protected readonly options: SelectOptions;
     private items: SelectOption[] = [];
     private isOpen: boolean = false;
     private selectedItems: SelectOption[] = [];
