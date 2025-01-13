@@ -18,7 +18,9 @@ describe('CodeBlock', () => {
             <div class="cl-code-block">
                 <div class="cl-code-preview"></div>
                 <div class="cl-code-container">
-                    <div class="cl-code-header"></div>
+                    <div class="cl-code-header">
+                        <div class="cl-copy-button"></div>
+                    </div>
                     <div class="cl-code-content">
                         <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
                     </div>
@@ -57,7 +59,8 @@ describe('CodeBlock', () => {
                     </div>
                 </div>
             `;
-            new CodeBlock('#test-container', { ...testOptions, showCopy: false });
+            const options = { ...testOptions, showCopy: false };
+            new CodeBlock('#test-container', options);
             const copyButton = container.querySelector('.cl-copy-button');
             expect(copyButton).toBeNull();
         });
@@ -66,14 +69,17 @@ describe('CodeBlock', () => {
             container.innerHTML = `
                 <div class="cl-code-block">
                     <div class="cl-code-container">
-                        <div class="cl-code-header"></div>
+                        <div class="cl-code-header">
+                            <div class="cl-copy-button"></div>
+                        </div>
                         <div class="cl-code-content">
                             <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
                         </div>
                     </div>
                 </div>
             `;
-            new CodeBlock('#test-container', { ...testOptions, showPreview: false });
+            const options = { ...testOptions, showPreview: false };
+            new CodeBlock('#test-container', options);
             const preview = container.querySelector('.cl-preview-content');
             expect(preview).toBeNull();
         });

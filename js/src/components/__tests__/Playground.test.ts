@@ -13,6 +13,15 @@ describe('Playground', () => {
         container = document.createElement('div');
         container.id = 'test-container';
         document.body.appendChild(container);
+
+        // Mock the Button component
+        (window as any).CodeLace = {
+            Button: jest.fn().mockImplementation((element: HTMLElement, props: any) => {
+                element.textContent = props.text;
+                return element;
+            })
+        };
+
         playground = new Playground('#test-container', testOptions);
         // Initialize with valid JSON to avoid initial error state
         const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
@@ -24,6 +33,7 @@ describe('Playground', () => {
 
     afterEach(() => {
         document.body.removeChild(container);
+        delete (window as any).CodeLace;
     });
 
     describe('Rendering', () => {

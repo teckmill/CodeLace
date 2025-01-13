@@ -126,12 +126,10 @@ describe('LiveDemo', () => {
 
     describe('Preview Updates', () => {
         it('should update preview content', () => {
-            const testComponent = document.createElement('div');
-            testComponent.textContent = 'Test Component';
             const mockComponent = `
                 const div = document.createElement('div');
                 div.textContent = 'Test Component';
-                return div;
+                div;  // Return the element
             `;
 
             liveDemo['updatePreview'](mockComponent);
