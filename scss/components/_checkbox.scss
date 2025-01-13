@@ -1,106 +1,160 @@
 .cl-checkbox-group {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 0.75rem;
 
   &.cl-checkbox-inline {
-    flex-direction: row;
-    flex-wrap: wrap;
+
+    flex-flow: row wrap;
   }
 
   &.cl-checkbox-disabled {
-    opacity: 0.6;
+
+    opacity: 60%;
+
     cursor: not-allowed;
 
     .cl-checkbox {
+
       pointer-events: none;
     }
   }
 }
 
 .cl-checkbox {
+
   position: relative;
+
   display: inline-flex;
+
   align-items: center;
+
   cursor: pointer;
+
   user-select: none;
 
   &.disabled {
-    opacity: 0.6;
+
+    opacity: 60%;
+
     cursor: not-allowed;
   }
 
   input[type="checkbox"] {
+
     position: absolute;
-    opacity: 0;
+
+    opacity: 0%;
+
     width: 0;
+
     height: 0;
 
     &:checked + .cl-checkbox-mark {
+
       border-color: var(--cl-primary);
+
       background-color: var(--cl-primary);
 
       &::after {
+
         transform: rotate(45deg) scale(1);
       }
     }
 
     &:focus + .cl-checkbox-mark {
+
       box-shadow: 0 0 0 2px var(--cl-primary-alpha);
     }
 
     &:disabled + .cl-checkbox-mark {
+
       background-color: var(--cl-bg-disabled);
+
       border-color: var(--cl-border-color);
     }
 
     &[data-indeterminate="true"] + .cl-checkbox-mark {
+
       border-color: var(--cl-primary);
+
       background-color: var(--cl-primary);
 
       &::after {
+
         transform: scale(1);
+
         border: none;
+
         height: 2px;
+
         width: 10px;
+
         top: 45%;
       }
     }
   }
 
   .cl-checkbox-mark {
+
     position: relative;
+
     display: inline-block;
+
     width: 1.25rem;
+
     height: 1.25rem;
+
     margin-right: 0.5rem;
+
     border: 2px solid var(--cl-border-color);
+
     border-radius: var(--cl-border-radius-sm);
+
     background: var(--cl-bg-primary);
+
     transition: all 0.2s ease;
 
     &::after {
+
       content: '';
+
       position: absolute;
+
       left: 4px;
+
       top: 1px;
+
       width: 5px;
+
       height: 10px;
+
       border: solid white;
+
       border-width: 0 2px 2px 0;
+
       transform: rotate(45deg) scale(0);
+
       transition: transform 0.2s ease;
     }
   }
 
   .cl-checkbox-label {
+
     color: var(--cl-text-primary);
+
     font-size: var(--cl-font-size-base);
+
     line-height: 1.5;
   }
 
   &:hover:not(.disabled) {
+
     .cl-checkbox-mark {
+
       border-color: var(--cl-primary);
     }
   }

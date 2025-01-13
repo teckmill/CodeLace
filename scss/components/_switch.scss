@@ -1,29 +1,40 @@
 .cl-switch {
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 0.5rem;
+
   cursor: pointer;
 
   &.cl-switch-disabled {
-    opacity: 0.6;
+
+    opacity: 60%;
+
     cursor: not-allowed;
 
     .cl-switch-toggle {
+
       pointer-events: none;
     }
   }
 
   &.cl-switch-loading {
+
     .cl-switch-toggle {
+
       pointer-events: none;
     }
   }
 
   // Sizes
+
   &.cl-switch-small {
     --switch-width: 2rem;
     --switch-height: 1rem;
     --thumb-size: 0.75rem;
+
     font-size: var(--cl-font-size-sm);
   }
 
@@ -31,6 +42,7 @@
     --switch-width: 2.5rem;
     --switch-height: 1.25rem;
     --thumb-size: 1rem;
+
     font-size: var(--cl-font-size-base);
   }
 
@@ -38,83 +50,121 @@
     --switch-width: 3rem;
     --switch-height: 1.5rem;
     --thumb-size: 1.25rem;
+
     font-size: var(--cl-font-size-lg);
   }
 
   .cl-switch-toggle {
+
     position: relative;
+
     display: inline-block;
+
     width: var(--switch-width);
+
     height: var(--switch-height);
 
     input {
-      opacity: 0;
+
+      opacity: 0%;
+
       width: 0;
+
       height: 0;
+
       position: absolute;
 
       &:checked + .cl-switch-track {
+
         background-color: var(--cl-switch-color, var(--cl-primary));
 
         .cl-switch-thumb {
+
           transform: translateX(calc(var(--switch-width) - var(--thumb-size) - 2px));
         }
       }
 
       &:focus + .cl-switch-track {
+
         box-shadow: 0 0 0 2px var(--cl-primary-alpha);
       }
 
       &:disabled + .cl-switch-track {
-        opacity: 0.6;
+
+        opacity: 60%;
+
         cursor: not-allowed;
       }
     }
   }
 
   .cl-switch-track {
+
     position: absolute;
+
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+
+    inset: 0;
+
     background-color: var(--cl-border-color);
+
     transition: all 0.2s ease;
+
     border-radius: var(--switch-height);
   }
 
   .cl-switch-thumb {
+
     position: absolute;
+
     height: var(--thumb-size);
+
     width: var(--thumb-size);
+
     left: 2px;
+
     bottom: calc((var(--switch-height) - var(--thumb-size)) / 2);
+
     background-color: white;
+
     transition: transform 0.2s ease;
+
     border-radius: 50%;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
   }
 
   .cl-switch-loading-spinner {
+
     width: 70%;
+
     height: 70%;
+
     border: 2px solid var(--cl-primary);
+
     border-top-color: transparent;
+
     border-radius: 50%;
+
     animation: switch-spinner 0.8s linear infinite;
   }
 
   .cl-switch-label {
+
     color: var(--cl-text-primary);
+
     user-select: none;
   }
 }
 
 @keyframes switch-spinner {
+
   to {
+
     transform: rotate(360deg);
   }
 }

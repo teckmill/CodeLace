@@ -1,61 +1,89 @@
 .cl-live-demo {
+
     display: flex;
+
     border: 1px solid var(--cl-border-color);
+
     border-radius: var(--cl-border-radius);
+
     overflow: hidden;
+
     background: var(--cl-bg-secondary);
 
     &-editor {
+
         width: 50%;
+
         border-right: 1px solid var(--cl-border-color);
+
         background: var(--cl-bg-secondary);
     }
 
     &-resize-handle {
+
         width: 6px;
+
         background: var(--cl-border-color);
+
         cursor: col-resize;
+
         transition: background-color 0.2s;
 
         &:hover {
+
             background: var(--cl-primary);
         }
 
         &:active {
+
             background: var(--cl-primary);
         }
     }
 
     &-preview {
+
         width: 50%;
+
         padding: 1rem;
+
         background: var(--cl-bg-primary);
+
         overflow: auto;
 
         &-content {
+
             height: 100%;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
         }
     }
 
     .monaco-editor {
+
         .monaco-editor-background,
         .margin {
+
             background-color: var(--cl-bg-secondary) !important;
         }
     }
 
     [data-theme="dark"] & {
+
         .monaco-editor {
+
             .monaco-editor-background,
             .margin {
+
                 background-color: var(--cl-bg-primary) !important;
             }
         }
 
         .cl-live-demo-preview {
+
             background: var(--cl-bg-secondary);
         }
     }

@@ -1,83 +1,128 @@
 .cl-code-block {
+
     margin: 1rem 0;
+
     border-radius: var(--cl-border-radius);
+
     overflow: hidden;
+
     background: var(--cl-bg-secondary);
 
     .cl-code-preview {
+
         padding: 1rem;
+
         border-bottom: 1px solid var(--cl-border-color);
+
         background: var(--cl-bg-primary);
     }
 
     .cl-code-container {
+
         position: relative;
     }
 
     .cl-code-header {
+
         display: flex;
+
         align-items: center;
+
         justify-content: space-between;
+
         padding: 0.5rem 1rem;
+
         background: var(--cl-bg-secondary);
+
         border-bottom: 1px solid var(--cl-border-color);
     }
 
     .cl-code-language {
+
         font-size: 0.875rem;
+
         color: var(--cl-text-secondary);
+
         text-transform: uppercase;
     }
 
     .cl-copy-button {
+
         display: flex;
+
         align-items: center;
+
         gap: 0.5rem;
+
         padding: 0.25rem 0.75rem;
+
         border: 1px solid var(--cl-border-color);
+
         border-radius: var(--cl-border-radius);
+
         background: var(--cl-bg-primary);
+
         color: var(--cl-text-primary);
+
         cursor: pointer;
+
         transition: all 0.2s ease;
 
         &:hover {
+
             background: var(--cl-bg-secondary);
+
             border-color: var(--cl-primary);
         }
 
         &.success {
+
             background: var(--cl-success);
+
             border-color: var(--cl-success);
+
             color: white;
         }
     }
 
     .cl-code-content {
+
         margin: 0;
+
         padding: 1rem;
+
         background: var(--cl-bg-secondary);
+
         overflow-x: auto;
 
         code {
+
             font-family: 'Fira Code', monospace;
+
             font-size: 0.875rem;
+
             line-height: 1.5;
         }
     }
 
     [data-theme="dark"] & {
+
         .cl-code-preview {
+
             background: var(--cl-bg-secondary);
         }
 
         .cl-code-content {
+
             background: var(--cl-bg-primary);
         }
 
         .cl-copy-button {
+
             background: var(--cl-bg-secondary);
+
             &:hover {
+
                 background: var(--cl-bg-primary);
             }
         }

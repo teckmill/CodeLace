@@ -1,78 +1,113 @@
 .cl-textarea-wrapper {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 0.25rem;
 
   &.cl-textarea-disabled {
-    opacity: 0.6;
+
+    opacity: 60%;
+
     cursor: not-allowed;
 
     .cl-textarea {
+
       pointer-events: none;
     }
   }
 
   .cl-textarea-label {
+
     color: var(--cl-text-primary);
+
     font-weight: 500;
 
     .cl-textarea-required {
+
       color: var(--cl-danger);
+
       margin-left: 0.25rem;
     }
   }
 
   .cl-textarea {
+
     width: 100%;
+
     min-height: 2.5rem;
+
     padding: 0.5rem 1rem;
+
     border: 1px solid var(--cl-border-color);
+
     border-radius: var(--cl-border-radius);
+
     background: var(--cl-bg-primary);
+
     color: var(--cl-text-primary);
+
     font-family: inherit;
+
     font-size: var(--cl-font-size-base);
+
     line-height: 1.5;
+
     transition: all 0.2s ease;
 
     &::placeholder {
+
       color: var(--cl-text-secondary);
     }
 
     &:hover {
+
       border-color: var(--cl-primary);
     }
 
     &:focus {
+
       outline: none;
+
       border-color: var(--cl-primary);
+
       box-shadow: 0 0 0 2px var(--cl-primary-alpha);
     }
 
     &.has-error {
+
       border-color: var(--cl-danger);
 
       &:focus {
+
         box-shadow: 0 0 0 2px var(--cl-danger-alpha);
       }
     }
 
     &:disabled {
+
       background-color: var(--cl-bg-disabled);
+
       cursor: not-allowed;
     }
 
     &:read-only {
+
       background-color: var(--cl-bg-secondary);
+
       cursor: default;
     }
   }
 
   .cl-textarea-helper {
+
     font-size: 0.875em;
+
     color: var(--cl-text-secondary);
 
     &.has-error {
+
       color: var(--cl-danger);
     }
   }

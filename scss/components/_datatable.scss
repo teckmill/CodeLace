@@ -1,97 +1,148 @@
 .cl-table-container {
+
   width: 100%;
+
   overflow-x: auto;
+
   margin: 1rem 0;
+
   border-radius: var(--cl-border-radius);
+
   box-shadow: var(--cl-shadow-sm);
 
   .cl-table-filter {
+
     padding: 1rem;
+
     background: var(--cl-bg-secondary);
+
     border-bottom: 1px solid var(--cl-border-color);
 
     .cl-table-search {
+
       width: 100%;
+
       padding: 0.5rem;
+
       border: 1px solid var(--cl-border-color);
+
       border-radius: var(--cl-border-radius-sm);
+
       background: var(--cl-bg-primary);
+
       color: var(--cl-text-primary);
 
       &:focus {
+
         outline: none;
+
         border-color: var(--cl-primary);
+
         box-shadow: 0 0 0 2px var(--cl-primary-alpha);
       }
     }
   }
 
   .cl-data-table {
+
     width: 100%;
+
     border-collapse: collapse;
+
     background: var(--cl-bg-primary);
 
     th, td {
+
       padding: 0.75rem 1rem;
+
       text-align: left;
+
       border-bottom: 1px solid var(--cl-border-color);
     }
 
     th {
+
       background: var(--cl-bg-secondary);
+
       font-weight: 600;
+
       white-space: nowrap;
 
       &.cl-sortable {
+
         cursor: pointer;
+
         user-select: none;
 
         &:hover {
+
           background: var(--cl-bg-hover);
         }
 
         .cl-sort-icon {
+
           display: inline-block;
+
           width: 1rem;
+
           height: 1rem;
+
           margin-left: 0.25rem;
+
           vertical-align: middle;
         }
       }
     }
 
     tr:hover td {
+
       background: var(--cl-bg-hover);
     }
   }
 
   .cl-pagination {
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     padding: 1rem;
+
     background: var(--cl-bg-secondary);
+
     border-top: 1px solid var(--cl-border-color);
 
     button {
+
       padding: 0.5rem 1rem;
+
       border: 1px solid var(--cl-border-color);
+
       border-radius: var(--cl-border-radius-sm);
+
       background: var(--cl-bg-primary);
+
       color: var(--cl-text-primary);
+
       cursor: pointer;
 
       &:hover:not(:disabled) {
+
         background: var(--cl-bg-hover);
       }
 
       &:disabled {
-        opacity: 0.5;
+
+        opacity: 50%;
+
         cursor: not-allowed;
       }
     }
 
     .cl-pagination-info {
+
       color: var(--cl-text-secondary);
     }
   }
