@@ -1,6 +1,6 @@
 import { Component } from './Component';
 
-interface PlaygroundOptions {
+export interface PlaygroundOptions {
     component: string;
     properties: Record<string, any>;
     template: string;

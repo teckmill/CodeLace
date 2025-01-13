@@ -128,9 +128,13 @@ describe('LiveDemo', () => {
         it('should update preview content', () => {
             const testComponent = document.createElement('div');
             testComponent.textContent = 'Test Component';
-            const mockComponent = () => testComponent;
+            const mockComponent = `
+                const div = document.createElement('div');
+                div.textContent = 'Test Component';
+                return div;
+            `;
 
-            liveDemo['updatePreview']('return (' + mockComponent.toString() + ')()');
+            liveDemo['updatePreview'](mockComponent);
             
             const previewContent = container.querySelector('.cl-live-demo-preview-content');
             expect(previewContent?.textContent).toBe('Test Component');

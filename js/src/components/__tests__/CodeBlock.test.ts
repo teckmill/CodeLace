@@ -14,6 +14,17 @@ describe('CodeBlock', () => {
     beforeEach(() => {
         container = document.createElement('div');
         container.id = 'test-container';
+        container.innerHTML = `
+            <div class="cl-code-block">
+                <div class="cl-code-preview"></div>
+                <div class="cl-code-container">
+                    <div class="cl-code-header"></div>
+                    <div class="cl-code-content">
+                        <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
+                    </div>
+                </div>
+            </div>
+        `;
         document.body.appendChild(container);
         codeBlock = new CodeBlock('#test-container', testOptions);
     });
@@ -35,17 +46,34 @@ describe('CodeBlock', () => {
         });
 
         it('should not render copy button when showCopy is false', () => {
-            const options = { ...testOptions, showCopy: false };
-            container.innerHTML = '';
-            new CodeBlock('#test-container', options);
+            container.innerHTML = `
+                <div class="cl-code-block">
+                    <div class="cl-code-preview"></div>
+                    <div class="cl-code-container">
+                        <div class="cl-code-header"></div>
+                        <div class="cl-code-content">
+                            <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+            new CodeBlock('#test-container', { ...testOptions, showCopy: false });
             const copyButton = container.querySelector('.cl-copy-button');
             expect(copyButton).toBeNull();
         });
 
         it('should not render preview when showPreview is false', () => {
-            const options = { ...testOptions, showPreview: false };
-            container.innerHTML = '';
-            new CodeBlock('#test-container', options);
+            container.innerHTML = `
+                <div class="cl-code-block">
+                    <div class="cl-code-container">
+                        <div class="cl-code-header"></div>
+                        <div class="cl-code-content">
+                            <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+            new CodeBlock('#test-container', { ...testOptions, showPreview: false });
             const preview = container.querySelector('.cl-preview-content');
             expect(preview).toBeNull();
         });
