@@ -14,21 +14,7 @@ describe('CodeBlock', () => {
     beforeEach(() => {
         container = document.createElement('div');
         container.id = 'test-container';
-        container.innerHTML = `
-            <div class="cl-code-block">
-                <div class="cl-code-preview"></div>
-                <div class="cl-code-container">
-                    <div class="cl-code-header">
-                        <div class="cl-copy-button"></div>
-                    </div>
-                    <div class="cl-code-content">
-                        <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
-                    </div>
-                </div>
-            </div>
-        `;
         document.body.appendChild(container);
-        codeBlock = new CodeBlock('#test-container', testOptions);
     });
 
     afterEach(() => {
@@ -36,6 +22,25 @@ describe('CodeBlock', () => {
     });
 
     describe('Rendering', () => {
+        beforeEach(() => {
+            container.innerHTML = `
+                <div class="cl-code-block">
+                    <div class="cl-code-preview">
+                        <div class="cl-preview-content"></div>
+                    </div>
+                    <div class="cl-code-container">
+                        <div class="cl-code-header">
+                            <div class="cl-copy-button"></div>
+                        </div>
+                        <div class="cl-code-content">
+                            <pre><code class="language-${testOptions.language}">${testCode}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+            codeBlock = new CodeBlock('#test-container', testOptions);
+        });
+
         it('should render code with correct language', () => {
             const codeElement = container.querySelector('code');
             expect(codeElement?.classList.contains(`language-${testOptions.language}`)).toBe(true);
@@ -50,7 +55,9 @@ describe('CodeBlock', () => {
         it('should not render copy button when showCopy is false', () => {
             container.innerHTML = `
                 <div class="cl-code-block">
-                    <div class="cl-code-preview"></div>
+                    <div class="cl-code-preview">
+                        <div class="cl-preview-content"></div>
+                    </div>
                     <div class="cl-code-container">
                         <div class="cl-code-header"></div>
                         <div class="cl-code-content">
@@ -59,8 +66,7 @@ describe('CodeBlock', () => {
                     </div>
                 </div>
             `;
-            const options = { ...testOptions, showCopy: false };
-            new CodeBlock('#test-container', options);
+            new CodeBlock('#test-container', { ...testOptions, showCopy: false });
             const copyButton = container.querySelector('.cl-copy-button');
             expect(copyButton).toBeNull();
         });
@@ -78,9 +84,8 @@ describe('CodeBlock', () => {
                     </div>
                 </div>
             `;
-            const options = { ...testOptions, showPreview: false };
-            new CodeBlock('#test-container', options);
-            const preview = container.querySelector('.cl-preview-content');
+            new CodeBlock('#test-container', { ...testOptions, showPreview: false });
+            const preview = container.querySelector('.cl-code-preview');
             expect(preview).toBeNull();
         });
     });

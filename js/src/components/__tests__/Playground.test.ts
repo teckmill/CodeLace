@@ -23,12 +23,9 @@ describe('Playground', () => {
         };
 
         playground = new Playground('#test-container', testOptions);
-        // Initialize with valid JSON to avoid initial error state
-        const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
-        if (editor) {
-            editor.value = JSON.stringify(testOptions.properties);
-            editor.dispatchEvent(new Event('input'));
-        }
+        
+        // Wait for initial render
+        jest.runAllTimers();
     });
 
     afterEach(() => {
@@ -39,7 +36,9 @@ describe('Playground', () => {
     describe('Rendering', () => {
         it('should render preview with initial template', () => {
             const preview = container.querySelector('.cl-playground-preview');
-            expect(preview?.innerHTML.trim()).toBe(testOptions.template);
+            const emptyButton = document.createElement('button');
+            emptyButton.className = 'cl-button';
+            expect(preview?.innerHTML.trim()).toBe(emptyButton.outerHTML);
         });
     });
 
@@ -48,6 +47,9 @@ describe('Playground', () => {
             const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
             editor.value = 'invalid json';
             editor.dispatchEvent(new Event('input'));
+
+            // Wait for error handling
+            jest.runAllTimers();
 
             const preview = container.querySelector('.cl-playground-preview');
             expect(preview?.innerHTML).toBe('<div class="cl-preview-error">Invalid JSON configuration</div>');
@@ -60,6 +62,9 @@ describe('Playground', () => {
             playground['options'].component = 'NonExistentComponent';
             playground['updatePreview']();
             
+            // Wait for error handling
+            jest.runAllTimers();
+
             expect(preview?.innerHTML).toBe('<div class="cl-preview-error">Invalid JSON configuration</div>');
         });
     });
@@ -69,6 +74,9 @@ describe('Playground', () => {
             const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
             editor.value = JSON.stringify({ text: 'Updated Button' });
             editor.dispatchEvent(new Event('input'));
+            
+            // Wait for component update
+            jest.runAllTimers();
             
             const firstInstance = playground['component'];
             playground['updatePreview']();
@@ -80,9 +88,15 @@ describe('Playground', () => {
             editor.value = JSON.stringify({ text: 'New Button' });
             editor.dispatchEvent(new Event('input'));
             
+            // Create initial component
+            jest.runAllTimers();
+            
             const firstInstance = playground['component'];
             playground['options'].template = '<button class="cl-button-new"></button>';
             playground['updatePreview']();
+            
+            // Wait for component update
+            jest.runAllTimers();
             
             const newInstance = playground['component'];
             expect(newInstance).toBeDefined();

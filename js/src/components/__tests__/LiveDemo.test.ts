@@ -126,11 +126,11 @@ describe('LiveDemo', () => {
 
     describe('Preview Updates', () => {
         it('should update preview content', () => {
-            const mockComponent = `
+            const mockComponent = `(() => {
                 const div = document.createElement('div');
                 div.textContent = 'Test Component';
-                div;  // Return the element
-            `;
+                return div;
+            })()`;
 
             liveDemo['updatePreview'](mockComponent);
             
