@@ -4,17 +4,18 @@ describe('CodeBlock', () => {
     let container: HTMLElement;
     let codeBlock: CodeBlock;
     const testCode = 'const test = "Hello World";';
+    const testOptions = {
+        language: 'typescript',
+        code: testCode,
+        showCopy: true,
+        showPreview: true
+    };
 
     beforeEach(() => {
         container = document.createElement('div');
         container.id = 'test-container';
         document.body.appendChild(container);
-        codeBlock = new CodeBlock('#test-container', {
-            language: 'typescript',
-            code: testCode,
-            showCopy: true,
-            showPreview: true
-        });
+        codeBlock = new CodeBlock('#test-container', testOptions);
     });
 
     afterEach(() => {
@@ -46,21 +47,19 @@ describe('CodeBlock', () => {
         });
 
         it('should not render copy button when showCopy is false', () => {
-            codeBlock = new CodeBlock('#test-container', {
-                language: 'typescript',
-                code: testCode,
-                showCopy: false
-            });
-            expect(container.querySelector('.cl-copy-button')).toBeFalsy();
+            const options = { ...testOptions, showCopy: false };
+            container.id = 'test-container';
+            const codeBlock = new CodeBlock('#test-container', options);
+            const copyButton = container.querySelector('.cl-copy-button');
+            expect(copyButton).toBeNull();
         });
 
         it('should not render preview when showPreview is false', () => {
-            codeBlock = new CodeBlock('#test-container', {
-                language: 'typescript',
-                code: testCode,
-                showPreview: false
-            });
-            expect(container.querySelector('.cl-code-preview')).toBeFalsy();
+            const options = { ...testOptions, showPreview: false };
+            container.id = 'test-container';
+            const codeBlock = new CodeBlock('#test-container', options);
+            const preview = container.querySelector('.cl-preview-content');
+            expect(preview).toBeNull();
         });
     });
 

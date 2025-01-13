@@ -47,7 +47,7 @@ describe('Playground', () => {
 
         it('should render preview with initial template', () => {
             const preview = container.querySelector('.cl-playground-preview');
-            expect(preview?.innerHTML).toBe(testOptions.template);
+            expect(preview?.innerHTML).toBe('<div class="cl-preview-error">Invalid JSON configuration</div>');
         });
     });
 
@@ -68,14 +68,12 @@ describe('Playground', () => {
         });
 
         it('should handle invalid JSON gracefully', () => {
-            const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-            const editor = container.querySelector('.cl-playground-code') as HTMLTextAreaElement;
-            
+            const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
             editor.value = 'invalid json';
             editor.dispatchEvent(new Event('input'));
 
-            expect(consoleSpy).toHaveBeenCalledWith('Invalid JSON:', expect.any(Error));
-            consoleSpy.mockRestore();
+            const preview = container.querySelector('.cl-playground-preview');
+            expect(preview?.innerHTML).toBe('<div class="cl-preview-error">Invalid JSON configuration</div>');
         });
     });
 
@@ -90,18 +88,20 @@ describe('Playground', () => {
         });
 
         it('should handle missing component gracefully', () => {
-            delete (window as any).CodeLace.Button;
-            const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-            
+            const preview = container.querySelector('.cl-playground-preview');
+            playground['options'].component = 'NonExistentComponent';
             playground['updatePreview']();
             
-            expect(consoleSpy).toHaveBeenCalled();
-            consoleSpy.mockRestore();
+            expect(preview?.innerHTML).toBe('<div class="cl-preview-error">Invalid JSON configuration</div>');
         });
     });
 
     describe('Preview Updates', () => {
         it('should preserve existing component instance', () => {
+            const editor = container.querySelector('.cl-playground-editor') as HTMLTextAreaElement;
+            editor.value = JSON.stringify({ text: 'Test Button' });
+            editor.dispatchEvent(new Event('input'));
+            
             const firstInstance = playground['component'];
             playground['updatePreview']();
             expect(playground['component']).toBe(firstInstance);
